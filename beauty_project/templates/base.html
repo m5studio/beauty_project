@@ -1,0 +1,25 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <nav id="main-nav"></nav>
+
+    <header id="header"></header>
+
+    {% block content_top %}{% endblock %}
+    <main id="main">
+        {% block content %}{% endblock %}
+    </main>
+    {% block content_bottom %}{% endblock %}
+
+    <footer id="footer">
+        <div class="container">
+            &copy; Copyrights {% now 'Y' %}
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,61 @@
+1. Составить Backend архитектуру
+    apps:
+        - core (Основные настройки)
+        - salon (Салон)
+            Models:
+                Salon:
+                    [x] name [CharField]
+                    [x] description [Text]
+                    owner [ForeingKey => User]
+                    [x] phone [CharField]
+                    [x] email [EmailField]
+                    [x] site [URLField]
+                    [x] created [DateTimeField]
+                    [x] updated [DateTimeField]
+
+                    TabularInline
+                        services [Service]
+                        work_schedule [WorkSchedule]
+
+                Employee
+                    [x] name [CharField]
+                    [x] surname [CharField]
+                    [x] patronymic [CharField]
+                    services [m2m => Service]
+                    [x] created [DateTimeField]
+                    [x] updated [DateTimeField]
+
+                WorkSchedule
+                    [x] day_of_week [CharField]
+                    [x] working_hours_from [TimeField]
+                    [x] working_hours_to [TimeField]
+
+        - master (Мастер)
+            Models:
+                Master:
+                    name [CharField]
+                    photo [ImageField]
+                    salon [ForeingKey => User]
+
+        - services (Услуги)
+            Models:
+                Service:
+                    name [CharField]
+                    price [DecimalField]
+
+        - actions (Акции)
+            Models:
+                Action:
+                    name [CharField]
+                    image [Image]
+                    description [Text]
+                    discount [PositiveInteger]
+
+        - reviews (Отзывы)
+        - users (Пользователь)
+        - api
+
+    Singleton Design Pattern for entire app and particular apps settings
+    ??? allauth + SMS.ru
+
+2. Изучить API 2GIS

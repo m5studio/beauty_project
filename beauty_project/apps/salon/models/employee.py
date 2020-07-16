@@ -1,0 +1,18 @@
+from django.db import models
+
+
+class Employee(models.Model):
+    active     = models.BooleanField('Активный', default=True, help_text='Активный профиль сотрудника?')
+    name       = models.CharField('Имя', max_length=255)
+    surname    = models.CharField('Фамилия', max_length=255, blank=True, null=True)
+    patronymic = models.CharField('Отчество', max_length=255, blank=True, null=True)
+    # TODO: services [m2m => Service]
+    created    = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated    = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return f'{self.surname} {self.name} {self.patronymic}'
+
+    class Meta:
+        verbose_name = 'Сотрудник'
+        verbose_name_plural = 'Сотрудники'
