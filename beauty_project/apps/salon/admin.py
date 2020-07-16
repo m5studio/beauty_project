@@ -1,8 +1,14 @@
 from django.contrib import admin
 
-from .models.salon import Salon
-from .models.employee import Employee
-from .models.work_schedule import WorkSchedule
+from apps.salon.models.salon import Salon
+from apps.salon.models.employee import Employee
+from apps.salon.models.work_schedule import WorkSchedule
+
+
+class EmployeeInline(admin.TabularInline):
+    model = Employee
+    extra = 1
+    max_num = 100
 
 
 class WorkScheduleInline(admin.TabularInline):
@@ -14,6 +20,7 @@ class WorkScheduleInline(admin.TabularInline):
 @admin.register(Salon)
 class SalonAdmin(admin.ModelAdmin):
     inlines = [
+        EmployeeInline,
         WorkScheduleInline,
     ]
 

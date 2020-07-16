@@ -1,7 +1,6 @@
-from datetime import datetime
-
+# from datetime import datetime
 from django.db import models
-from .salon import Salon
+from apps.salon.models.salon import Salon
 
 
 class WorkSchedule(models.Model):

@@ -17,10 +17,12 @@
                         services [Service]
                         work_schedule [WorkSchedule]
 
-                Employee
+                Employee (Мастер\Сотрудник)
                     [x] name [CharField]
                     [x] surname [CharField]
                     [x] patronymic [CharField]
+                    photo [ImageField]
+                    salon [ForeingKey => User]
                     services [m2m => Service]
                     [x] created [DateTimeField]
                     [x] updated [DateTimeField]
@@ -30,26 +32,23 @@
                     [x] working_hours_from [TimeField]
                     [x] working_hours_to [TimeField]
 
-        - master (Мастер)
-            Models:
-                Master:
-                    name [CharField]
-                    photo [ImageField]
-                    salon [ForeingKey => User]
-
         - services (Услуги)
             Models:
                 Service:
-                    name [CharField]
+                    [x] name [CharField]
                     price [DecimalField]
 
         - actions (Акции)
             Models:
                 Action:
+                    active
+                    salon [ForeingKey => User]
                     name [CharField]
                     image [Image]
                     description [Text]
                     discount [PositiveInteger]
+                    created [DateTimeField]
+                    updated [DateTimeField]
 
         - reviews (Отзывы)
         - users (Пользователь)

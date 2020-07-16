@@ -1,8 +1,10 @@
 from django.db import models
+from apps.salon.models.salon import Salon
 
 
 class Employee(models.Model):
     active     = models.BooleanField('Активный', default=True, help_text='Активный профиль сотрудника?')
+    salon      = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.SET_NULL, null=True)
     name       = models.CharField('Имя', max_length=255)
     surname    = models.CharField('Фамилия', max_length=255, blank=True, null=True)
     patronymic = models.CharField('Отчество', max_length=255, blank=True, null=True)
