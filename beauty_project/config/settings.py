@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'mptt',
 
+    'apps.actions.apps.ActionsConfig',
     'apps.core.apps.CoreConfig',
     'apps.salon.apps.SalonConfig',
     'apps.services.apps.ServicesConfig',

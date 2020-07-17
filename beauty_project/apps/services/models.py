@@ -6,7 +6,7 @@ class Services(MPTTModel):
     name = models.CharField('Название', max_length=255, unique=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children', verbose_name='Родитель')
 
-    price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
+    price = models.DecimalField('Цена', max_digits=10, decimal_places=2, blank=True, null=True)
 
     class MPTTMeta:
         order_insertion_by = ['name']

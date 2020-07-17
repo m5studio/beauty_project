@@ -4,7 +4,7 @@ from apps.services.models import Services
 
 
 class Employee(models.Model):
-    active     = models.BooleanField('Активный', default=True, help_text='Активный профиль сотрудника?')
+    active     = models.BooleanField('Активный', default=True, help_text='Опубликован на сайте?')
     salon      = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.SET_NULL, null=True)
 
     name       = models.CharField('Имя', max_length=255)

@@ -41,14 +41,14 @@
         - actions (Акции)
             Models:
                 Action:
-                    active
-                    salon [ForeingKey => User]
-                    name [CharField]
+                    [x] active
+                    [x] salon [ForeingKey => User]
+                    [x] title [CharField]
                     image [Image]
-                    description [Text]
-                    discount [PositiveInteger]
-                    created [DateTimeField]
-                    updated [DateTimeField]
+                    [x] description [Text]
+                    [x] discount [PositiveInteger]
+                    [x] created [DateTimeField]
+                    [x] updated [DateTimeField]
 
         - reviews (Отзывы)
         - users (Пользователь)

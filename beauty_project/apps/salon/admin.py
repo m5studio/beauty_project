@@ -5,10 +5,10 @@ from apps.salon.models.employee import Employee
 from apps.salon.models.work_schedule import WorkSchedule
 
 
-class EmployeeInline(admin.TabularInline):
-    model = Employee
-    extra = 1
-    max_num = 100
+# class EmployeeInline(admin.TabularInline):
+#     model = Employee
+#     extra = 1
+#     max_num = 100
 
 
 class WorkScheduleInline(admin.TabularInline):
@@ -20,11 +20,24 @@ class WorkScheduleInline(admin.TabularInline):
 @admin.register(Salon)
 class SalonAdmin(admin.ModelAdmin):
     inlines = [
-        EmployeeInline,
+        # EmployeeInline,
         WorkScheduleInline,
     ]
 
+    fieldsets = (
+        (None, {
+            'fields': ('active', 'name', 'description')
+        }),
+        ('Контакты салона', {
+            'fields': ('phone', 'email', 'site_url')
+        }),
+        ('Владелец', {
+            'fields': ('owner',)
+        }),
+    )
+
     search_fields = ['name']
+    autocomplete_fields = ['owner']
 
 
 @admin.register(Employee)
