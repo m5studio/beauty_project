@@ -4,4 +4,4 @@ from apps.services.models import Services
 
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ['name']

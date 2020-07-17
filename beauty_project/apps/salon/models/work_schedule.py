@@ -17,8 +17,8 @@ class WorkSchedule(models.Model):
     salon              = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.CASCADE)
     week_day           = models.CharField('День недели', max_length=1, choices=WEEK_DAYS)
     # working_hours_from = models.TimeField('Рабочие часы С', default=datetime.time(datetime.now()))
-    working_hours_from = models.TimeField('Рабочие часы С', default='09:00')
-    working_hours_to   = models.TimeField('Рабочие часы ДО', default='19:00')
+    working_hours_from = models.TimeField('С', default='09:00')
+    working_hours_to   = models.TimeField('До', default='19:00')
 
     def __str__(self):
         return self.week_day

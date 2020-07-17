@@ -9,6 +9,7 @@ class Salon(models.Model):
     phone       = models.CharField('Телефон', max_length=200, blank=True, null=True)
     email       = models.EmailField('Email', max_length=200, blank=True, null=True)
     site_url    = models.EmailField('Site URL', max_length=200, blank=True, null=True)
+
     # TODO: ownner [ForeingKey => User]
 
     created     = models.DateTimeField(auto_now=False, auto_now_add=True)

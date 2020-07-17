@@ -34,9 +34,9 @@
 
         - services (Услуги)
             Models:
-                Service:
+                Services:
                     [x] name [CharField]
-                    price [DecimalField]
+                    [x] price [DecimalField]
 
         - actions (Акции)
             Models:

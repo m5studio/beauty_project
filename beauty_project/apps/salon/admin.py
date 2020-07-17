@@ -24,12 +24,35 @@ class SalonAdmin(admin.ModelAdmin):
         WorkScheduleInline,
     ]
 
+    search_fields = ['name']
+
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    pass
+    fieldsets = (
+        (None, {
+            'fields': ('active',)
+        }),
+        ('ФИО', {
+            'fields': ('surname', 'name', 'patronymic')
+        }),
+        ('Салон\Услуги', {
+            'fields': ('salon', 'services',)
+        }),
+    )
+
+    autocomplete_fields = ['salon', 'services']
 
 
 @admin.register(WorkSchedule)
 class WorkScheduleAdmin(admin.ModelAdmin):
-    pass
+    fieldsets = (
+        (None, {
+            'fields': ('salon',)
+        }),
+        ('График работы', {
+            'fields': ('week_day', 'working_hours_from', 'working_hours_to',)
+        }),
+    )
+
+    autocomplete_fields = ['salon',]
