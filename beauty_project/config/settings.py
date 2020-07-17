@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'mptt',
+
     'apps.core.apps.CoreConfig',
     'apps.salon.apps.SalonConfig',
     'apps.services.apps.ServicesConfig',
