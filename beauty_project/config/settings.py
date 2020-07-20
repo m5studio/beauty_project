@@ -41,6 +41,9 @@ INSTALLED_APPS = [
 
     'mptt',
 
+    'allauth',
+    'allauth.account',
+
     'apps.actions.apps.ActionsConfig',
     'apps.core.apps.CoreConfig',
     'apps.salon.apps.SalonConfig',
@@ -151,3 +154,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Format TimeField
 TIME_INPUT_FORMATS = ('%H:%M',)
+
+
+# Allauth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# ACCOUNT_EMAIL_REQUIRED = True
+
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# LOGIN_REDIRECT_URL = "/user/cabinet/"

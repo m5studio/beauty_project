@@ -2,8 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
-    {% block css %}{% endblock %}
+    <title>Beauty Service</title>
+    <!-- TODO: favicons -->
+    {% block css %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% endblock %}
+    <!-- TODO: og:tags -->
 </head>
 <body>
     <nav id="main-nav"></nav>
@@ -11,9 +15,14 @@
     <header id="header"></header>
 
     {% block content_top %}{% endblock %}
+
     <main id="main">
+        {% if page_title %}
+            <h1>{{ page_title }}</h1>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
+
     {% block content_bottom %}{% endblock %}
 
     <footer id="footer">
@@ -21,5 +30,9 @@
             &copy; Copyrights {% now 'Y' %}
         </div>
     </footer>
+
+    {% block js %}
+        <script src="{% static 'js/scripts.js' %}"></script>
+    {% endblock %}
 </body>
 </html>

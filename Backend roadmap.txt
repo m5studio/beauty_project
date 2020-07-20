@@ -51,6 +51,7 @@
                     [x] updated [DateTimeField]
 
         - reviews (Отзывы)
+        - ??? (Отзывы)
         - users (Пользователь)
         - api
 
