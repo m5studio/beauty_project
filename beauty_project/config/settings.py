@@ -39,8 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'django_unused_media',
+    'imagekit',
     'mptt',
-
     'allauth',
     'allauth.account',
 
@@ -170,3 +171,7 @@ AUTHENTICATION_BACKENDS = [
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 # LOGIN_REDIRECT_URL = "/user/cabinet/"
+
+
+# https://github.com/matthewwithanm/django-imagekit
+IMAGEKIT_CACHEFILE_DIR = 'cache-images'

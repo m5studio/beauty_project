@@ -1,11 +1,26 @@
 from django.db import models
+from django.utils.html import mark_safe
+
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill, ResizeToFit
+
 from apps.salon.models.salon import Salon
 from apps.services.models import Services
 
 
+def image_upload_path(instance, filename):
+    filename = filename.lower()
+    return f'employee/{filename}'
+
 class Employee(models.Model):
     active     = models.BooleanField('Активный', default=True, help_text='Опубликован на сайте?')
     salon      = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.SET_NULL, null=True)
+
+    image      = ProcessedImageField(upload_to=image_upload_path,
+                                        processors=[ResizeToFill(1280, 768)],
+                                        format='JPEG',
+                                        options={'quality': 75},
+                                        blank=True, null=True)
 
     name       = models.CharField('Имя', max_length=255)
     surname    = models.CharField('Фамилия', max_length=255)
@@ -22,3 +37,9 @@ class Employee(models.Model):
     class Meta:
         verbose_name = 'Сотрудник'
         verbose_name_plural = 'Сотрудники'
+
+    # Thumbnails
+    def image_admin_thumb(self):
+        return mark_safe(f'<img src="{self.image.url}" alt="" style="width: 386px; height: auto;" />')
+    image_admin_thumb.short_description = 'Изображение (thumbnail)'
+    # END Thumbnails

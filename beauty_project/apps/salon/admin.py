@@ -42,12 +42,17 @@ class SalonAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
+    readonly_fields = ('image_admin_thumb',)
+
     fieldsets = (
         (None, {
             'fields': ('active',)
         }),
         ('ФИО', {
             'fields': ('surname', 'name', 'patronymic')
+        }),
+        ('Фото сотрудника', {
+            'fields': ('image_admin_thumb', 'image')
         }),
         ('Салон\Услуги', {
             'fields': ('salon', 'services',)
