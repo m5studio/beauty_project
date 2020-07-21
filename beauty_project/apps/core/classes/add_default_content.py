@@ -101,18 +101,32 @@ from apps.services.models import Services
         Окрашивание и коррекция бровей
 """
 class AddDefaultContent:
+    def _addRootService(self, root_service_name: str, parent_name=None: str):
+        try:
+            root_service = Services.objects.get(name=root_service_name)
+            print(f'Услуга "{root_service}" уже существует')
+        except Exception as e:
+            root_service = Services.objects.create(name=root_service_name)
+            print(f'Услуга "{root_service}" создана!')
+
+    # TODO:
+    def _addChildService(self):
+        pass
+
     def addServices(self):
         # nails_root = Services.objects.create(name="Ногтевой сервис")
         # manicure_root = Services.objects.create(name="Маникюр", parent=nails_root)
         # root = Services.objects.create(name="")
         # Services.objects.create(name="test", parent=root)
 
-        try:
-            nails_root = Services.objects.get(name="Ногтевой сервис")
-            print(f'Услуга "{nails_root}" уже существует')
-        except Exception as e:
-            nails_root = Services.objects.create(name="Ногтевой сервис")
-            print(f'Услуга "{nails_root}" создана!')
+        self._addRootService("Ногтевой сервис")
+
+        # try:
+        #     nails_root = Services.objects.get(name="Ногтевой сервис")
+        #     print(f'Услуга "{nails_root}" уже существует')
+        # except Exception as e:
+        #     nails_root = Services.objects.create(name="Ногтевой сервис")
+        #     print(f'Услуга "{nails_root}" создана!')
 
         try:
             manicure_root = Services.objects.get(name="Маникюр", parent=nails_root)
