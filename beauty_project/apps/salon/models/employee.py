@@ -32,7 +32,10 @@ class Employee(models.Model):
     updated    = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return f'{self.surname} {self.name} {self.patronymic}'
+        if self.patronymic:
+            return f'{self.surname} {self.name} {self.patronymic}'
+        else:
+            return f'{self.surname} {self.name}'
 
     class Meta:
         verbose_name = 'Сотрудник'
