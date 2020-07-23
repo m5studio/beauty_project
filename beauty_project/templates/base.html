@@ -15,7 +15,33 @@
             <li>
                 <a href="/accounts/">Accounts</a>
             </li>
+            <li>
+                <a href="{% url 'account_signup' %}">Sign Up</a>
+            </li>
+            <li>
+                <a href="{% url 'account_login' %}">Sign In</a>
+            </li>
+            <li>
+                <a href="{% url 'account_reset_password' %}">Password Reset</a>
+            </li>
         </ul>
+
+        {% if request.user.is_authenticated %}
+            <ul>
+                <li>
+                    Hello, {{ request.user }}
+                </li>
+                <li>
+                    <a href="{% url 'account_change_password' %}">Change password</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_change_password' %}">Change password</a>
+                </li>
+                <li>
+                    <a href="{% url 'account_logout' %}">Exit</a>
+                </li>
+            </ul>
+        {% endif %}
     </nav>
 
     <header id="header"></header>
