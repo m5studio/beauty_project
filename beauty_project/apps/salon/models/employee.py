@@ -22,8 +22,8 @@ class Employee(models.Model):
                                         options={'quality': 75},
                                         blank=True, null=True)
 
-    name       = models.CharField('Имя', max_length=255)
     surname    = models.CharField('Фамилия', max_length=255)
+    name       = models.CharField('Имя', max_length=255)
     patronymic = models.CharField('Отчество', max_length=255, blank=True, null=True)
 
     services   = models.ManyToManyField(Services, blank=True, verbose_name='Услуги')

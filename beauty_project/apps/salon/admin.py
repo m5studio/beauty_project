@@ -43,6 +43,8 @@ class SalonAdmin(admin.ModelAdmin):
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
     readonly_fields = ('image_admin_thumb',)
+    # list_display = ('surname', 'name', 'patronymic', 'salon',)
+    list_display = ('__str__', 'salon',)
 
     fieldsets = (
         (None, {

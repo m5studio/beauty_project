@@ -271,14 +271,27 @@ class AddDefaultContent:
             else:
                 print(f'Рабочий график для салона "{salon.name}" уже существует')
 
-    # TODO
     def addSalonsEmployees(self):
         salons = Salon.objects.all()
         for salon in salons:
             i = 0
             if not Employee.objects.filter(salon=salon).exists():
                 for _ in range(10):
-                    pass
+                    salon_obj = Salon.objects.get(id=salon.id)
+                    employee = Employee(active=True, \
+                                        salon=salon_obj, \
+                                        surname='Иванов', \
+                                        name='Иван', \
+                                        patronymic='Иванович', \
+                                        # TODO
+                                        # services=
+                                    )
+                    employee.save()
+                    # Set Services by it's id's
+                    employee.services.set([1, 2, 3, 4, 5, 6, 7, 8, 9])
+                    print(f'Сотрудник {employee.surname} {employee.name} {employee.patronymic} создан')
+            else:
+                print(f'Сотрудник уже существует')
 
 
     # Init creation
