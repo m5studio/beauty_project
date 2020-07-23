@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django_unused_media',
     'imagekit',
     'mptt',
+
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
 
     'apps.actions.apps.ActionsConfig',
     'apps.core.apps.CoreConfig',
