@@ -16,7 +16,7 @@ class HomepageView(TemplateView):
 
 @method_decorator(login_required, name='dispatch')
 class ProfileView(TemplateView):
-    template_name = 'accounts/profile.html'
+    template_name = 'account/profile.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

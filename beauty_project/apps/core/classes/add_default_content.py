@@ -1,3 +1,5 @@
+import random
+
 from apps.services.models import Services
 
 from apps.salon.models.salon import Salon
@@ -272,6 +274,10 @@ class AddDefaultContent:
                 print(f'Рабочий график для салона "{salon.name}" уже существует')
 
     def addSalonsEmployees(self):
+        surnames_arr = ['Иванов', 'Петров', 'Сидоров', 'Андреев', 'Лебедев']
+        names_arr = ['Иван', 'Кирилл', 'Игорь', 'Артем', 'Павел']
+        patronymics_arr = ['Иванович', 'Алексеевич', 'Игоревич', 'Семенович', 'Владимирович']
+
         salons = Salon.objects.all()
         for salon in salons:
             i = 0
@@ -280,11 +286,9 @@ class AddDefaultContent:
                     salon_obj = Salon.objects.get(id=salon.id)
                     employee = Employee(active=True, \
                                         salon=salon_obj, \
-                                        surname='Иванов', \
-                                        name='Иван', \
-                                        patronymic='Иванович', \
-                                        # TODO
-                                        # services=
+                                        surname=random.choice(surnames_arr), \
+                                        name=random.choice(names_arr), \
+                                        patronymic=random.choice(patronymics_arr), \
                                     )
                     employee.save()
                     # Set Services by it's id's
