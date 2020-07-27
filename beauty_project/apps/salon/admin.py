@@ -37,7 +37,7 @@ class SalonAdmin(admin.ModelAdmin):
     )
 
     search_fields = ['name']
-    autocomplete_fields = ['owner']
+    # autocomplete_fields = ['owner']
 
 
 @admin.register(Employee)

@@ -43,10 +43,11 @@ INSTALLED_APPS = [
     'imagekit',
     'mptt',
 
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 
+    'apps.account.apps.AccountConfig',
     'apps.actions.apps.ActionsConfig',
     'apps.core.apps.CoreConfig',
     'apps.salon.apps.SalonConfig',
@@ -116,6 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'account.Account'
 
 
 # Internationalization

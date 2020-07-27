@@ -26,7 +26,7 @@ admin.site.index_title = "Salon Applications"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.urls')),
     path('', include('apps.core.urls')),
     path('', include('apps.salon.urls')),
 ]
