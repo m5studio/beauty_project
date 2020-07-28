@@ -161,7 +161,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Format TimeField
 TIME_INPUT_FORMATS = ('%H:%M',)
 
-
+"""
 # Allauth
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -178,7 +178,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 # LOGIN_REDIRECT_URL = "/user/cabinet/"
-
+"""
 
 # https://github.com/matthewwithanm/django-imagekit
 IMAGEKIT_CACHEFILE_DIR = 'cache-images'

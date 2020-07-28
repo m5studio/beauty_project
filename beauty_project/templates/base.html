@@ -12,19 +12,19 @@
 <body>
     <nav id="main-nav">
         <ul>
-            <li>
-                <a href="/accounts/">Accounts</a>
-            </li>
             {% if not request.user.is_authenticated %}
                 <li>
-                    <a href="{% url 'account_signup' %}">Sign Up</a>
+                    <a href="{% url 'registration-phone' %}">Register with phone</a>
                 </li>
-                <li>
-                    <a href="{% url 'account_login' %}">Sign In</a>
-                </li>
-                <li>
-                    <a href="{% url 'account_reset_password' %}">Password Reset</a>
-                </li>
+                <!-- <li>
+                    <a href="">Sign Up</a>
+                </li> -->
+                <!-- <li>
+                    <a href="">Sign In</a>
+                </li> -->
+                <!-- <li>
+                    <a href="">Password Reset</a>
+                </li> -->
             {% endif %}
         </ul>
 
@@ -37,13 +37,13 @@
                     <a href="{% url 'homepage' %}">Homepage</a>
                 </li>
                 <li>
-                    <a href="{% url 'account_profile' %}">Go to Profile</a>
+                    <a href="">Go to Profile</a>
                 </li>
                 <li>
-                    <a href="{% url 'account_change_password' %}">Change password</a>
+                    <a href="">Change password</a>
                 </li>
                 <li>
-                    <a href="{% url 'account_logout' %}">Exit</a>
+                    <a href="{% url 'logout' %}">Exit</a>
                 </li>
             </ul>
         {% endif %}
