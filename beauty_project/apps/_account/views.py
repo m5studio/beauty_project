@@ -17,11 +17,32 @@ def registration_view(request):
             login(request, account)
             return redirect('/')
         else:
+            context['registration_form'] = form
+    else: #GET request
+        form = RegistrationForm()
+        context['registration_form'] = form
+    return render(request, 'account/register.html', context)
+
+"""
+def registration_phone_view(request):
+    context = {}
+    if request.POST:
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            phone = form.cleaned_data.get('phone')
+            username = phone
+            raw_password = '123'
+            account = authenticate(username=username, password=raw_password)
+            login(request, account)
+            return redirect('/')
+        else:
             context['form'] = form
     else: #GET request
         form = RegistrationForm()
         context['form'] = form
-    return render(request, 'account/register.html', context)
+    return render(request, 'account/register-by-phone.html', context)
+"""
 
 
 def logout_view(request):

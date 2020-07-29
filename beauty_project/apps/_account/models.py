@@ -2,27 +2,33 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 
-class CustomUserManager(BaseUserManager):
-    def create_user(self, username, email, phone, password=None):
+class MyAccountManager(BaseUserManager):
+    def create_user(self, username, phone, password=None):
+    # def create_user(self, email, phone, password=None):
+    # def create_user(self, username, email, phone, password=None):
+        # if not email:
+        #     raise ValueError('Users must have an email address')
         if not username:
             raise ValueError('Users must have a username')
-        if not email:
-            raise ValueError('Users must have an email address')
         if not phone:
             raise ValueError('Users must have a phone number')
+
         user = self.model(
-            email=self.normalize_email(email),
+            # email=self.normalize_email(email),
             username=username,
             phone=phone,
         )
+
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, phone, password=None):
+    def create_superuser(self, username, phone, password):
+    # def create_superuser(self, email, phone, password):
+    # def create_superuser(self, email, username, phone, password):
         user = self.create_user(
+            # email=self.normalize_email(email),
             username=username,
-            email=self.normalize_email(email),
             phone=phone,
             password=password,
         )
@@ -33,9 +39,9 @@ class CustomUserManager(BaseUserManager):
         return user
 
 
-class CustomUser(AbstractBaseUser):
+class Account(AbstractBaseUser):
     phone        = models.CharField('Phone', max_length=100, unique=True)
-    email        = models.EmailField('Email', max_length=60, unique=True)
+    # email        = models.EmailField('Email', max_length=60, unique=True)
 
     # Requiered
     username     = models.CharField(max_length=30, unique=True)
@@ -47,9 +53,14 @@ class CustomUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', 'phone']
+    # USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = ['phone']
+    # REQUIRED_FIELDS = ['username', 'email']
+    # REQUIRED_FIELDS = ['username', 'phone']
+    # REQUIRED_FIELDS = ['username']
 
-    objects = CustomUserManager()
+    objects = MyAccountManager()
 
     def __str__(self):
         return self.username

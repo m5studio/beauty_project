@@ -1,14 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 
 from apps.account.views import (
     logout_view,
     registration_view,
-    registration_phone_view,
 )
 
 
+app_name = 'user'
+
 urlpatterns = [
-    path('logout/', logout_view, name="logout"),
-    path('register/', registration_view, name='registration'),
-    path('registration-phone/', registration_phone_view, name='registration-phone'),
+    path('user/', include([
+        path('register/', registration_view, name='registration'),
+        path('logout/', logout_view, name="logout"),
+    ]))
 ]

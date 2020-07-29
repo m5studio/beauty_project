@@ -109,16 +109,17 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 3,
+        }
     },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
-
-AUTH_USER_MODEL = 'account.Account'
 
 
 # Internationalization
@@ -160,6 +161,18 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Format TimeField
 TIME_INPUT_FORMATS = ('%H:%M',)
+
+
+# Authentication settings
+AUTH_USER_MODEL = 'account.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    # Default
+    'django.contrib.auth.backends.ModelBackend',
+
+    # Custom Authentication backends
+    'apps.account.AuthBackends.EmailAuthBackend',
+]
 
 """
 # Allauth
