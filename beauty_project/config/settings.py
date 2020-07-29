@@ -171,7 +171,9 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
     # Custom Authentication backends
-    'apps.account.AuthBackends.EmailAuthBackend',
+    # 'apps.account.auth_backends.EmailAuthBackend',
+    # 'apps.account.auth_backends.PhoneAuthBackend',
+    'apps.account.auth_backends.EmailOrPhoneModelBackend',
 ]
 
 """

@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from apps.account.models import CustomUser
 
@@ -40,3 +40,12 @@ class RegistrationForm(UserCreationForm):
     #     # if cd['password'] != cd['password2']:
     #     #     raise forms.ValidationError('Passwords don\'t match.')
     #     return cd['password2']
+
+
+# class AuthForm(AuthenticationForm):
+#     username = forms.CharField(max_length=100, help_text='Required. Add a valid username')
+#     email    = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
+#     phone    = forms.CharField(max_length=100, help_text='Required. Add a valid phone number')
+
+#     class Meta:
+#         fields = ("username", "email", "phone", "password")
