@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
-from apps.account.models import CustomUser
+from apps.account.models import Account
 
 
 class RegistrationForm(UserCreationForm):
@@ -17,7 +17,7 @@ class RegistrationForm(UserCreationForm):
     phone    = forms.CharField(max_length=100, help_text='Required. Add a valid phone number')
 
     class Meta:
-        model = CustomUser
+        model = Account
         fields = ("username", "email", "phone", "password1", "password2")
 
     # def clean_username(self):
