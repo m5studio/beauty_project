@@ -37,17 +37,18 @@
         {% if request.user.is_authenticated %}
             <ul>
                 <li>
-                    Hello, {{ request.user }}
+                    <!-- Hello, {{ request.user }} -->
+                    Hello, {{ request.user.first_name }}
                 </li>
                 <li>
                     <a href="{% url 'homepage' %}">Homepage</a>
                 </li>
                 <li>
-                    <a href="">Go to Profile</a>
+                    <a href="{% url 'user:cabinet' %}">Go to Personal Cabinet</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="">Change password</a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{% url 'user:logout' %}">Exit</a>
                 </li>

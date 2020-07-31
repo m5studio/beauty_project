@@ -41,11 +41,23 @@ class RegistrationForm(UserCreationForm):
     #     #     raise forms.ValidationError('Passwords don\'t match.')
     #     return cd['password2']
 
+class RegistrationByPhoneForm(forms.Form):
+    first_name  = forms.CharField(label='Your name', max_length=100)
+    phone       = forms.CharField(label='Phone', max_length=100)
+    agree_terms = forms.BooleanField(initial=False)
 
-# class AuthForm(AuthenticationForm):
-#     username = forms.CharField(max_length=100, help_text='Required. Add a valid username')
-#     email    = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
-#     phone    = forms.CharField(max_length=100, help_text='Required. Add a valid phone number')
+    def clean_first_name(self):
+        cd = self.cleaned_data
+        if len(cd['first_name']) < 2:
+            raise forms.ValidationError("First name can't be less than 2 characters")
+        return cd['first_name']
 
-#     class Meta:
-#         fields = ("username", "email", "phone", "password")
+    def clean_phone(self):
+        cd = self.cleaned_data
+        if len(cd['phone']) < 5:
+            raise forms.ValidationError("Phone can't be less than 5 digits")
+        return cd['phone']
+
+    def clean_agree_terms(self):
+        cd = self.cleaned_data
+        return cd['agree_terms']
