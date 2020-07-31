@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from apps.account.forms import RegistrationForm
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 
 User = get_user_model()
 
@@ -85,6 +85,10 @@ def register_password_view(request):
                                     password=password
                                 )
     user.save()
+
+    # Set user Group
+    group = Group.objects.get(name='Client')
+    group.user_set.add(user)
 
     login(request, user)
 

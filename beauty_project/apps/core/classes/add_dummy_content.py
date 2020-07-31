@@ -7,7 +7,7 @@ from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.employee import Employee
 
 
-class AddDefaultContent:
+class AddDummyContent:
     # Create Services from array
     def _createSubServices(self, arr, obj):
         for item in arr:
