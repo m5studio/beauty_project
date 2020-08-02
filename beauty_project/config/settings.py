@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
+    'django_cleanup.apps.CleanupConfig',
     'django_unused_media',
     'imagekit',
     'mptt',
