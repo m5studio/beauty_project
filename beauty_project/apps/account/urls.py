@@ -5,7 +5,7 @@ from apps.account.views import (
     registration_view,
     login_view,
 
-    personal_cabinet_view,
+    user_profile_view,
 
     register_by_phone_view,
     register_password_view,
@@ -20,7 +20,7 @@ urlpatterns = [
         path('login/', login_view, name='login'),
         path('logout/', logout_view, name='logout'),
 
-        path('cabinet/', personal_cabinet_view, name='cabinet'),
+        path('profile/', user_profile_view, name='profile'),
 
         path('register-by-phone/', register_by_phone_view, name='registration-by-phone'),
         path('register-password/', register_password_view, name='registration-password'),

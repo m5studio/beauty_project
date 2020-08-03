@@ -13,9 +13,9 @@
     <nav id="main-nav">
         <ul>
             {% if not request.user.is_authenticated %}
-                <li>
+                <!-- <li>
                     <a href="{% url 'user:registration' %}">Registration</a>
-                </li>
+                </li> -->
                 <li>
                     <a href="{% url 'user:registration-by-phone' %}">Registration by phone</a>
                 </li>
@@ -44,7 +44,7 @@
                     <a href="{% url 'homepage' %}">Homepage</a>
                 </li>
                 <li>
-                    <a href="{% url 'user:cabinet' %}">Go to Personal Cabinet</a>
+                    <a href="{% url 'user:profile' %}">User Profile</a>
                 </li>
                 <!-- <li>
                     <a href="">Change password</a>

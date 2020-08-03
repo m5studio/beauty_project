@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1>Hi, {{ request.user.first_name }}</h1>
+
+    <p>Login: {{ request.user }}</p>
+
+    <p>Имя: {{ request.user.first_name }}</p>
+    <p>Город: {{ request.user.city }}</p>
+    <p>Дата рождения: {{ request.user.birth_date }}</p>
+
+    <p>Телефон: {{ request.user.phone }}</p>
+    <p>Email: {{ request.user.email }}</p>
+
+    <hr>
+
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Edit</button>
+    </form>
+{% endblock %}

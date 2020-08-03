@@ -12,7 +12,7 @@ class AccountAdmin(UserAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('username', 'phone', 'email', 'password')
+            'fields': ('username', 'phone', 'email', 'first_name', 'city', 'birth_date', 'password')
         }),
         ('Status', {
             'fields': ('is_staff', 'is_admin', 'is_superuser')

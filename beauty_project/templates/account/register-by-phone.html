@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <form action="" autocomplete="off" novalidate method="post">{% csrf_token %}
+    <form action="{% url 'user:registration-by-phone' %}" autocomplete="off" novalidate method="post">{% csrf_token %}
         <p>
             {{ form.first_name.label_tag }}
             {{ form.first_name }}

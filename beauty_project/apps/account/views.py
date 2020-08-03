@@ -5,14 +5,15 @@ from django.contrib.auth.decorators import login_required
 
 # from apps.account.forms import RegistrationForm, AuthForm
 from django.contrib.auth.forms import AuthenticationForm
-from apps.account.forms import RegistrationForm, RegistrationByPhoneForm
+from apps.account.forms import RegistrationForm, RegistrationByPhoneForm, EditAccountForm
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User, Group
-
+# TODO: change User to Account
 User = get_user_model()
 
 
+# TODO: remove
 def registration_view(request):
     context = {}
     if request.POST:
@@ -54,34 +55,27 @@ def logout_view(request):
     return redirect('homepage')
 
 
-# @login_required(login_url='/user/login/')
 @login_required(login_url='user:login')
-def personal_cabinet_view(request):
+def user_profile_view(request):
     context = {}
-    return render(request, 'account/cabinet.html', context)
+
+    if request.POST:
+        form = EditAccountForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('user:profile')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = EditAccountForm(instance=request.user)
+        context['form'] = form
+    return render(request, 'account/profile.html', context)
 
 
-# Sandbox
 def register_by_phone_view(request):
     context = {}
     if request.POST:
-        # first_name  = request.POST.get('first_name')
-        # phone       = request.POST.get('phone')
-        # agree_terms = request.POST.get('agree_terms')
-
-        # print(first_name)
-        # print(phone)
-        # print(agree_terms)
-
-        # if first_name and phone and agree_terms == 'true':
-        #     from random import randint
-        #     request.session['phone'] = phone
-        #     request.session['password'] = str(randint(0000, 9999))
-        #     request.session.modified = True
-        #     return redirect('user:registration-password')
-
         form = RegistrationByPhoneForm(request.POST)
-
         if form.is_valid():
             first_name  = form.cleaned_data['first_name']
             phone       = form.cleaned_data['phone']
@@ -118,7 +112,7 @@ def register_password_view(request):
     #                             )
 
     user = User(username=phone, \
-                    email='noemail@gmail.com', \
+                    # email='noemail@gmail.com', \
                     first_name=first_name,
                     phone=phone, \
                     password=password
