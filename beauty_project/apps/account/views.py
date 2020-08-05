@@ -158,8 +158,7 @@ def reset_password_view(request):
     if request.POST:
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
-            pass
-            # first_name  = form.cleaned_data['first_name']
+            phone_or_email = form.cleaned_data['phone_or_email']
             # phone       = form.cleaned_data['phone']
             # agree_terms = form.cleaned_data['agree_terms']
 

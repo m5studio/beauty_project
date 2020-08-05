@@ -89,13 +89,13 @@ class EditAccountForm(forms.ModelForm):
 
 
 class ResetPasswordForm(forms.Form):
-    phone = forms.CharField(max_length=100, help_text='Required. Add a valid phone number')
+    phone_or_email = forms.CharField(label="Phone or Email", max_length=100, help_text='Required. Add a valid phone or email')
     # email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
 
     def clean(self):
         cleaned_data = super().clean()
 
-        phone = cleaned_data.get('phone')
+        phone_or_email = cleaned_data.get('phone_or_email')
         # email = cleaned_data.get('email')
 
         # if len(first_name) < 2:
