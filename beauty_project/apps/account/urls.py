@@ -7,6 +7,7 @@ from apps.account.views import (
 
     user_profile_view,
     change_password_view,
+    reset_password_view,
 
     register_by_phone_view,
     register_password_view,
@@ -23,6 +24,7 @@ urlpatterns = [
 
         path('profile/', user_profile_view, name='profile'),
         path('profile/change-password/', change_password_view, name='change-password'),
+        path('reset-password/', reset_password_view, name='reset-password'),
 
         path('register-by-phone/', register_by_phone_view, name='registration-by-phone'),
         path('register-password/', register_password_view, name='registration-password'),

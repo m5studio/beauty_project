@@ -28,17 +28,16 @@
                 <!-- <li>
                     <a href="">Sign In</a>
                 </li> -->
-                <!-- <li>
-                    <a href="">Password Reset</a>
-                </li> -->
+                <li>
+                    <a href="{% url 'user:reset-password' %}">Password Reset</a>
+                </li>
             {% endif %}
         </ul>
 
         {% if request.user.is_authenticated %}
             <ul>
                 <li>
-                    <!-- Hello, {{ request.user }} -->
-                    Hello, {{ request.user.first_name }}
+                    Hello, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}Anonymous user{% endif %}
                 </li>
                 <li>
                     <a href="{% url 'homepage' %}">Homepage</a>

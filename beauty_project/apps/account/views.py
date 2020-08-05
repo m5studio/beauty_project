@@ -5,7 +5,12 @@ from django.contrib.auth.decorators import login_required
 
 # from apps.account.forms import RegistrationForm, AuthForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
-from apps.account.forms import RegistrationForm, RegistrationByPhoneForm, EditAccountForm
+from apps.account.forms import (
+    RegistrationForm,
+    RegistrationByPhoneForm,
+    EditAccountForm,
+    ResetPasswordForm,
+)
 
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.models import User, Group
@@ -59,6 +64,17 @@ def logout_view(request):
 def user_profile_view(request):
     context = {}
 
+    # Clean session
+    if request.session.get('first_name'):
+        del request.session['first_name']
+        request.session.modified = True
+    if request.session.get('phone'):
+        del request.session['phone']
+        request.session.modified = True
+    if request.session.get('password'):
+        del request.session['password']
+        request.session.modified = True
+
     if request.POST:
         form = EditAccountForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -75,7 +91,6 @@ def user_profile_view(request):
 @login_required(login_url='user:login')
 def change_password_view(request):
     context = {}
-
     if request.POST:
         form = PasswordChangeForm(data=request.POST, user=request.user)
         if form.is_valid():
@@ -122,13 +137,6 @@ def register_password_view(request):
     phone      = request.session['phone']
     password   = request.session['password']
 
-    # user = User.objects.create_user(username=phone, \
-    #                                 email='noemail@gmail.com', \
-    #                                 first_name=first_name,
-    #                                 phone=phone, \
-    #                                 password=password
-    #                             )
-
     user = User(username=phone, \
                     # email='noemail@gmail.com', \
                     first_name=first_name,
@@ -142,12 +150,30 @@ def register_password_view(request):
     group.user_set.add(user)
 
     login(request, user)
-
-    # del request.session['first_name']
-    # del request.session['phone']
-    # del request.session['password']
-    # request.session.modified = True
-
-    # return redirect('user:profile')
-
     return render(request, 'account/register-password.html', context)
+
+
+def reset_password_view(request):
+    context = {}
+    if request.POST:
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            pass
+            # first_name  = form.cleaned_data['first_name']
+            # phone       = form.cleaned_data['phone']
+            # agree_terms = form.cleaned_data['agree_terms']
+
+            # # Generate new password
+            # from random import randint
+            # request.session['first_name'] = first_name
+            # request.session['phone'] = phone
+            # request.session['password'] = str(randint(0000, 9999))
+            # request.session.modified = True
+            # return redirect('user:registration-password')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = ResetPasswordForm()
+        context['form'] = form
+
+    return render(request, 'account/reset-password.html', context)

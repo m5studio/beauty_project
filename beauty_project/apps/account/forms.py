@@ -86,3 +86,26 @@ class EditAccountForm(forms.ModelForm):
     class Meta:
         model = Account
         fields = ("phone", "email", "city", "birth_date")
+
+
+class ResetPasswordForm(forms.Form):
+    phone = forms.CharField(max_length=100, help_text='Required. Add a valid phone number')
+    # email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        phone = cleaned_data.get('phone')
+        # email = cleaned_data.get('email')
+
+        # if len(first_name) < 2:
+        #     self.add_error('first_name', 'First name can\'t be less than 2 digits')
+
+        # if len(phone) < 5:
+        #     self.add_error('phone', 'Phone can\'t be less than 5 digits')
+
+        # if image != '' and image_url != '':
+        #     self.add_error('image', 'Заполните только одно поле!')
+        #     self.add_error('image_url', 'Заполните только одно поле!')
+
+        return cleaned_data

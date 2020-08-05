@@ -44,7 +44,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     phone        = models.CharField('Phone', max_length=100, unique=True)
     # email        = models.EmailField('Email', max_length=60, unique=True)
     email        = models.EmailField('Email', max_length=60, blank=True, null=True)
-    first_name   = models.CharField('First Name', max_length=100)
+    first_name   = models.CharField('First Name', max_length=100, blank=True, null=True)
     city         = models.CharField('City', max_length=255, blank=True, null=True)
     birth_date   = models.DateField('Дата рождения', blank=True, null=True)
     # birth_date   = models.CharField('Дата рождения', max_length=50, blank=True, null=True)
