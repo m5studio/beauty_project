@@ -6,6 +6,7 @@ from apps.account.views import (
     login_view,
 
     user_profile_view,
+    change_password_view,
 
     register_by_phone_view,
     register_password_view,
@@ -21,6 +22,7 @@ urlpatterns = [
         path('logout/', logout_view, name='logout'),
 
         path('profile/', user_profile_view, name='profile'),
+        path('profile/change-password/', change_password_view, name='change-password'),
 
         path('register-by-phone/', register_by_phone_view, name='registration-by-phone'),
         path('register-password/', register_password_view, name='registration-password'),

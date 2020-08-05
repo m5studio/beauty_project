@@ -47,6 +47,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name   = models.CharField('First Name', max_length=100)
     city         = models.CharField('City', max_length=255, blank=True, null=True)
     birth_date   = models.DateField('Дата рождения', blank=True, null=True)
+    # birth_date   = models.CharField('Дата рождения', max_length=50, blank=True, null=True)
 
     # Requiered
     username     = models.CharField(max_length=30, unique=True)

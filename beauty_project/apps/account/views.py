@@ -4,10 +4,10 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 
 # from apps.account.forms import RegistrationForm, AuthForm
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from apps.account.forms import RegistrationForm, RegistrationByPhoneForm, EditAccountForm
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.models import User, Group
 # TODO: change User to Account
 User = get_user_model()
@@ -72,6 +72,24 @@ def user_profile_view(request):
     return render(request, 'account/profile.html', context)
 
 
+@login_required(login_url='user:login')
+def change_password_view(request):
+    context = {}
+
+    if request.POST:
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect('user:profile')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = PasswordChangeForm(user=request.user)
+        context['form'] = form
+    return render(request, 'account/profile-change-password.html', context)
+
+
 def register_by_phone_view(request):
     context = {}
     if request.POST:
@@ -129,5 +147,7 @@ def register_password_view(request):
     # del request.session['phone']
     # del request.session['password']
     # request.session.modified = True
+
+    # return redirect('user:profile')
 
     return render(request, 'account/register-password.html', context)

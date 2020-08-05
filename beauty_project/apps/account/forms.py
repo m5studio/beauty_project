@@ -1,3 +1,6 @@
+from datetime import datetime
+# from django.utils import timezone
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
@@ -68,6 +71,18 @@ class RegistrationByPhoneForm(forms.Form):
 
 
 class EditAccountForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        widget=forms.SelectDateWidget(years=range(1950, datetime.now().year - 15)),
+        # widget=forms.SelectDateWidget(),
+        # initial=timezone.now()
+        # initial="15 04 2014"
+    )
+
+    # birth_date = forms.CharField(
+    #     # initial="2004-03-15"
+    #     initial=timezone.now()
+    # )
+
     class Meta:
         model = Account
         fields = ("phone", "email", "city", "birth_date")
