@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # from apps.account.forms import RegistrationForm, AuthForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
@@ -11,6 +11,8 @@ from apps.account.forms import (
     EditAccountForm,
     ResetPasswordForm,
 )
+
+from apps.salon.forms import AddClientForm
 
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.models import User, Group
@@ -46,7 +48,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('/')
+            return redirect('user:profile')
         else:
             context['form'] = form
     else: #GET request
@@ -105,6 +107,32 @@ def change_password_view(request):
     return render(request, 'account/profile-change-password.html', context)
 
 
+def group_check(user):
+    return user.groups.filter(name__in=['Salon'])
+
+# TODO
+@login_required(login_url='user:login')
+# @user_passes_test(group_check)
+@user_passes_test(lambda user: user.groups.filter(name__in=['Salon']))
+def add_salon_client_view(request):
+    context = {}
+    if request.POST:
+        form = AddClientForm(request.POST)
+        if form.is_valid():
+            # form.save()
+            active     = form.cleaned_data['active']
+            salon      = form.cleaned_data['first_name']
+            phone      = form.cleaned_data['phone']
+            first_name = form.cleaned_data['first_name']
+            return redirect('user:profile')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = AddClientForm()
+        context['form'] = form
+    return render(request, 'account/profile-add-salon-client.html', context)
+
+
 def register_by_phone_view(request):
     context = {}
     if request.POST:
@@ -159,10 +187,8 @@ def reset_password_view(request):
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
             phone_or_email = form.cleaned_data['phone_or_email']
-            # phone       = form.cleaned_data['phone']
-            # agree_terms = form.cleaned_data['agree_terms']
 
-            # # Generate new password
+            # Generate new password
             # from random import randint
             # request.session['first_name'] = first_name
             # request.session['phone'] = phone

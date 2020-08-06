@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.employee import Employee
+from apps.salon.models.client import Client
 from apps.salon.models.work_schedule import WorkSchedule
 
 
@@ -75,4 +76,9 @@ class WorkScheduleAdmin(admin.ModelAdmin):
         }),
     )
 
+    autocomplete_fields = ['salon',]
+
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
     autocomplete_fields = ['salon',]
