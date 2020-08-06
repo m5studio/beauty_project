@@ -107,12 +107,11 @@ def change_password_view(request):
     return render(request, 'account/profile-change-password.html', context)
 
 
-def group_check(user):
-    return user.groups.filter(name__in=['Salon'])
-
 # TODO
 @login_required(login_url='user:login')
-# @user_passes_test(group_check)
+# @user_passes_test(lambda user: user.groups.filter(name__in=['Salon']) )
+# @user_passes_test(lambda user: True if user.groups.filter(name__in=['Salon']) or user.is_superuser() else False)
+# @user_passes_test(lambda user: user.groups.filter(name__in=['Salon']) or user.is_superuser())
 @user_passes_test(lambda user: user.groups.filter(name__in=['Salon']))
 def add_salon_client_view(request):
     context = {}
