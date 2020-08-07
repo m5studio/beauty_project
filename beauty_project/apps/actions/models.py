@@ -22,9 +22,9 @@ ACTION_TYPE = (
 )
 
 class Actions(models.Model):
-    active      = models.BooleanField('Активный', default=True, blank=True, null=True, help_text='Опубликован на сайте?')
+    active      = models.BooleanField('Активный', default=True, help_text='Опубликован на сайте?')
 
-    action_type = models.CharField('Тип акции', max_length=1, choices=ACTION_TYPE)
+    action_type = models.CharField('Тип акции', max_length=1, blank=True, null=True, choices=ACTION_TYPE)
 
     salon       = models.ForeignKey(Salon, on_delete=models.SET_NULL, null=True, verbose_name='Салон')
     services    = models.ForeignKey(Services, on_delete=models.SET_NULL, null=True, verbose_name='Услуги')
