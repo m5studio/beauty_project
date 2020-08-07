@@ -1,12 +1,42 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-from apps.salon.models.salon import Salon
 
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill, ResizeToFit
+
+from apps.salon.models.salon import Salon
+from apps.services.models import Services
+
+
+def image_upload_path(instance, filename):
+    filename = filename.lower()
+    return f'actions/{filename}'
+
+ACTION_TYPE = (
+    (0, "Скидка на услугу"),
+    (1, "Скидка на услуги в определенные часы/дни"),
+    (2, "Скидка на первое посещение"),
+    (3, "Подарок"),
+    (4, "Подарок за первое посещение"),
+    # (5, ""),
+)
 
 class Actions(models.Model):
-    active      = models.BooleanField('Активный', default=True, help_text='Опубликован на сайте?')
+    active      = models.BooleanField('Активный', default=True, blank=True, null=True, help_text='Опубликован на сайте?')
+
+    action_type = models.CharField('Тип акции', max_length=1, choices=ACTION_TYPE)
+
     salon       = models.ForeignKey(Salon, on_delete=models.SET_NULL, null=True, verbose_name='Салон')
+    services    = models.ForeignKey(Services, on_delete=models.SET_NULL, null=True, verbose_name='Услуги')
+
     title       = models.CharField('Заголовок акции', max_length=255)
+
+    image       = ProcessedImageField(upload_to=image_upload_path,
+                                    processors=[ResizeToFill(1280, 768)],
+                                    format='JPEG',
+                                    options={'quality': 75},
+                                    blank=True, null=True)
+
     description = models.TextField('Описание', blank=True, null=True)
 
     discount    = models.PositiveIntegerField('Скидка', blank=True, null=True, \

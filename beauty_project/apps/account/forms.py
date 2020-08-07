@@ -64,10 +64,6 @@ class RegistrationByPhoneForm(forms.Form):
     #         raise forms.ValidationError("Phone can't be less than 5 digits")
     #     return cd['phone']
 
-    # def clean_agree_terms(self):
-    #     cd = self.cleaned_data
-    #     return cd['agree_terms']
-
 
 class EditAccountForm(forms.ModelForm):
     phone = forms.CharField(disabled=True)

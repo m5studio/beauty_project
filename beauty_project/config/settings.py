@@ -167,15 +167,13 @@ TIME_INPUT_FORMATS = ('%H:%M',)
 # Authentication settings
 AUTH_USER_MODEL = 'account.Account'
 
-# AUTHENTICATION_BACKENDS = [
-#     # Default
-#     'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = [
+    # Default
+    'django.contrib.auth.backends.ModelBackend',
 
-#     # Custom Authentication backends
-#     # 'apps.account.auth_backends.EmailAuthBackend',
-#     # 'apps.account.auth_backends.PhoneAuthBackend',
-#     # 'apps.account.auth_backends.EmailOrPhoneModelBackend',
-# ]
+    # Custom Authentication backends
+    'apps.account.auth_backends.PhoneAuthBackend',
+]
 
 """
 # Allauth

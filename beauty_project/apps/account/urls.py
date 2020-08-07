@@ -20,17 +20,21 @@ app_name = 'user'
 
 urlpatterns = [
     path('user/', include([
-        path('register/', registration_view, name='registration'),
+        # path('register/', registration_view, name='registration'),
+
         path('login/', login_view, name='login'),
         path('logout/', logout_view, name='logout'),
 
-        path('profile/', user_profile_view, name='profile'),
-        path('profile/change-password/', change_password_view, name='change-password'),
         path('reset-password/', reset_password_view, name='reset-password'),
 
-        path('profile/salon/add-client/', add_salon_client_view, name='add-salon-client'),
+        path('registration/', register_by_phone_view, name='registration-by-phone'),
+        path('registration/password/', register_password_view, name='registration-password'),
+    ])),
 
-        path('register-by-phone/', register_by_phone_view, name='registration-by-phone'),
-        path('register-password/', register_password_view, name='registration-password'),
-    ]))
+    path('profile/', include([
+        path('', user_profile_view, name='profile'),
+        path('change-password/', change_password_view, name='change-password'),
+
+        path('salon/add-client/', add_salon_client_view, name='add-salon-client'),
+    ])),
 ]
