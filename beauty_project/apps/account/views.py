@@ -3,6 +3,9 @@ from django.contrib.auth import login, authenticate, logout
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+from apps.salon.models.salon import Salon
+from apps.salon.models.client import Client
+
 # from apps.account.forms import RegistrationForm, AuthForm
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from apps.account.forms import (
@@ -12,9 +15,7 @@ from apps.account.forms import (
     ResetPasswordForm,
 )
 
-from apps.salon.models.salon import Salon
-from apps.salon.models.client import Client
-
+from apps.actions.forms import AddActionsForm
 from apps.salon.forms import AddClientForm
 
 from django.contrib.auth import get_user_model, update_session_auth_hash
@@ -110,9 +111,7 @@ def change_password_view(request):
     return render(request, 'account/profile-change-password.html', context)
 
 
-# TODO
 @login_required(login_url='user:login')
-# @user_passes_test(lambda user: user.groups.filter(name__in=['Salon']))
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
 def add_salon_client_view(request):
     context = {}
@@ -127,6 +126,23 @@ def add_salon_client_view(request):
         form = AddClientForm()
         context['form'] = form
     return render(request, 'account/profile-add-salon-client.html', context)
+
+
+@login_required(login_url='user:login')
+@user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
+def add_salon_action_view(request):
+    context = {}
+    if request.POST:
+        form = AddActionsForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user:profile')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = AddActionsForm()
+        context['form'] = form
+    return render(request, 'account/profile-add-salon-action.html', context)
 
 
 def register_by_phone_view(request):

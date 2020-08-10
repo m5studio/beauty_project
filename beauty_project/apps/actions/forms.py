@@ -1,14 +1,14 @@
 from django import forms
 
-from apps.salon.models.client import Client
+from apps.actions.models import Actions
 
 
-class AddClientForm(forms.ModelForm):
+class AddActionsForm(forms.ModelForm):
     # active = forms.BooleanField(initial=True, disabled=True)
     # salon  = forms.CharField(required=False)
 
     class Meta:
-        model = Client
+        model = Actions
         # fields = ("phone", "first_name")
         fields = "__all__"
         # exclude = ["active"]

@@ -10,6 +10,7 @@ from apps.account.views import (
     reset_password_view,
 
     add_salon_client_view,
+    add_salon_action_view,
 
     register_by_phone_view,
     register_password_view,
@@ -36,5 +37,6 @@ urlpatterns = [
         path('change-password/', change_password_view, name='change-password'),
 
         path('salon/add-client/', add_salon_client_view, name='add-salon-client'),
+        path('salon/add-action/', add_salon_action_view, name='add-salon-action'),
     ])),
 ]

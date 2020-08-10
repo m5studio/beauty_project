@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         add_dummy_content = AddDummyContent()
-        add_dummy_content.addContent()
+        add_dummy_content.createDummyContent()
 
         self.stdout.write(self.style.SUCCESS('Dummy content Created'))
         # self.stdout.write(self.style.ERROR('Error message'))

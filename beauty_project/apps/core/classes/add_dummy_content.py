@@ -299,7 +299,7 @@ class AddDummyContent:
 
 
     # Init creation
-    def addContent(self):
+    def createDummyContent(self):
         self.addServices()
         self.addSalons()
         self.addSalonsWorkSchedules()
