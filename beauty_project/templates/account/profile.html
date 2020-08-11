@@ -55,7 +55,9 @@
         <p>
             <a href="{% url 'user:salon-add-action' %}">Добавить Акцию</a>
         </p>
+
         <hr>
+
         <p>
             <a href="{% url 'user:salon-records-journal' %}">Журнал записи</a>
         </p>
@@ -68,5 +70,12 @@
         <p>
             <a href="">Акции и бонусы</a>
         </p>
+
+        <hr>
+
+        <form action="" method="post">{% csrf_token %}
+            {{ form_edit_salon.as_p }}
+            <button type="submit">Edit Salon</button>
+        </form>
     {% endif %}
 {% endblock %}

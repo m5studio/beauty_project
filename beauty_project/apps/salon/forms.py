@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.salon.models.client import Client
+from apps.salon.models.salon import Salon
 
 
 class AddClientForm(forms.ModelForm):
@@ -12,3 +13,9 @@ class AddClientForm(forms.ModelForm):
         # fields = ("phone", "first_name")
         fields = "__all__"
         # exclude = ["active"]
+
+
+class EditSalonForm(forms.ModelForm):
+    class Meta:
+        model = Salon
+        fields = "__all__"
