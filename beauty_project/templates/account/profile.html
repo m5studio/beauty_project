@@ -73,7 +73,7 @@
 
         <hr>
 
-        <form action="" method="post">{% csrf_token %}
+        <form action="{% url 'user:profile' %}" novalidate method="post">{% csrf_token %}
             {{ form_edit_salon.as_p }}
             <button type="submit">Edit Salon</button>
         </form>

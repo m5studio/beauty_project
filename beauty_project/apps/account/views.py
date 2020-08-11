@@ -75,7 +75,6 @@ def user_profile_view(request):
         context['form'] = form
 
     # Edit Salon Form
-    # print(f"Salon ID: {request.user.salon.id}")
     salon_instance = Salon.objects.get(id=request.user.salon.id)
     if request.POST:
         form_edit_salon = EditSalonForm(request.POST, instance=salon_instance)

@@ -9,7 +9,7 @@ class Salon(models.Model):
 
     phone       = models.CharField('Телефон', max_length=200, blank=True, null=True)
     email       = models.EmailField('Email', max_length=200, blank=True, null=True)
-    site_url    = models.EmailField('Site URL', max_length=200, blank=True, null=True)
+    site_url    = models.URLField('Site URL', max_length=200, blank=True, null=True)
 
     # owner       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Владелец')
 

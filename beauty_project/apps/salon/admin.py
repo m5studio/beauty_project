@@ -32,9 +32,6 @@ class SalonAdmin(admin.ModelAdmin):
         ('Контакты салона', {
             'fields': ('phone', 'email', 'site_url')
         }),
-        ('Владелец', {
-            'fields': ('owner',)
-        }),
     )
 
     search_fields = ['name']
