@@ -127,6 +127,13 @@ def add_salon_action_view(request):
     return render(request, 'account/profile-add-salon-action.html', context)
 
 
+@login_required(login_url='user:login')
+@user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
+def salon_records_journal_view(request):
+    context = {}
+    return render(request, 'account/profile-salon-records-journal.html', context)
+
+
 @user_passes_test(lambda user: user.is_anonymous)
 def register_by_phone_view(request):
     context = {}
@@ -188,7 +195,6 @@ def register_password_view(request):
 
 
 # TODO: reset password
-# @login_required(login_url='user:login')
 def reset_password_view(request):
     context = {}
     if request.POST:
@@ -205,6 +211,7 @@ def reset_password_view(request):
     return render(request, 'account/reset-password.html', context)
 
 
+# TODO: reset password instructions manipulate with session
 def reset_password_instructions_view(request):
     context = {}
     return render(request, 'account/reset-password-instructions.html', context)

@@ -12,6 +12,7 @@ from apps.account.views import (
 
     add_salon_client_view,
     add_salon_action_view,
+    salon_records_journal_view,
 
     register_by_phone_view,
     register_password_view,
@@ -36,7 +37,14 @@ urlpatterns = [
         path('', user_profile_view, name='profile'),
         path('change-password/', change_password_view, name='change-password'),
 
-        path('salon/add-client/', add_salon_client_view, name='add-salon-client'),
-        path('salon/add-action/', add_salon_action_view, name='add-salon-action'),
+        # Salon
+        path('salon/', include([
+            path('add-client/', add_salon_client_view, name='salon-add-client'),
+            path('add-action/', add_salon_action_view, name='salon-add-action'),
+
+            path('records-journal/', salon_records_journal_view, name='salon-records-journal'),
+        ])),
+        # path('salon/add-client/', add_salon_client_view, name='add-salon-client'),
+        # path('salon/add-action/', add_salon_action_view, name='add-salon-action'),
     ])),
 ]

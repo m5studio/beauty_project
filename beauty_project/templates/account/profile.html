@@ -45,18 +45,19 @@
         <button type="submit">Edit</button>
     </form>
 
-    {% if request.user|has_group:"Salon" or request.user.is_superuser %}
+    {# if request.user|has_group:"Salon" or request.user.is_superuser #}
+    {% if request.user|has_group:"Salon" %}
         <hr>
 
         <p>
-            <a href="{% url 'user:add-salon-client' %}">Добавить Клиента</a>
+            <a href="{% url 'user:salon-add-client' %}">Добавить Клиента</a>
         </p>
         <p>
-            <a href="{% url 'user:add-salon-action' %}">Добавить Акцию</a>
+            <a href="{% url 'user:salon-add-action' %}">Добавить Акцию</a>
         </p>
         <hr>
         <p>
-            <a href="">Журнал записи</a>
+            <a href="{% url 'user:salon-records-journal' %}">Журнал записи</a>
         </p>
         <p>
             <a href="">Клиенты</a>

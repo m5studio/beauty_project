@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from apps.account.models import Account
+from apps.salon.models.salon import Salon
 
 from datetime import datetime
 
@@ -69,7 +70,7 @@ class EditAccountForm(forms.ModelForm):
     first_name = forms.CharField(disabled=True)
     phone      = forms.CharField(disabled=True)
     # salon      = forms.ChoiceField(disabled=True)
-    # salon      = forms.CharField()
+    salon      = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
 
     birth_date = forms.DateField(
         widget=forms.SelectDateWidget(years=range(1950, datetime.now().year - 15)),

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group
 
 from apps.account.models import Account
+from apps.salon.models.salon import Salon
 
 from .add_dummy_content import AddDummyContent
 
@@ -24,7 +25,7 @@ class AddDefaultSettings(AddDummyContent):
         except Exception as e:
             user_client = Account(phone="111", \
                                     username="user_client", \
-                                    first_name="Клиент",
+                                    first_name="Клиент", \
                                     city="Москва")
             user_client.set_password('123')
             user_client.save()
@@ -37,10 +38,13 @@ class AddDefaultSettings(AddDummyContent):
             user_salon = Account.objects.get(username="user_salon")
             print("UserSalon alredy exists")
         except Exception as e:
+            # TODO: wrap in try
+            salon_instance = Salon.objects.get(id=1)
             user_salon = Account(phone="222", \
                                     username="user_salon", \
-                                    first_name="Салон",
-                                    city="Москва")
+                                    first_name="Салон", \
+                                    city="Москва", \
+                                    salon=salon_instance)
             user_salon.set_password('123')
             user_salon.save()
             print("UserSalon creted and set Group \"Salon\"")
@@ -54,7 +58,7 @@ class AddDefaultSettings(AddDummyContent):
         except Exception as e:
             user_manager = Account(phone="333", \
                                     username="user_manager", \
-                                    first_name="Менеджер",
+                                    first_name="Менеджер", \
                                     city="Москва")
             user_manager.set_password('123')
             user_manager.save()
@@ -64,12 +68,12 @@ class AddDefaultSettings(AddDummyContent):
 
 
     def addSettings(self):
+        # in case you don't need dummy content - comment this
+        self.createDummyContent()
+
         self.addServices()
         self.createGroups()
 
         self.createUserClient()
         self.createUserSalon()
         self.createUserManager()
-
-        # in case you don't need dummy content - comment this
-        self.createDummyContent()
