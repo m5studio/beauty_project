@@ -54,6 +54,9 @@ class EmployeeAdmin(admin.ModelAdmin):
         ('ФИО', {
             'fields': ('surname', 'name', 'patronymic')
         }),
+        ('Контакты сотрудника', {
+            'fields': ('phone',)
+        }),
         ('Фото сотрудника', {
             'fields': ('image_admin_thumb', 'image')
         }),

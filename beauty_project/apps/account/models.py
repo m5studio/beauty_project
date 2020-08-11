@@ -6,6 +6,8 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 
+from apps.salon.models.salon import Salon
+
 
 class AccountManager(BaseUserManager):
     # def create_user(self, username, email, phone, password=None):
@@ -48,6 +50,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     city         = models.CharField('City', max_length=255, blank=True, null=True)
     birth_date   = models.DateField('Дата рождения', blank=True, null=True)
     # birth_date   = models.CharField('Дата рождения', max_length=50, blank=True, null=True)
+    salon        = models.ForeignKey(Salon, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Салон')
 
     # Requiered
     username     = models.CharField(max_length=30, unique=True)

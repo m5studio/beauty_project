@@ -1,50 +1,28 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
-
+from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+# Models
+from django.contrib.auth.models import Group
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.client import Client
+from apps.account.models import Account
 
-# from apps.account.forms import RegistrationForm, AuthForm
+# Forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+
 from apps.account.forms import (
     RegistrationForm,
     RegistrationByPhoneForm,
     EditAccountForm,
     ResetPasswordForm,
 )
-
 from apps.actions.forms import AddActionsForm
 from apps.salon.forms import AddClientForm
 
-from django.contrib.auth import get_user_model, update_session_auth_hash
-from django.contrib.auth.models import User, Group
-# TODO: change User to Account
-User = get_user_model()
 
-
-# TODO: remove
-def registration_view(request):
-    context = {}
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            phone = form.cleaned_data.get('phone')
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
-            account = authenticate(email=email, password=raw_password)
-            login(request, account)
-            return redirect('/')
-        else:
-            context['form'] = form
-    else: #GET request
-        form = RegistrationForm()
-        context['form'] = form
-    return render(request, 'account/register.html', context)
-
-
+@user_passes_test(lambda user: user.is_anonymous)
 def login_view(request):
     context = {}
     if request.POST:
@@ -61,6 +39,7 @@ def login_view(request):
     return render(request, 'account/login.html', context)
 
 
+@login_required(login_url='user:login')
 def logout_view(request):
     logout(request)
     return redirect('homepage')
@@ -79,6 +58,9 @@ def user_profile_view(request):
         request.session.modified = True
     if request.session.get('password'):
         del request.session['password']
+        request.session.modified = True
+    if request.session.get('first_view'):
+        del request.session['first_view']
         request.session.modified = True
 
     if request.POST:
@@ -145,6 +127,7 @@ def add_salon_action_view(request):
     return render(request, 'account/profile-add-salon-action.html', context)
 
 
+@user_passes_test(lambda user: user.is_anonymous)
 def register_by_phone_view(request):
     context = {}
     if request.POST:
@@ -159,7 +142,9 @@ def register_by_phone_view(request):
             request.session['first_name'] = first_name
             request.session['phone'] = phone
             request.session['password'] = str(randint(0000, 9999))
+            request.session['first_view'] = True
             request.session.modified = True
+
             return redirect('user:registration-password')
         else:
             context['form'] = form
@@ -173,44 +158,53 @@ def register_by_phone_view(request):
 def register_password_view(request):
     context = {}
 
-    first_name = request.session['first_name']
-    phone      = request.session['phone']
-    password   = request.session['password']
+    first_name = request.session.get('first_name')
+    phone      = request.session.get('phone')
+    password   = request.session.get('password')
+    first_view = request.session.get('first_view')
 
-    user = User(username=phone, \
-                    # email='noemail@gmail.com', \
-                    first_name=first_name,
-                    phone=phone, \
-                    password=password
-                )
-    user.save()
+    if first_view:
+        user = Account(username=phone, \
+                        # email='noemail@gmail.com', \
+                        first_name=first_name,
+                        phone=phone, \
+                        # password=password
+                    )
+        user.set_password(password)
+        user.save()
+    else:
+        try:
+            del request.session['first_view']
+            request.session.modified = True
+        except Exception as e:
+            pass
 
     # Set user Group
     group = Group.objects.get(name='Client')
     group.user_set.add(user)
 
-    login(request, user)
+    login(request, user, backend='apps.account.auth_backends.PhoneAuthBackend')
     return render(request, 'account/register-password.html', context)
 
 
+# TODO: reset password
+# @login_required(login_url='user:login')
 def reset_password_view(request):
     context = {}
     if request.POST:
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
+            # form.save()
             phone_or_email = form.cleaned_data['phone_or_email']
-
-            # Generate new password
-            # from random import randint
-            # request.session['first_name'] = first_name
-            # request.session['phone'] = phone
-            # request.session['password'] = str(randint(0000, 9999))
-            # request.session.modified = True
-            # return redirect('user:registration-password')
+            return redirect('user:reset-password-instructions')
         else:
             context['form'] = form
     else: #GET request
         form = ResetPasswordForm()
         context['form'] = form
-
     return render(request, 'account/reset-password.html', context)
+
+
+def reset_password_instructions_view(request):
+    context = {}
+    return render(request, 'account/reset-password-instructions.html', context)

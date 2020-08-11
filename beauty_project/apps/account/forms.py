@@ -66,7 +66,11 @@ class RegistrationByPhoneForm(forms.Form):
 
 
 class EditAccountForm(forms.ModelForm):
-    phone = forms.CharField(disabled=True)
+    first_name = forms.CharField(disabled=True)
+    phone      = forms.CharField(disabled=True)
+    # salon      = forms.ChoiceField(disabled=True)
+    # salon      = forms.CharField()
+
     birth_date = forms.DateField(
         widget=forms.SelectDateWidget(years=range(1950, datetime.now().year - 15)),
         # widget=forms.SelectDateWidget(),
@@ -81,7 +85,7 @@ class EditAccountForm(forms.ModelForm):
 
     class Meta:
         model = Account
-        fields = ("phone", "email", "city", "birth_date")
+        fields = ("first_name", "phone", "email", "city", "birth_date", "salon")
 
 
 class ResetPasswordForm(forms.Form):

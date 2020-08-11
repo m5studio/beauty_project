@@ -26,6 +26,8 @@ class Employee(models.Model):
     name       = models.CharField('Имя', max_length=255)
     patronymic = models.CharField('Отчество', max_length=255, blank=True, null=True)
 
+    phone      = models.CharField('Телефон', max_length=60, blank=True, null=True)
+
     services   = models.ManyToManyField(Services, blank=True, verbose_name='Услуги')
 
     created    = models.DateTimeField(auto_now=False, auto_now_add=True)
