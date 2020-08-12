@@ -4,6 +4,7 @@ from apps.salon.models.salon import Salon
 from apps.salon.models.employee import Employee
 from apps.salon.models.client import Client
 from apps.salon.models.work_schedule import WorkSchedule
+from apps.salon.models.client_appointment import ClientAppointment
 
 
 # class EmployeeInline(admin.TabularInline):
@@ -31,6 +32,9 @@ class SalonAdmin(admin.ModelAdmin):
         }),
         ('Контакты салона', {
             'fields': ('phone', 'email', 'site_url')
+        }),
+        ('Адрес', {
+            'fields': ('city', 'address', 'metro')
         }),
     )
 
@@ -82,3 +86,8 @@ class WorkScheduleAdmin(admin.ModelAdmin):
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     autocomplete_fields = ['salon',]
+
+
+@admin.register(ClientAppointment)
+class ClientAppointmentAdmin(admin.ModelAdmin):
+    pass

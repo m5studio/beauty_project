@@ -16,18 +16,6 @@ class RegistrationForm(UserCreationForm):
         model = Account
         fields = ("username", "email", "phone", "password1", "password2")
 
-    # def clean_username(self):
-    #     cd = self.cleaned_data
-    #     if cd['username'] == '':
-    #         cd['username'] = cd['phone']
-    #         # raise forms.ValidationError('Username is empty ((')
-    #     return cd['username']
-
-    # def clean_phone(self):
-    #     cd = self.cleaned_data
-    #     if cd['phone'] == '':
-    #         raise forms.ValidationError('Phone is empty ((')
-    #     return cd['phone']
 
 class RegistrationByPhoneForm(forms.Form):
     first_name  = forms.CharField(label='Your name', max_length=100)
@@ -53,36 +41,17 @@ class RegistrationByPhoneForm(forms.Form):
         if len(phone) < 5:
             self.add_error('phone', 'Phone can\'t be less than 5 digits')
 
-        # if image != '' and image_url != '':
-        #     self.add_error('image', 'Заполните только одно поле!')
-        #     self.add_error('image_url', 'Заполните только одно поле!')
-
         return cleaned_data
-
-    # def clean_phone(self):
-    #     cd = self.cleaned_data
-    #     if len(cd['phone']) < 5:
-    #         raise forms.ValidationError("Phone can't be less than 5 digits")
-    #     return cd['phone']
 
 
 class EditAccountForm(forms.ModelForm):
     first_name = forms.CharField(disabled=True)
     phone      = forms.CharField(disabled=True)
-    # salon      = forms.ChoiceField(disabled=True)
     salon      = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
 
     birth_date = forms.DateField(
         widget=forms.SelectDateWidget(years=range(1950, datetime.now().year - 15)),
-        # widget=forms.SelectDateWidget(),
-        # initial=timezone.now()
-        # initial="15 04 2014"
     )
-
-    # birth_date = forms.CharField(
-    #     # initial="2004-03-15"
-    #     initial=timezone.now()
-    # )
 
     class Meta:
         model = Account
@@ -91,19 +60,14 @@ class EditAccountForm(forms.ModelForm):
 
 class ResetPasswordForm(forms.Form):
     phone_or_email = forms.CharField(label="Phone or Email", max_length=100, help_text='Required. Add a valid phone or email')
-    # email = forms.EmailField(max_length=60, help_text='Required. Add a valid email address')
 
     def clean(self):
         cleaned_data = super().clean()
 
         phone_or_email = cleaned_data.get('phone_or_email')
-        # email = cleaned_data.get('email')
 
         # if len(first_name) < 2:
         #     self.add_error('first_name', 'First name can\'t be less than 2 digits')
-
-        # if len(phone) < 5:
-        #     self.add_error('phone', 'Phone can\'t be less than 5 digits')
 
         # if image != '' and image_url != '':
         #     self.add_error('image', 'Заполните только одно поле!')

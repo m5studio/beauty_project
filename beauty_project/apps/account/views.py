@@ -74,18 +74,19 @@ def user_profile_view(request):
         form = EditAccountForm(instance=request.user)
         context['form'] = form
 
-    # Edit Salon Form
-    salon_instance = Salon.objects.get(id=request.user.salon.id)
-    if request.POST:
-        form_edit_salon = EditSalonForm(request.POST, instance=salon_instance)
-        if form_edit_salon.is_valid():
-            form_edit_salon.save()
-            return redirect('user:profile')
-        else:
+    # Edit Salon Form if user in Salon Group
+    if request.user.groups.filter(name='Salon').exists():
+        salon_instance = Salon.objects.get(id=request.user.salon.id)
+        if request.POST:
+            form_edit_salon = EditSalonForm(request.POST, instance=salon_instance)
+            if form_edit_salon.is_valid():
+                form_edit_salon.save()
+                return redirect('user:profile')
+            else:
+                context['form_edit_salon'] = form_edit_salon
+        else: #GET request
+            form_edit_salon = EditSalonForm(instance=salon_instance)
             context['form_edit_salon'] = form_edit_salon
-    else: #GET request
-        form_edit_salon = EditSalonForm(instance=salon_instance)
-        context['form_edit_salon'] = form_edit_salon
 
     return render(request, 'account/profile.html', context)
 

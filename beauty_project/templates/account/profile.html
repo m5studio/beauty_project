@@ -4,6 +4,56 @@
 
 
 {% block content %}
+    {% if request.user|has_group:"Client" %}
+        <!-- Client nav -->
+        <ul>
+            <li>
+                <a href="">Профиль</a>
+            </li>
+            <li>
+                <a href="">Записи</a>
+            </li>
+            <li>
+                <a href="">Бонусы</a>
+            </li>
+            <li>
+                <a href="">Выход</a>
+            </li>
+        </ul>
+    {% endif %}
+
+    {% if request.user|has_group:"Salon" %}
+        <!-- Salon nav -->
+        <ul>
+            <li>
+                <a href="">Профиль</a>
+            </li>
+            <li>
+                <a href="">Журнал записи</a>
+            </li>
+            <li>
+                <a href="">Клиенты</a>
+            </li>
+            <li>
+                <a href="">Сотрудники</a>
+            </li>
+            <li>
+                <a href="">Акции и бонусы</a>
+            </li>
+            <li>
+                <a href="">
+                    Аналитика<br>
+                    <small>(доступна по паролю)</small>
+                </a>
+            </li>
+            <li>
+                <a href="">Выход</a>
+            </li>
+        </ul>
+    {% endif %}
+
+    <hr>
+
     <h1>Hi, {{ request.user.first_name }}</h1>
     <h2>User Group{% if request.user.groups.all.count > 1 %}s{% endif %}: {{ request.user.groups.all|join:", " }}</h2>
 

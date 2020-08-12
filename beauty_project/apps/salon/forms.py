@@ -19,3 +19,4 @@ class EditSalonForm(forms.ModelForm):
     class Meta:
         model = Salon
         fields = "__all__"
+        exclude = ["active"]

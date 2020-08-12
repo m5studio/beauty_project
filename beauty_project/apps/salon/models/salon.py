@@ -1,5 +1,4 @@
 from django.db import models
-# from django.conf import settings
 
 
 class Salon(models.Model):
@@ -7,11 +6,13 @@ class Salon(models.Model):
     name        = models.CharField('Название', max_length=255, db_index=True)
     description = models.TextField('Описание', blank=True, null=True)
 
-    phone       = models.CharField('Телефон', max_length=200, blank=True, null=True)
+    phone       = models.CharField('Телефон', max_length=100, blank=True, null=True)
     email       = models.EmailField('Email', max_length=200, blank=True, null=True)
     site_url    = models.URLField('Site URL', max_length=200, blank=True, null=True)
 
-    # owner       = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='Владелец')
+    city        = models.CharField('Город', max_length=255, blank=True, null=True)
+    address     = models.CharField('Адрес', max_length=255, blank=True, null=True)
+    metro       = models.CharField('Метро', max_length=255, blank=True, null=True)
 
     created     = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True, auto_now_add=False)

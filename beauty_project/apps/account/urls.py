@@ -44,7 +44,5 @@ urlpatterns = [
 
             path('records-journal/', salon_records_journal_view, name='salon-records-journal'),
         ])),
-        # path('salon/add-client/', add_salon_client_view, name='add-salon-client'),
-        # path('salon/add-action/', add_salon_action_view, name='add-salon-action'),
     ])),
 ]
