@@ -8,16 +8,16 @@
         <!-- Client nav -->
         <ul>
             <li>
-                <a href="">Профиль</a>
+                <a href="{% url 'user:profile' %}">Профиль</a>
             </li>
             <li>
-                <a href="">Записи</a>
+                <a href="{% url 'user:client-appointments' %}">Записи</a>
             </li>
             <li>
                 <a href="">Бонусы</a>
             </li>
             <li>
-                <a href="">Выход</a>
+                <a href="{% url 'user:logout' %}">Выход</a>
             </li>
         </ul>
     {% endif %}

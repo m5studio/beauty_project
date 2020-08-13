@@ -19,7 +19,7 @@ from apps.account.forms import (
     ResetPasswordForm,
 )
 from apps.actions.forms import AddActionsForm
-from apps.salon.forms import AddClientForm, EditSalonForm
+from apps.salon.forms import AddClientForm, EditSalonForm, ClientAppointmentForm
 
 
 @user_passes_test(lambda user: user.is_anonymous)
@@ -144,9 +144,29 @@ def add_salon_action_view(request):
 
 @login_required(login_url='user:login')
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
-def salon_records_journal_view(request):
+def salon_appointments_journal_view(request):
     context = {}
-    return render(request, 'account/profile-salon-records-journal.html', context)
+    return render(request, 'account/profile-salon-appointments-journal.html', context)
+
+
+@login_required(login_url='user:login')
+@user_passes_test(lambda user: user.groups.filter(name='Client').exists() or user.is_superuser)
+def client_appointments_view(request):
+    context = {}
+
+    # user_instance = Account.objects.get(id=request.user.id)
+    # TODO:select current user in form
+    if request.POST:
+        form = ClientAppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('user:client-appointments')
+        else:
+            context['form'] = form
+    else: #GET request
+        form = ClientAppointmentForm()
+        context['form'] = form
+    return render(request, 'account/profile-client-appointments.html', context)
 
 
 @user_passes_test(lambda user: user.is_anonymous)

@@ -12,7 +12,10 @@ from apps.account.views import (
 
     add_salon_client_view,
     add_salon_action_view,
-    salon_records_journal_view,
+
+    salon_appointments_journal_view,
+
+    client_appointments_view,
 
     register_by_phone_view,
     register_password_view,
@@ -42,7 +45,12 @@ urlpatterns = [
             path('add-client/', add_salon_client_view, name='salon-add-client'),
             path('add-action/', add_salon_action_view, name='salon-add-action'),
 
-            path('records-journal/', salon_records_journal_view, name='salon-records-journal'),
+            path('records-journal/', salon_appointments_journal_view, name='salon-records-journal'),
+        ])),
+
+        # Client
+        path('client/', include([
+            path('appontments/', client_appointments_view, name='client-appointments'),
         ])),
     ])),
 ]

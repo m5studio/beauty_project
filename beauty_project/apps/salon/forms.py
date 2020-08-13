@@ -1,6 +1,7 @@
 from django import forms
 
 from apps.salon.models.client import Client
+from apps.salon.models.client_appointment import ClientAppointment
 from apps.salon.models.salon import Salon
 
 
@@ -20,3 +21,9 @@ class EditSalonForm(forms.ModelForm):
         model = Salon
         fields = "__all__"
         exclude = ["active"]
+
+
+class ClientAppointmentForm(forms.ModelForm):
+    class Meta:
+        model = ClientAppointment
+        fields = "__all__"

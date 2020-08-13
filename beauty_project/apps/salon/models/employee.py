@@ -40,8 +40,8 @@ class Employee(models.Model):
             return f'{self.surname} {self.name}'
 
     class Meta:
-        verbose_name = 'Сотрудник'
-        verbose_name_plural = 'Сотрудники'
+        verbose_name = 'Мастер'
+        verbose_name_plural = 'Мастера'
 
     # Thumbnails
     def image_admin_thumb(self):

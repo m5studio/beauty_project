@@ -66,6 +66,7 @@ class EmployeeAdmin(admin.ModelAdmin):
         }),
     )
 
+    search_fields = ['__str__']
     autocomplete_fields = ['salon', 'services']
 
 
@@ -90,4 +91,4 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(ClientAppointment)
 class ClientAppointmentAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ['client', 'employee', 'service']
