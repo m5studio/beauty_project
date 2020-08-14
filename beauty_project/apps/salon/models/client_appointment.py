@@ -23,3 +23,9 @@ class ClientAppointment(models.Model):
     class Meta:
         verbose_name = 'Запись Клиента'
         verbose_name_plural = 'Записи Клиентов'
+
+    def get_client_name(self):
+        return self.client.first_name
+
+    def get_salon_name(self):
+        return self.employee.salon.name
