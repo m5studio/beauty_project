@@ -7,6 +7,7 @@ from django.contrib.auth.models import Group
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.client import Client
+from apps.salon.models.client_appointment import ClientAppointment
 from apps.account.models import Account
 
 # Forms
@@ -154,17 +155,17 @@ def salon_appointments_journal_view(request):
 def client_appointments_view(request):
     context = {}
 
-    # user_instance = Account.objects.get(id=request.user.id)
-    # TODO:select current user in form
+    context['appointments'] = ClientAppointment.objects.filter(client=request.user)
+
     if request.POST:
-        form = ClientAppointmentForm(request.POST)
+        form = ClientAppointmentForm(request.POST, client=request.user)
         if form.is_valid():
             form.save()
             return redirect('user:client-appointments')
         else:
             context['form'] = form
     else: #GET request
-        form = ClientAppointmentForm()
+        form = ClientAppointmentForm(client=request.user)
         context['form'] = form
     return render(request, 'account/profile-client-appointments.html', context)
 

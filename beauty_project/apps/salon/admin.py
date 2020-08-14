@@ -91,4 +91,4 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(ClientAppointment)
 class ClientAppointmentAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['client', 'employee', 'service']
+    autocomplete_fields = ['client', 'employee', 'services']

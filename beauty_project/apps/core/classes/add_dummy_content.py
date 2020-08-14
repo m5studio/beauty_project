@@ -1,10 +1,16 @@
 import random
 
+from django.utils import timezone
+
+from django.contrib.auth.models import Group
+
 from apps.services.models import Services
+from apps.account.models import Account
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.employee import Employee
+from apps.salon.models.client_appointment import ClientAppointment
 
 
 class AddDummyContent:
@@ -17,6 +23,7 @@ class AddDummyContent:
             except Exception as e:
                 Services.objects.create(name=item, parent=obj)
                 print(f'Услуга "{item}" создана!')
+
 
     def addServices(self):
         # Ногтевой сервис
@@ -238,6 +245,7 @@ class AddDummyContent:
 
         self._createSubServices(increase_angles, increase_angles_root)
 
+
     def addSalons(self):
         salons_count = Salon.objects.all().count()
         if salons_count == 0:
@@ -254,6 +262,7 @@ class AddDummyContent:
                 salon.save()
                 print(f"Салон {salon.name} создан")
                 i += 1
+
 
     def addSalonsWorkSchedules(self):
         salons = Salon.objects.all()
@@ -272,6 +281,7 @@ class AddDummyContent:
                     i += 1
             else:
                 print(f'Рабочий график для салона "{salon.name}" уже существует')
+
 
     def addSalonsEmployees(self):
         surnames_arr = ['Иванов', 'Петров', 'Сидоров', 'Андреев', 'Лебедев']
@@ -298,9 +308,33 @@ class AddDummyContent:
                 print(f'Сотрудник уже существует')
 
 
+    def addClientAppointments(self):
+        users_client = Account.objects.filter(groups__name='Client')
+
+        for user in users_client:
+            user_instance = Account.objects.get(id=user.id)
+            employee_instance = Employee.objects.get(id=random.choice([1, 2, 3]))
+            salon_instance = Salon.objects.get(id=random.choice([1, 2, 3]))
+
+            if ClientAppointment.objects.all().count() == 0:
+                for _ in range(5):
+                    client_appointment = ClientAppointment(client=user_instance, \
+                                                            employee=employee_instance, \
+                                                            # datetime="2020-08-14 16:30:00", \
+                                                            datetime=timezone.now(), \
+                                                            comment="Some client comment", \
+                                                        )
+                    client_appointment.save()
+                    client_appointment.services.set(["1", "2", "3"])
+                    print(f"Запись в салон {client_appointment.id} создана!")
+            else:
+                print("Записи Клиентов в Салон уже созданы")
+
+
     # Init creation
     def createDummyContent(self):
         self.addServices()
         self.addSalons()
         self.addSalonsWorkSchedules()
         self.addSalonsEmployees()
+        # self.addClientAppointments()

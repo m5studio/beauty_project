@@ -10,7 +10,7 @@ from apps.salon.models.employee import Employee
 class ClientAppointment(models.Model):
     client   = models.ForeignKey(Account, verbose_name='Клиент', on_delete=models.SET_NULL, null=True)
     employee = models.ForeignKey(Employee, verbose_name='Мастер', on_delete=models.SET_NULL, null=True)
-    service  = models.ManyToManyField(Services, verbose_name='Услуга', blank=True)
+    services = models.ManyToManyField(Services, verbose_name='Услуга', blank=True)
     datetime = models.DateTimeField('Дата и время записи', blank=True, null=True)
     comment  = models.TextField('Комментарий', blank=True, null=True)
 
@@ -18,7 +18,7 @@ class ClientAppointment(models.Model):
     updated  = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __str__(self):
-        return self.salon
+        return self.client.first_name
 
     class Meta:
         verbose_name = 'Запись Клиента'

@@ -77,3 +77,5 @@ class AddDefaultSettings(AddDummyContent):
         self.createUserClient()
         self.createUserSalon()
         self.createUserManager()
+
+        self.addClientAppointments()
