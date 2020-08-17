@@ -36,6 +36,9 @@ class SalonAdmin(admin.ModelAdmin):
         ('Адрес', {
             'fields': ('city', 'address', 'metro')
         }),
+        ('Координаты', {
+            'fields': ('latitude', 'longitude',)
+        }),
     )
 
     search_fields = ['name']

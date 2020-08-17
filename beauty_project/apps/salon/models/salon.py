@@ -14,6 +14,9 @@ class Salon(models.Model):
     address     = models.CharField('Адрес', max_length=255, blank=True, null=True)
     metro       = models.CharField('Метро', max_length=255, blank=True, null=True)
 
+    latitude    = models.CharField('Широта', max_length=100, blank=True, null=True)
+    longitude   = models.CharField('Долгота', max_length=100, blank=True, null=True)
+
     created     = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True, auto_now_add=False)
 
