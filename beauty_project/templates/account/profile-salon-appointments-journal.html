@@ -3,4 +3,15 @@
 
 {% block content %}
     <h1>Журнал записи</h1>
+
+    {% if client_appontents %}
+        {% for object in client_appontents %}
+            <div style="margin-bottom: 30px;">
+                <div>Дата: {{ object.datetime }}</div>
+                <div>Салон: {{ object.employee.salon.name }}</div>
+                <div>Мастер: {{ object.employee.get_employee_full_name }}</div>
+                <div>Имя Клиента: {{ object.client.first_name }}</div>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

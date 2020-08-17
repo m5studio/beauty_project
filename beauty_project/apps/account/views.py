@@ -114,16 +114,16 @@ def change_password_view(request):
 def add_salon_client_view(request):
     context = {}
     if request.POST:
-        form = AddClientForm(request.POST)
+        form = AddClientForm(request.POST, salon=request.user.salon)
         if form.is_valid():
             form.save()
             return redirect('user:profile')
         else:
             context['form'] = form
     else: #GET request
-        form = AddClientForm()
+        form = AddClientForm(salon=request.user.salon)
         context['form'] = form
-    return render(request, 'account/profile-add-salon-client.html', context)
+    return render(request, 'account/profile-salon-add-client.html', context)
 
 
 @login_required(login_url='user:login')
@@ -140,13 +140,14 @@ def add_salon_action_view(request):
     else: #GET request
         form = AddActionsForm()
         context['form'] = form
-    return render(request, 'account/profile-add-salon-action.html', context)
+    return render(request, 'account/profile-salon-add-action.html', context)
 
 
 @login_required(login_url='user:login')
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
 def salon_appointments_journal_view(request):
     context = {}
+    context['client_appontents'] = ClientAppointment.objects.filter(employee__salon=request.user.salon)
     return render(request, 'account/profile-salon-appointments-journal.html', context)
 
 

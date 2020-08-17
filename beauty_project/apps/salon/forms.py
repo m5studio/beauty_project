@@ -8,7 +8,14 @@ from apps.salon.models.salon import Salon
 
 class AddClientForm(forms.ModelForm):
     # active = forms.BooleanField(initial=True, disabled=True)
-    # salon  = forms.CharField(required=False)
+    salon = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        # Select current Salon in form
+        self.salon = kwargs.pop('salon')
+        super(AddClientForm, self).__init__(*args, **kwargs)
+        self.fields['salon'].initial = self.salon
+
 
     class Meta:
         model = Client

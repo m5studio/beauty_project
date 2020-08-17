@@ -43,6 +43,13 @@ class Employee(models.Model):
         verbose_name = 'Мастер'
         verbose_name_plural = 'Мастера'
 
+
+    def get_employee_full_name(self):
+        if self.patronymic:
+            return f'{self.surname} {self.name} {self.patronymic}'
+        else:
+            return f'{self.surname} {self.name}'
+
     # Thumbnails
     def image_admin_thumb(self):
         return mark_safe(f'<img src="{self.image.url}" alt="" style="width: 386px; height: auto;" />')
