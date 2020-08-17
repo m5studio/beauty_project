@@ -18,6 +18,27 @@ class AddDefaultSettings(AddDummyContent):
                 gr.save()
                 print(f"Group {gr.name} created!")
 
+
+    def createSuperuser(self):
+        try:
+            superuser = Account.objects.get(username="admin")
+            print("Superuser alredy exists")
+        except Exception as e:
+            superuser = Account(phone="000", \
+                                    username="admin", \
+                                    first_name="", \
+                                    city="Москва")
+            superuser.set_password('123')
+
+            # set superuser params
+            superuser.is_superuser = True
+            superuser.is_admin = True
+            superuser.is_staff = True
+
+            superuser.save()
+            print("Superuser creted!")
+
+
     def createUserClient(self):
         try:
             user_client = Account.objects.get(username="user_client")
@@ -32,6 +53,7 @@ class AddDefaultSettings(AddDummyContent):
             print("UserClient creted and set Group \"Client\"")
         client_group = Group.objects.get(name='Client')
         client_group.user_set.add(user_client)
+
 
     def createUserSalon(self):
         try:
@@ -50,6 +72,7 @@ class AddDefaultSettings(AddDummyContent):
             print("UserSalon creted and set Group \"Salon\"")
         salon_group = Group.objects.get(name='Salon')
         salon_group.user_set.add(user_salon)
+
 
     def createUserManager(self):
         try:
@@ -74,6 +97,7 @@ class AddDefaultSettings(AddDummyContent):
         self.addServices()
         self.createGroups()
 
+        self.createSuperuser()
         self.createUserClient()
         self.createUserSalon()
         self.createUserManager()

@@ -257,7 +257,8 @@ class AddDummyContent:
                                 phone="+79990001100", \
                                 email="salonmail@gmail.com", \
                                 site_url="https://google.com", \
-                                # owner=, \
+                                latitude="55.751244", \
+                                longitude="37.618423", \
                             )
                 salon.save()
                 print(f"Салон {salon.name} создан")
