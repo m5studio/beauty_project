@@ -12,7 +12,7 @@ def image_upload_path(instance, filename):
     filename = filename.lower()
     return f'actions/{filename}'
 
-ACTION_TYPE = (
+ACTION_TYPES = (
     (0, "Скидка на услугу"),
     (1, "Скидка на услуги в определенные часы/дни"),
     (2, "Скидка на первое посещение"),
@@ -23,7 +23,7 @@ ACTION_TYPE = (
 class Actions(models.Model):
     active      = models.BooleanField('Активный', default=True, help_text='Опубликован на сайте?')
 
-    action_type = models.CharField('Тип акции', max_length=1, blank=True, null=True, choices=ACTION_TYPE)
+    action_type = models.CharField('Тип акции', max_length=1, blank=True, null=True, choices=ACTION_TYPES)
 
     salon       = models.ForeignKey(Salon, on_delete=models.SET_NULL, null=True, verbose_name='Салон')
     services    = models.ForeignKey(Services, on_delete=models.SET_NULL, null=True, verbose_name='Услуги')

@@ -44,3 +44,4 @@ class ClientAppointmentForm(forms.ModelForm):
     class Meta:
         model = ClientAppointment
         fields = "__all__"
+        exclude = ["status"]

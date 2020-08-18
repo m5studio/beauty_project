@@ -123,7 +123,7 @@ def add_salon_client_view(request):
     else: #GET request
         form = AddClientForm(salon=request.user.salon)
         context['form'] = form
-    return render(request, 'account/profile-salon-add-client.html', context)
+    return render(request, 'account/profile/salon/profile-salon-add-client.html', context)
 
 
 @login_required(login_url='user:login')
@@ -140,7 +140,7 @@ def add_salon_action_view(request):
     else: #GET request
         form = AddActionsForm()
         context['form'] = form
-    return render(request, 'account/profile-salon-add-action.html', context)
+    return render(request, 'account/profile/salon/profile-salon-add-action.html', context)
 
 
 @login_required(login_url='user:login')
@@ -148,7 +148,7 @@ def add_salon_action_view(request):
 def salon_appointments_journal_view(request):
     context = {}
     context['client_appontents'] = ClientAppointment.objects.filter(employee__salon=request.user.salon)
-    return render(request, 'account/profile-salon-appointments-journal.html', context)
+    return render(request, 'account/profile/salon/profile-salon-appointments.html', context)
 
 
 @login_required(login_url='user:login')

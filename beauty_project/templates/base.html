@@ -56,7 +56,7 @@
                 {# <!-- Salon nav --> #}
                 {% if request.user|has_group:"Salon" %}
                     <li>
-                        <a href="{% url 'user:salon-appointments-journal' %}">Журнал записи</a>
+                        <a href="{% url 'user:salon-appointments' %}">Журнал записи</a>
                     </li>
                     <li>
                         <a href="">Клиенты</a>
