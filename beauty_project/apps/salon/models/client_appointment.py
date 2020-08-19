@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.db.models import Sum
+
 from apps.account.models import Account
 from apps.services.models import Services
 
@@ -38,3 +40,6 @@ class ClientAppointment(models.Model):
 
     def get_salon_name(self):
         return self.employee.salon.name
+
+    def calculate_total_services_price(self):
+        return self.services.aggregate(total=Sum('price'))['total']

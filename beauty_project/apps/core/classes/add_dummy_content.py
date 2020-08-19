@@ -39,7 +39,7 @@ class AddDummyContent:
             manicure_root = Services.objects.get(name="Маникюр", parent=nails_root)
             print(f'Услуга "{manicure_root}" уже существует')
         except Exception as e:
-            manicure_root = Services.objects.create(name="Маникюр", parent=nails_root)
+            manicure_root = Services.objects.create(name="Маникюр", parent=nails_root, price=random.randint(1000, 9000))
             print(f'Услуга "{manicure_root}" создана!')
 
         manicure = [
@@ -323,6 +323,7 @@ class AddDummyContent:
                                                             employee=employee_instance, \
                                                             # datetime="2020-08-14 16:30:00", \
                                                             datetime=timezone.now(), \
+                                                            status="in_progress", \
                                                             comment="Some client comment", \
                                                         )
                     client_appointment.save()
