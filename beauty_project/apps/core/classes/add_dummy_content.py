@@ -79,7 +79,7 @@ class AddDummyContent:
             pedicure_root = Services.objects.get(name="Педикюр", parent=nails_root)
             print(f'Услуга "{pedicure_root}" уже существует')
         except Exception as e:
-            pedicure_root = Services.objects.create(name="Педикюр", parent=nails_root)
+            pedicure_root = Services.objects.create(name="Педикюр", parent=nails_root, price=random.randint(1000, 9000))
             print(f'Услуга "{pedicure_root}" создана!')
 
         pedicure = [
@@ -103,7 +103,7 @@ class AddDummyContent:
             sets_root = Services.objects.get(name="Сеты", parent=nails_root)
             print(f'Услуга "{sets_root}" уже существует')
         except Exception as e:
-            sets_root = Services.objects.create(name="Сеты", parent=nails_root)
+            sets_root = Services.objects.create(name="Сеты", parent=nails_root, price=random.randint(1000, 9000))
             print(f'Услуга "{sets_root}" создана!')
 
         sets = [
@@ -127,7 +127,7 @@ class AddDummyContent:
             haircut_root = Services.objects.get(name="Стрижка", parent=barber_root)
             print(f'Услуга "{haircut_root}" уже существует')
         except Exception as e:
-            haircut_root = Services.objects.create(name="Стрижка", parent=barber_root)
+            haircut_root = Services.objects.create(name="Стрижка", parent=barber_root, price=random.randint(1000, 9000))
             print(f'Услуга "{haircut_root}" создана!')
 
         haircut = [
@@ -145,7 +145,7 @@ class AddDummyContent:
             haircoloring_root = Services.objects.get(name="Окрашивание", parent=barber_root)
             print(f'Услуга "{haircoloring_root}" уже существует')
         except Exception as e:
-            haircoloring_root = Services.objects.create(name="Окрашивание", parent=barber_root)
+            haircoloring_root = Services.objects.create(name="Окрашивание", parent=barber_root, price=random.randint(1000, 9000))
             print(f'Услуга "{haircoloring_root}" создана!')
 
         haircoloring = [
@@ -166,7 +166,7 @@ class AddDummyContent:
             hairstyling_root = Services.objects.get(name="Укладка", parent=barber_root)
             print(f'Услуга "{hairstyling_root}" уже существует')
         except Exception as e:
-            hairstyling_root = Services.objects.create(name="Укладка", parent=barber_root)
+            hairstyling_root = Services.objects.create(name="Укладка", parent=barber_root, price=random.randint(1000, 9000))
             print(f'Услуга "{hairstyling_root}" создана!')
 
         hairstyling = [
@@ -186,7 +186,7 @@ class AddDummyContent:
             hairremoving_root = Services.objects.get(name="Удаление волос", parent=barber_root)
             print(f'Услуга "{hairremoving_root}" уже существует')
         except Exception as e:
-            hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root)
+            hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root, price=random.randint(1000, 9000))
             print(f'Услуга "{hairremoving_root}" создана!')
 
         hairremoving = [
@@ -209,7 +209,7 @@ class AddDummyContent:
             eyelashes_eyebrows_root = Services.objects.get(name="Ресницы и брови", parent=barber_root)
             print(f'Услуга "{eyelashes_eyebrows_root}" уже существует')
         except Exception as e:
-            eyelashes_eyebrows_root = Services.objects.create(name="Ресницы и брови", parent=barber_root)
+            eyelashes_eyebrows_root = Services.objects.create(name="Ресницы и брови", parent=barber_root, price=random.randint(1000, 9000))
             print(f'Услуга "{eyelashes_eyebrows_root}" создана!')
 
         eyelashes_eyebrows = [
@@ -231,7 +231,7 @@ class AddDummyContent:
             increase_angles_root = Services.objects.get(name="Наращивание уголков", parent=eyelashes_eyebrows_root)
             print(f'Услуга "{increase_angles_root}" уже существует')
         except Exception as e:
-            increase_angles_root = Services.objects.create(name="Наращивание уголков", parent=eyelashes_eyebrows_root)
+            increase_angles_root = Services.objects.create(name="Наращивание уголков", parent=eyelashes_eyebrows_root, price=random.randint(1000, 9000))
             print(f'Услуга "{increase_angles_root}" создана!')
 
         increase_angles = [
