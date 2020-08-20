@@ -48,9 +48,12 @@
     {% if request.user|has_group:"Salon" %}
         <hr>
 
+        <h2>Edit Salon data</h2>
         <form action="{% url 'user:profile' %}" novalidate method="post">{% csrf_token %}
             {{ form_edit_salon.as_p }}
             <button type="submit">Edit Salon</button>
         </form>
+
+        <h2>Salon Services</h2>
     {% endif %}
 {% endblock %}

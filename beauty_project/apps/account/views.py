@@ -78,6 +78,7 @@ def user_profile_view(request):
     # Edit Salon Form if user in Salon Group
     if request.user.groups.filter(name='Salon').exists():
         salon_instance = Salon.objects.get(id=request.user.salon.id)
+
         if request.POST:
             form_edit_salon = EditSalonForm(request.POST, instance=salon_instance)
             if form_edit_salon.is_valid():
@@ -88,6 +89,9 @@ def user_profile_view(request):
         else: #GET request
             form_edit_salon = EditSalonForm(instance=salon_instance)
             context['form_edit_salon'] = form_edit_salon
+
+
+        # TODO: Add Salon Services
 
     return render(request, 'account/profile.html', context)
 

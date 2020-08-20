@@ -1,16 +1,11 @@
 from django.contrib import admin
 
 from apps.salon.models.salon import Salon
+from apps.salon.models.salon_services import SalonServices
 from apps.salon.models.employee import Employee
 from apps.salon.models.client import Client
 from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.client_appointment import ClientAppointment
-
-
-# class EmployeeInline(admin.TabularInline):
-#     model = Employee
-#     extra = 1
-#     max_num = 100
 
 
 class WorkScheduleInline(admin.TabularInline):
@@ -22,7 +17,6 @@ class WorkScheduleInline(admin.TabularInline):
 @admin.register(Salon)
 class SalonAdmin(admin.ModelAdmin):
     inlines = [
-        # EmployeeInline,
         WorkScheduleInline,
     ]
 
@@ -42,7 +36,11 @@ class SalonAdmin(admin.ModelAdmin):
     )
 
     search_fields = ['name']
-    # autocomplete_fields = ['owner']
+
+
+@admin.register(SalonServices)
+class SalonServicesAdmin(admin.ModelAdmin):
+    autocomplete_fields = ['salon', 'service']
 
 
 @admin.register(Employee)
