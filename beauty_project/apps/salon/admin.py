@@ -40,7 +40,8 @@ class SalonAdmin(admin.ModelAdmin):
 
 @admin.register(SalonServices)
 class SalonServicesAdmin(admin.ModelAdmin):
-    autocomplete_fields = ['salon', 'service']
+    # autocomplete_fields = ['salon', 'service']
+    autocomplete_fields = ['salon',]
 
 
 @admin.register(Employee)
