@@ -8,6 +8,7 @@ from apps.services.models import Services
 from apps.account.models import Account
 
 from apps.salon.models.salon import Salon
+from apps.salon.models.salon_services import SalonServices
 from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.employee import Employee
 from apps.salon.models.client_appointment import ClientAppointment
@@ -21,6 +22,8 @@ class AddDummyContent:
                 Services.objects.get(name=item)
                 print(f'Услуга "{item}" уже существует')
             except Exception as e:
+                # service = Services(name=item, parent=obj)
+                # service.save()
                 Services.objects.create(name=item, parent=obj)
                 print(f'Услуга "{item}" создана!')
 
@@ -39,7 +42,7 @@ class AddDummyContent:
             manicure_root = Services.objects.get(name="Маникюр", parent=nails_root)
             print(f'Услуга "{manicure_root}" уже существует')
         except Exception as e:
-            manicure_root = Services.objects.create(name="Маникюр", parent=nails_root, price=random.randint(1000, 9000))
+            manicure_root = Services.objects.create(name="Маникюр", parent=nails_root)
             print(f'Услуга "{manicure_root}" создана!')
 
         manicure = [
@@ -79,7 +82,7 @@ class AddDummyContent:
             pedicure_root = Services.objects.get(name="Педикюр", parent=nails_root)
             print(f'Услуга "{pedicure_root}" уже существует')
         except Exception as e:
-            pedicure_root = Services.objects.create(name="Педикюр", parent=nails_root, price=random.randint(1000, 9000))
+            pedicure_root = Services.objects.create(name="Педикюр", parent=nails_root)
             print(f'Услуга "{pedicure_root}" создана!')
 
         pedicure = [
@@ -103,7 +106,7 @@ class AddDummyContent:
             sets_root = Services.objects.get(name="Сеты", parent=nails_root)
             print(f'Услуга "{sets_root}" уже существует')
         except Exception as e:
-            sets_root = Services.objects.create(name="Сеты", parent=nails_root, price=random.randint(1000, 9000))
+            sets_root = Services.objects.create(name="Сеты", parent=nails_root)
             print(f'Услуга "{sets_root}" создана!')
 
         sets = [
@@ -127,7 +130,7 @@ class AddDummyContent:
             haircut_root = Services.objects.get(name="Стрижка", parent=barber_root)
             print(f'Услуга "{haircut_root}" уже существует')
         except Exception as e:
-            haircut_root = Services.objects.create(name="Стрижка", parent=barber_root, price=random.randint(1000, 9000))
+            haircut_root = Services.objects.create(name="Стрижка", parent=barber_root)
             print(f'Услуга "{haircut_root}" создана!')
 
         haircut = [
@@ -145,7 +148,7 @@ class AddDummyContent:
             haircoloring_root = Services.objects.get(name="Окрашивание", parent=barber_root)
             print(f'Услуга "{haircoloring_root}" уже существует')
         except Exception as e:
-            haircoloring_root = Services.objects.create(name="Окрашивание", parent=barber_root, price=random.randint(1000, 9000))
+            haircoloring_root = Services.objects.create(name="Окрашивание", parent=barber_root)
             print(f'Услуга "{haircoloring_root}" создана!')
 
         haircoloring = [
@@ -166,7 +169,7 @@ class AddDummyContent:
             hairstyling_root = Services.objects.get(name="Укладка", parent=barber_root)
             print(f'Услуга "{hairstyling_root}" уже существует')
         except Exception as e:
-            hairstyling_root = Services.objects.create(name="Укладка", parent=barber_root, price=random.randint(1000, 9000))
+            hairstyling_root = Services.objects.create(name="Укладка", parent=barber_root)
             print(f'Услуга "{hairstyling_root}" создана!')
 
         hairstyling = [
@@ -186,7 +189,7 @@ class AddDummyContent:
             hairremoving_root = Services.objects.get(name="Удаление волос", parent=barber_root)
             print(f'Услуга "{hairremoving_root}" уже существует')
         except Exception as e:
-            hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root, price=random.randint(1000, 9000))
+            hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root)
             print(f'Услуга "{hairremoving_root}" создана!')
 
         hairremoving = [
@@ -209,7 +212,7 @@ class AddDummyContent:
             eyelashes_eyebrows_root = Services.objects.get(name="Ресницы и брови", parent=barber_root)
             print(f'Услуга "{eyelashes_eyebrows_root}" уже существует')
         except Exception as e:
-            eyelashes_eyebrows_root = Services.objects.create(name="Ресницы и брови", parent=barber_root, price=random.randint(1000, 9000))
+            eyelashes_eyebrows_root = Services.objects.create(name="Ресницы и брови", parent=barber_root)
             print(f'Услуга "{eyelashes_eyebrows_root}" создана!')
 
         eyelashes_eyebrows = [
@@ -231,7 +234,7 @@ class AddDummyContent:
             increase_angles_root = Services.objects.get(name="Наращивание уголков", parent=eyelashes_eyebrows_root)
             print(f'Услуга "{increase_angles_root}" уже существует')
         except Exception as e:
-            increase_angles_root = Services.objects.create(name="Наращивание уголков", parent=eyelashes_eyebrows_root, price=random.randint(1000, 9000))
+            increase_angles_root = Services.objects.create(name="Наращивание уголков", parent=eyelashes_eyebrows_root)
             print(f'Услуга "{increase_angles_root}" создана!')
 
         increase_angles = [
@@ -309,6 +312,25 @@ class AddDummyContent:
                 print(f'Сотрудник уже существует')
 
 
+    def addSalonServices(self):
+        salons = Salon.objects.all()
+        services_ids_list = Services.objects.all().values_list('id', flat=True)
+        services_ids_list_random = random.sample(list(services_ids_list), 10)
+
+        for salon in salons:
+            salon_instance = Salon.objects.get(id=salon.id)
+
+            # for service_id in services_ids_list:
+            for service_id in services_ids_list_random:
+                service_instance = Services.objects.get(id=service_id)
+                salon_service = SalonServices(salon=salon_instance, \
+                                            service=service_instance, \
+                                            price=random.randint(1000,9000)
+                                            )
+                salon_service.save()
+                print(f'Услуга "{service_instance.name}" для Салона "{salon.name}", с ценой {salon_service.price} создана!')
+
+
     def addClientAppointments(self):
         users_client = Account.objects.filter(groups__name='Client')
 
@@ -327,7 +349,10 @@ class AddDummyContent:
                                                             comment="Some client comment", \
                                                         )
                     client_appointment.save()
-                    client_appointment.services.set(["1", "2", "3"])
+
+                    services_ids_list = Services.objects.all().values_list('id', flat=True)
+                    # client_appointment.services.set(["1", "2", "3"])
+                    client_appointment.services.set([str(random.choice(services_ids_list)), str(random.choice(services_ids_list)), str(random.choice(services_ids_list))])
                     print(f"Запись в салон {client_appointment.id} создана!")
             else:
                 print("Записи Клиентов в Салон уже созданы")
@@ -336,7 +361,9 @@ class AddDummyContent:
     # Init creation
     def createDummyContent(self):
         self.addServices()
+
         self.addSalons()
         self.addSalonsWorkSchedules()
         self.addSalonsEmployees()
+        self.addSalonServices()
         # self.addClientAppointments()

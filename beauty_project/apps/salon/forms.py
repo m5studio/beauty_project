@@ -1,9 +1,13 @@
 from django import forms
 
 from apps.account.models import Account
+
 from apps.salon.models.client import Client
 from apps.salon.models.client_appointment import ClientAppointment
 from apps.salon.models.salon import Salon
+from apps.salon.models.salon_services import SalonServices
+
+from apps.services.models import Services
 
 
 class AddClientForm(forms.ModelForm):
@@ -45,3 +49,22 @@ class ClientAppointmentForm(forms.ModelForm):
         model = ClientAppointment
         fields = "__all__"
         exclude = ["status"]
+
+
+class AddSalonServicesForm(forms.ModelForm):
+    salon   = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
+    # service = forms.ModelChoiceField(queryset=SalonServices.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        # Select current Salon
+        self.salon = kwargs.pop('salon')
+        super(AddSalonServicesForm, self).__init__(*args, **kwargs)
+        self.fields['salon'].initial = self.salon
+
+        # Get Services in queryset except selected to curret Salon
+        salon_services_ids_list = list(SalonServices.objects.filter(salon=self.salon).values_list('service__id', flat=True))
+        self.fields['service'].queryset = Services.objects.exclude(id__in=salon_services_ids_list)
+
+    class Meta:
+        model = SalonServices
+        fields = "__all__"

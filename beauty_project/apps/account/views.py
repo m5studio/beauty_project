@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
 
 from apps.salon.models.salon import Salon
+from apps.salon.models.salon_services import SalonServices
 from apps.salon.models.client import Client
 from apps.salon.models.client_appointment import ClientAppointment
 from apps.account.models import Account
@@ -20,7 +21,13 @@ from apps.account.forms import (
     ResetPasswordForm,
 )
 from apps.actions.forms import AddActionsForm
-from apps.salon.forms import AddClientForm, EditSalonForm, ClientAppointmentForm
+from apps.salon.forms import (
+    AddClientForm,
+    EditSalonForm,
+    ClientAppointmentForm,
+
+    AddSalonServicesForm,
+)
 
 
 @user_passes_test(lambda user: user.is_anonymous)
@@ -90,8 +97,19 @@ def user_profile_view(request):
             form_edit_salon = EditSalonForm(instance=salon_instance)
             context['form_edit_salon'] = form_edit_salon
 
+        # TODO: Add SalonServicesForm
+        if request.POST:
+            form_add_salon_services = AddSalonServicesForm(request.POST, salon=request.user.salon.id)
+            if form_add_salon_services.is_valid():
+                form_add_salon_services.save()
+                return redirect('user:profile')
+            else:
+                context['form_add_salon_services'] = form_add_salon_services
+        else: #GET request
+            form_add_salon_services = AddSalonServicesForm(salon=request.user.salon.id)
+            context['form_add_salon_services'] = form_add_salon_services
 
-        # TODO: Add Salon Services
+    context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon)
 
     return render(request, 'account/profile.html', context)
 

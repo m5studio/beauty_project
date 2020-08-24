@@ -3,8 +3,9 @@ from django.db import models
 from django.db.models import Sum
 
 from apps.account.models import Account
-from apps.services.models import Services
+# from apps.services.models import Services
 
+from apps.salon.models.salon_services import SalonServices
 from apps.salon.models.salon import Salon
 from apps.salon.models.employee import Employee
 
@@ -19,7 +20,7 @@ STATUSES = (
 class ClientAppointment(models.Model):
     client   = models.ForeignKey(Account, verbose_name='Клиент', on_delete=models.SET_NULL, null=True)
     employee = models.ForeignKey(Employee, verbose_name='Мастер', on_delete=models.SET_NULL, null=True)
-    services = models.ManyToManyField(Services, verbose_name='Услуга', blank=True)
+    services = models.ManyToManyField(SalonServices, verbose_name='Услуги', blank=True)
     datetime = models.DateTimeField('Дата и время записи', blank=True, null=True)
     comment  = models.TextField('Комментарий', blank=True, null=True)
 
