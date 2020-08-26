@@ -1,6 +1,10 @@
+import random
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required, user_passes_test
+
+from django.forms.models import modelformset_factory, inlineformset_factory
 
 # Models
 from django.contrib.auth.models import Group
@@ -27,6 +31,7 @@ from apps.salon.forms import (
     ClientAppointmentForm,
 
     AddSalonServicesForm,
+    EditSalonServicesForm,
 )
 
 
@@ -84,8 +89,37 @@ def user_profile_view(request):
 
     # Edit Salon Form if user in Salon Group
     if request.user.groups.filter(name='Salon').exists():
-        salon_instance = Salon.objects.get(id=request.user.salon.id)
+        context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon)
 
+        salon_instance = Salon.objects.get(id=request.user.salon.id)
+        # salon_services_instance = SalonServices.objects.get(salon=request.user.salon.id)
+
+        # TODO: EditSalonServicesForm
+        # EditSalonServicesFormFormSet = modelformset_factory(SalonServices, form=EditSalonServicesForm, exclude=(), extra=0)
+        EditSalonServicesFormFormSet = inlineformset_factory(Salon, SalonServices, fields=('salon', 'service', 'price'), can_delete=False)
+        if request.POST:
+            # if request.POST and 'edit_prices' in request.POST:
+            print('!!!!!!!!!!!!!!!!!!!!! edit_prices')
+            # formset = EditSalonServicesFormFormSet(data=request.POST, queryset=SalonServices.objects.filter(salon=salon_instance))
+            formset = EditSalonServicesFormFormSet(data=request.POST, instance=salon_instance)
+            if formset.is_valid():
+                formset.save()
+
+                # instances = formset.save(commit=False)
+                # for instance in instances:
+                #     instance.salon = salon_instance
+                #     # instance.service = salon_instance
+                #     instance.save()
+
+                return redirect('user:profile')
+            else:
+                context['form_edit_salon_services'] = formset
+        else:
+            # formset = EditSalonServicesFormFormSet(queryset=SalonServices.objects.filter(salon=salon_instance))
+            formset = EditSalonServicesFormFormSet(instance=salon_instance)
+            context['form_edit_salon_services'] = formset
+
+        # EditSalonForm
         if request.POST:
             form_edit_salon = EditSalonForm(request.POST, instance=salon_instance)
             if form_edit_salon.is_valid():
@@ -97,7 +131,7 @@ def user_profile_view(request):
             form_edit_salon = EditSalonForm(instance=salon_instance)
             context['form_edit_salon'] = form_edit_salon
 
-        # TODO: Add SalonServicesForm
+        # AddSalonServicesForm
         if request.POST:
             form_add_salon_services = AddSalonServicesForm(request.POST, salon=request.user.salon.id)
             if form_add_salon_services.is_valid():
@@ -108,8 +142,6 @@ def user_profile_view(request):
         else: #GET request
             form_add_salon_services = AddSalonServicesForm(salon=request.user.salon.id)
             context['form_add_salon_services'] = form_add_salon_services
-
-    context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon)
 
     return render(request, 'account/profile.html', context)
 
@@ -177,9 +209,9 @@ def salon_appointments_journal_view(request):
 @user_passes_test(lambda user: user.groups.filter(name='Client').exists() or user.is_superuser)
 def client_appointments_view(request):
     context = {}
-
     context['appointments'] = ClientAppointment.objects.filter(client=request.user)
 
+    # ClientAppointmentForm
     if request.POST:
         form = ClientAppointmentForm(request.POST, client=request.user)
         if form.is_valid():
@@ -190,6 +222,7 @@ def client_appointments_view(request):
     else: #GET request
         form = ClientAppointmentForm(client=request.user)
         context['form'] = form
+
     return render(request, 'account/profile-client-appointments.html', context)
 
 
@@ -204,10 +237,9 @@ def register_by_phone_view(request):
             agree_terms = form.cleaned_data['agree_terms']
 
             # Generate password and write it to session
-            from random import randint
             request.session['first_name'] = first_name
             request.session['phone'] = phone
-            request.session['password'] = str(randint(0000, 9999))
+            request.session['password'] = str(random.randint(0000, 9999))
             request.session['first_view'] = True
             request.session.modified = True
 

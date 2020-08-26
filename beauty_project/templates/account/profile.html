@@ -63,11 +63,15 @@
         <br><br>
 
         <h2>Salon Services</h2>
-        {% for object in salon_services %}
-            <div style="margin-bottom: 10px;">
+        <form action="{% url 'user:profile' %}" novalidate method="post">{% csrf_token %}
+            {{ form_edit_salon_services.as_p }}
+            <button type="submit">Edit prices</button>
+        </form>
+        <!-- {% for object in salon_services %}
+            <div style="margin-bottom: 15px;">
                 {{ object.service.name }}<br>
-                {{ object.price }}
+                {{ object.price }}<br>
             </div>
-        {% endfor %}
+        {% endfor %} -->
     {% endif %}
 {% endblock %}

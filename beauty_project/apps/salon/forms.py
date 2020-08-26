@@ -62,9 +62,32 @@ class AddSalonServicesForm(forms.ModelForm):
         self.fields['salon'].initial = self.salon
 
         # Get Services in queryset except selected to curret Salon
-        salon_services_ids_list = list(SalonServices.objects.filter(salon=self.salon).values_list('service__id', flat=True))
+        # salon_services_ids_list = list(SalonServices.objects.filter(salon=self.salon).values_list('service__id', flat=True))
+
+        salon_services_ids = SalonServices.objects.filter(salon=self.salon).values_list('service__id', flat=True)
+        # Avoid to add None value to list
+        salon_services_ids_list = list(filter(None, salon_services_ids))
+
+        # print(salon_services_ids_list)
+        # self.fields['service'].queryset = Services.objects.all()
         self.fields['service'].queryset = Services.objects.exclude(id__in=salon_services_ids_list)
 
     class Meta:
         model = SalonServices
         fields = "__all__"
+
+
+class EditSalonServicesForm(forms.ModelForm):
+    salon   = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
+    service = forms.ModelChoiceField(disabled=True, queryset=Services.objects.all())
+
+    # def __init__(self, *args, **kwargs):
+    #     # Select current Salon
+    #     self.salon = kwargs.pop('salon')
+    #     super(EditSalonServicesForm, self).__init__(*args, **kwargs)
+    #     self.fields['salon'].initial = self.salon
+
+    class Meta:
+        model = SalonServices
+        fields = "__all__"
+        # exclude = ["salon"]
