@@ -65,7 +65,7 @@
         <h2>Salon Services</h2>
         <form action="{% url 'user:profile' %}" novalidate method="post">{% csrf_token %}
             {{ form_edit_salon_services.as_p }}
-            <button type="submit">Edit prices</button>
+            <button type="submit" name="edit_prices">Edit prices</button>
         </form>
         <!-- {% for object in salon_services %}
             <div style="margin-bottom: 15px;">

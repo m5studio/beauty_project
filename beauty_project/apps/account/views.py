@@ -92,30 +92,17 @@ def user_profile_view(request):
         context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon)
 
         salon_instance = Salon.objects.get(id=request.user.salon.id)
-        # salon_services_instance = SalonServices.objects.get(salon=request.user.salon.id)
 
-        # TODO: EditSalonServicesForm
-        # EditSalonServicesFormFormSet = modelformset_factory(SalonServices, form=EditSalonServicesForm, exclude=(), extra=0)
-        EditSalonServicesFormFormSet = inlineformset_factory(Salon, SalonServices, fields=('salon', 'service', 'price'), can_delete=False)
-        if request.POST:
-            # if request.POST and 'edit_prices' in request.POST:
-            print('!!!!!!!!!!!!!!!!!!!!! edit_prices')
-            # formset = EditSalonServicesFormFormSet(data=request.POST, queryset=SalonServices.objects.filter(salon=salon_instance))
-            formset = EditSalonServicesFormFormSet(data=request.POST, instance=salon_instance)
+        # EditSalonServicesForm
+        EditSalonServicesFormFormSet = inlineformset_factory(Salon, SalonServices, fields=('salon', 'service', 'price'), extra=0, can_delete=False)
+        if request.POST and 'edit_prices' in request.POST:
+            formset = EditSalonServicesFormFormSet(request.POST, instance=salon_instance)
             if formset.is_valid():
                 formset.save()
-
-                # instances = formset.save(commit=False)
-                # for instance in instances:
-                #     instance.salon = salon_instance
-                #     # instance.service = salon_instance
-                #     instance.save()
-
                 return redirect('user:profile')
             else:
                 context['form_edit_salon_services'] = formset
         else:
-            # formset = EditSalonServicesFormFormSet(queryset=SalonServices.objects.filter(salon=salon_instance))
             formset = EditSalonServicesFormFormSet(instance=salon_instance)
             context['form_edit_salon_services'] = formset
 

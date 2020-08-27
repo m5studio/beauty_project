@@ -53,7 +53,7 @@ class ClientAppointmentForm(forms.ModelForm):
 
 class AddSalonServicesForm(forms.ModelForm):
     salon   = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
-    # service = forms.ModelChoiceField(queryset=SalonServices.objects.all())
+    service = forms.ModelChoiceField(required=True, queryset=SalonServices.objects.all())
 
     def __init__(self, *args, **kwargs):
         # Select current Salon
@@ -80,6 +80,7 @@ class AddSalonServicesForm(forms.ModelForm):
 class EditSalonServicesForm(forms.ModelForm):
     salon   = forms.ModelChoiceField(disabled=True, queryset=Salon.objects.all())
     service = forms.ModelChoiceField(disabled=True, queryset=Services.objects.all())
+    price   = forms.DecimalField(required=True)
 
     # def __init__(self, *args, **kwargs):
     #     # Select current Salon
