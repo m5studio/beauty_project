@@ -67,9 +67,6 @@ class AddSalonServicesForm(forms.ModelForm):
         salon_services_ids = SalonServices.objects.filter(salon=self.salon).values_list('service__id', flat=True)
         # Avoid to add None value to list
         salon_services_ids_list = list(filter(None, salon_services_ids))
-
-        # print(salon_services_ids_list)
-        # self.fields['service'].queryset = Services.objects.all()
         self.fields['service'].queryset = Services.objects.exclude(id__in=salon_services_ids_list)
 
     class Meta:

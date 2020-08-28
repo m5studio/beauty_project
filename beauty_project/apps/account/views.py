@@ -172,14 +172,14 @@ def add_salon_client_view(request):
 def add_salon_action_view(request):
     context = {}
     if request.POST:
-        form = AddActionsForm(request.POST)
+        form = AddActionsForm(request.POST, salon=request.user.salon.id)
         if form.is_valid():
             form.save()
             return redirect('user:profile')
         else:
             context['form'] = form
     else: #GET request
-        form = AddActionsForm()
+        form = AddActionsForm(salon=request.user.salon.id)
         context['form'] = form
     return render(request, 'account/profile/salon/profile-salon-add-action.html', context)
 
