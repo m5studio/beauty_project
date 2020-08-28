@@ -89,7 +89,7 @@ def user_profile_view(request):
 
     # Edit Salon Form if user in Salon Group
     if request.user.groups.filter(name='Salon').exists():
-        context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon)
+        context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon).reverse()
 
         salon_instance = Salon.objects.get(id=request.user.salon.id)
 

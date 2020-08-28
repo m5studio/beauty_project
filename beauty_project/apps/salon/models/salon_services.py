@@ -5,9 +5,9 @@ from apps.services.models import Services
 
 
 class SalonServices(models.Model):
-    salon   = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.SET_NULL, null=True)
-    service = models.ForeignKey(Services, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Услуга")
-    price   = models.DecimalField('Цена', max_digits=10, decimal_places=2, blank=True, null=True)
+    salon   = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.CASCADE)
+    service = models.ForeignKey(Services, on_delete=models.CASCADE, verbose_name="Услуга")
+    price   = models.DecimalField('Цена', max_digits=10, decimal_places=2)
 
     def __str__(self):
         return self.service.name
