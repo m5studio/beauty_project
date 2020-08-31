@@ -1,0 +1,23 @@
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+}
+
+#header {
+    background-color: orange;
+
+    #page-h1 {
+        h1 {}
+    }
+}
+
+#content {
+    background-color: #EEE;
+
+    #main {}
+}
+
+#footer {
+    background-color: lime;
+}
