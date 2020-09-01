@@ -32,7 +32,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(png|svg|jpe?g|gif)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -53,14 +53,13 @@ module.exports = {
                                 enabled: true,
                             },
                             pngquant: {
-                                quality: '65-90',
+                                quality: [0.65, 0.90],
                                 speed: 4
                             }
                         }
                     }
                 ]
             },
-
             // Fonts loader
             // {
             //     test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -91,6 +90,14 @@ module.exports = {
                 {
                     from: './layout/src/images/favicons',
                     to: 'images/favicons'
+                },
+                // {
+                //     from: './layout/src/images/icons',
+                //     to: 'images/icons'
+                // },
+                {
+                    from: './layout/src/images/tmp',
+                    to: 'images/tmp'
                 },
             ],
         }),

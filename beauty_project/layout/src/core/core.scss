@@ -2,22 +2,74 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
     min-height: 100vh;
+
+    background-color: #1a2835;
+    color: white;
 }
 
 #header {
-    background-color: orange;
+    &__top {
+        background-color: #062544;
+        padding: 10px 0;
 
-    #page-h1 {
-        h1 {}
+        &--inner {
+            display: grid;
+            grid-gap: 30px;
+            align-items: center;
+            grid-template-columns: 30% 1fr auto;
+        }
+
+        #logo {
+            &__link {
+                background-image: url("images/logo.svg");
+                background-position: 0 50%;
+                background-repeat: no-repeat;
+                background-size: contain;
+
+                display: block;
+                width: 100%;
+                max-width: 318px;
+                height: 88px;
+
+                text-indent: -9999px;
+            }
+        }
+
+        #select_city,
+        #user_zone {
+            @include media-breakpoint-up(lg) {
+                text-align: right;
+            }
+        }
+
+        #select_city {}
+
+        #user_zone {}
+    }
+
+    &__banner {
+        background-image: linear-gradient(to right, #ffcb02, #e89f02);
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     }
 }
 
-#content {
-    background-color: #EEE;
+#page-h1 {
+    text-align: center;
 
-    #main {}
+    h1 {
+        color: #fbddd3;
+        font-weight: 700;
+        margin-bottom: 0;
+    }
 }
 
-#footer {
-    background-color: lime;
-}
+// #content {
+//     #main {}
+// }
+
+// #footer {}

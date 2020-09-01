@@ -1,0 +1,16 @@
+.icon {
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+
+    &-arrow-down {
+        background-image: url("images/icons/icon-arr-down.svg");
+    }
+
+    &-geomark {
+        background-image: url("images/icons/icon-geomark.svg");
+    }
+}
