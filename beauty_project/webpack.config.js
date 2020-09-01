@@ -91,10 +91,6 @@ module.exports = {
                     from: './layout/src/images/favicons',
                     to: 'images/favicons'
                 },
-                // {
-                //     from: './layout/src/images/icons',
-                //     to: 'images/icons'
-                // },
                 {
                     from: './layout/src/images/tmp',
                     to: 'images/tmp'
