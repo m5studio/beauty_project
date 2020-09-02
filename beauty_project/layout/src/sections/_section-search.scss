@@ -1,0 +1,81 @@
+#section-search {
+    #search-form {
+        &__services-nav {
+            border: 1px solid #fbddd3;
+            border-radius: 25px;
+            overflow: hidden;
+
+            display: flex;
+            flex-flow: row wrap;
+            align-content: space-around;
+
+            a {
+                color: #fbddd3;
+                flex-grow: 1;
+                font-size: 1.1rem;
+                font-weight: 600;
+                padding: 10px 25px;
+                text-align: center;
+                text-transform: uppercase;
+                text-decoration: none;
+                transition: all ease-in-out .2s;
+
+                &:focus,
+                &:hover {
+                    background-color: #fbddd3;
+                    color: #1a2835;
+                    outline: none;
+                    text-decoration: none;
+                }
+
+                &.active {
+                    background-color: #fbddd3;
+                    color: #1a2835;
+                }
+            }
+        }
+
+        label {
+            color: #fbddd3;
+            font-size: .9rem;
+            font-weight: 600;
+        }
+
+        input {
+            background-color: transparent;
+            border-width: 0;
+            border-color: transparent;
+            color: white;
+            font-size: 1.05rem;
+            outline: none;
+            padding: 3px 0;
+            display: block;
+            width: 100%;
+
+            border-bottom: 2px solid #fbddd3;
+
+            // &[type=text] {
+            //     border-bottom: 2px solid #fbddd3;
+            // }
+        }
+
+        &__tiles {
+            .search-tiles-group {
+                display: grid;
+                grid-gap: 10px;
+                grid-template-columns: repeat(3, 1fr);
+
+                .search-tile {
+                    background-color: #293c4d;
+                    padding: 15px 30px;
+                    min-height: 130px;
+
+                    &.st-4 {
+                        grid-column-start: 1;
+                        grid-column-end: 3;
+                    }
+                }
+            }
+        }
+    }
+}
