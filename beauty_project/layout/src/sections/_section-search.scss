@@ -37,26 +37,7 @@
 
         label {
             color: #fbddd3;
-            font-size: .9rem;
             font-weight: 600;
-        }
-
-        input {
-            background-color: transparent;
-            border-width: 0;
-            border-color: transparent;
-            color: white;
-            font-size: 1.05rem;
-            outline: none;
-            padding: 3px 0;
-            display: block;
-            width: 100%;
-
-            border-bottom: 2px solid #fbddd3;
-
-            // &[type=text] {
-            //     border-bottom: 2px solid #fbddd3;
-            // }
         }
 
         &__tiles {
@@ -74,6 +55,79 @@
                         grid-column-start: 1;
                         grid-column-end: 3;
                     }
+
+                    &-input {
+                        background-color: transparent;
+                        border-color: transparent;
+                        border-width: 0;
+                        border-bottom: 2px solid #fbddd3;
+                        color: white;
+                        font-size: 1.05rem;
+                        outline: none;
+                        padding: 3px 30px 3px 0;
+                        display: block;
+                        width: 100%;
+                        transition: background-color ease-in-out .3s;
+
+                        &__place {
+                            background-image: url("images/icons/icon-arrow-down.png");
+                            background-repeat: no-repeat;
+                            background-position: 99% 50%;
+                            background-size: 12px;
+                        }
+
+                        &__date {
+                            background-image: url("images/icons/icon-calendar.png");
+                            background-repeat: no-repeat;
+                            background-position: 99% 50%;
+                            background-size: 26px;
+                        }
+
+                        // &__time {
+                        // }
+
+                        &:focus,
+                        &:hover {
+                            background-color: rgba(255, 255, 255, .1);
+                            outline: none;
+                        }
+                    }
+
+                    &__add-service {
+                        color: #fbddd3;
+                        cursor: pointer;
+                        text-align: center;
+                    }
+
+                    &__add-service-plus {
+                        font-size: 2rem;
+                        font-weight: 700;
+                    }
+
+                    &__add-service-text {
+                        font-size: .9rem;
+                    }
+                }
+            }
+        }
+
+        &__submit {
+            button {
+                background-color: #ff4200;
+                border: none;
+                color: white;
+                font-size: 1.3rem;
+                font-weight: 600;
+                display: block;
+                padding: 5px;
+                width: 100%;
+                text-transform: uppercase;
+                transition: all ease-in-out .2s;;
+
+                &:focus,
+                &:hover {
+                    background-color: rgba(255, 66, 0, .8);
+                    outline: none;
                 }
             }
         }

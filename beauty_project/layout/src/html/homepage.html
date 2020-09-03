@@ -50,7 +50,7 @@
     </header>
 
     <div id="content">
-        <main id="main">
+        <div id="main">
             <!-- <div class="container">
                 <div id="page-h1">
                     <h1>Page h1 title</h1>
@@ -78,25 +78,91 @@
                             <div class="search-tiles-group">
                                 <div class="search-tile st-1">
                                     <label for="">Местоположение или салон</label>
-                                    <input type="text" name="" id="">
+                                    <input type="text" name="" id="" class="search-tile-input search-tile-input__place">
                                 </div>
                                 <div class="search-tile st-2">
                                     <label for="">Дата визита</label>
-                                    <input type="text" name="" id="">
+                                    <input type="text" name="" id="" class="search-tile-input search-tile-input__date">
                                 </div>
                                 <div class="search-tile st-3">
-                                    <label for="">Время начала</label>
-                                    <input type="text" name="" id="">
+                                    <div>
+                                        <label for="">Время начала</label>
+                                        <input type="text" name="" id="" class="search-tile-input search-tile-input__time">
+                                    </div>
+                                    <div class="mt-2 text-right">
+                                        <label for="st-precice-time">
+                                            <input type="checkbox" name="" id="st-precice-time"> точное время
+                                        </label>
+                                    </div>
                                 </div>
 
-                                <div class="search-tile st-4"></div>
-                                <div class="search-tile st-5"></div>
+                                <div class="search-tile st-4">
+                                    <label for="">Выберите услугу</label>
+                                    <input type="text" name="" id="" class="search-tile-input">
+                                </div>
+                                <div class="search-tile st-5">
+                                    <div class="search-tile__add-service">
+                                        <div class="search-tile__add-service-plus">+</div>
+                                        <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                    </div>
+                                </div>
 
-                                <div class="search-tile st-4"></div>
-                                <div class="search-tile st-5"></div>
+                                <!-- <div class="search-tile st-4">
+                                    <label for="">Выберите услугу</label>
+                                    <input type="text" name="" id="" class="search-tile-input">
+                                </div>
+                                <div class="search-tile st-5">
+                                    <div class="search-tile__add-service">
+                                        <div class="search-tile__add-service-plus">+</div>
+                                        <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                    </div>
+                                </div> -->
                             </div>
                         </div>
+
+                        <div class="text-center my-3">
+                            <div class="h4">Вы ищите:</div>
+                            <div class="search-query">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
+                        </div>
+
+                        <div id="search-form__submit">
+                            <button type="submit">Начать поиск</button>
+                        </div>
                     </form>
+                </div>
+            </div>
+
+            <div id="section-advantages">
+                <div id="section-advantages__inner" class="container">
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-actions" class="section-type-one">
+                <div class="section-type-one__title container">
+                    <div class="h2">Акции</div>
+                </div>
+
+                <div class="section-type-one__inner container">
+                    <div class="action-card"></div>
+                    <div class="action-card"></div>
+                    <div class="action-card"></div>
+                    <div class="action-card"></div>
                 </div>
             </div>
         </main>
