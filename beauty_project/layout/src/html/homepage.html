@@ -157,19 +157,138 @@
                 <div class="section-type-one__title container">
                     <div class="h2">Акции</div>
                 </div>
-
                 <div class="section-type-one__inner container">
-                    <div class="action-card"></div>
-                    <div class="action-card"></div>
-                    <div class="action-card"></div>
-                    <div class="action-card"></div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="../images/tmp/action.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="../images/tmp/action.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="../images/tmp/action.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="../images/tmp/action.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
+
+        <div id="section-map" class="section-type-one">
+            <div class="section-type-one__title container">
+                <div class="h2">Все салоны на карте</div>
+            </div>
+            <div class="section-type-one__inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-5">
+                            <a href="">Открыты сейчас</a>
+                            <a href="">Акции</a>
+                            <a href="">Все салоны</a>
+                        </div>
+                        <div class="col-2"></div>
+                        <div class="col-5">
+                            <span class="">Открыто</span>
+                            <span class="">Закрыто</span>
+                            <span class="">Акция</span>
+                            <span class="">Не подключен</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-map__map" style="width:500px; height:400px"></div>
+            </div>
+        </div>
     </div>
 
     <footer id="footer">
         footer
     </footer>
+
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script>
+    <script type="text/javascript">
+        var map;
+
+        DG.then(function () {
+            map = DG.map('section-map__map', {
+                center: [54.98, 82.89],
+                zoom: 13
+            });
+
+            DG.marker([54.98, 82.89]).addTo(map);
+        });
+    </script>
 </body>
 </html>
