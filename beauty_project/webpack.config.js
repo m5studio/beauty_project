@@ -10,7 +10,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: 'production',
     // mode: 'development',
-    entry: './layout/src/main.js',
+
+    // entry: './layout/src/main.js',
+    entry: {
+        main: './layout/src/main.js',
+        '2Gis': './layout/src/2gis.js'
+    },
     output: {
         filename: 'js/[name].js',
         path: path.resolve(__dirname, './layout/dist'),
@@ -126,7 +131,8 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             filename: 'html/homepage.html',
-            template: './layout/src/html/homepage.html'
+            template: './layout/src/html/homepage.html',
+            chunks: ["main", "2Gis"]
         }),
 
         // ...

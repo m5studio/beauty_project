@@ -85,4 +85,17 @@ body {
 //     #main {}
 // }
 
-// #footer {}
+#footer {
+    cursor: default;
+    min-height: 15vh;
+
+    display: flex;
+    align-items: center;
+
+    opacity: .8;
+    transition: all ease-in-out .3s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
