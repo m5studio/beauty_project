@@ -148,10 +148,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'static'),
 
-    # os.path.join(BASE_DIR, 'layout/dist'),
-    # ('css', os.path.join(BASE_DIR, 'layout/dist/css')),
-    # ('js', os.path.join(BASE_DIR, 'layout/dist/js')),
-    # ('favicons', os.path.join(BASE_DIR, 'layout/dist/images/favicons')),
+    os.path.join(BASE_DIR, 'layout/dist'),
+    ('css', os.path.join(BASE_DIR, 'layout/dist/css')),
+    ('js', os.path.join(BASE_DIR, 'layout/dist/js')),
+    ('favicons', os.path.join(BASE_DIR, 'layout/dist/images/favicons')),
 ]
 
 

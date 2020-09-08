@@ -1,6 +1,35 @@
 {% extends 'base.html' %}
 
 
-{% block content %}
+{% block content_top %}{% endblock %}
 
+
+{% block content %}{% endblock %}
+
+
+{% block content_bottom %}
+    <div id="section-map" class="section-type-one">
+        <div class="section-type-one__title container">
+            <div class="h2">Все салоны на карте</div>
+        </div>
+        <div class="section-type-one__inner">
+            <div id="section-map__legend"class="container">
+                <div class="row">
+                    <div id="section-map__legend--filters" class="col-5">
+                        <a class="active" href="">Открыты сейчас</a>
+                        <a href="">Акции</a>
+                        <a href="">Все салоны</a>
+                    </div>
+                    <div class="col-2"></div>
+                    <div id="section-map__legend--icons" class="col-5">
+                        <span class="legend-icon legend-icon__open">Открыто</span>
+                        <span class="legend-icon legend-icon__closed">Закрыто</span>
+                        <span class="legend-icon legend-icon__action">Акция</span>
+                        <span class="legend-icon legend-icon__not-icluded">Не подключен</span>
+                    </div>
+                </div>
+            </div>
+            <div id="section-map__map"></div>
+        </div>
+    </div>
 {% endblock %}

@@ -3,116 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <title>Beauty Service</title>
+    {% include "includes/favicons.html" %}
     <!-- TODO: favicons -->
     {% block css %}
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     {% endblock %}
     <!-- TODO: og:tags -->
 </head>
+
 <body>
-    <nav id="main-nav">
-        {% if not request.user.is_authenticated %}
-            <ul>
-                <li>
-                    <a href="{% url 'user:registration-by-phone' %}">Registration by phone</a>
-                </li>
-                <li>
-                    <a href="{% url 'user:login' %}">Login</a>
-                </li>
-                <li>
-                    <a href="{% url 'user:reset-password' %}">Password Reset</a>
-                </li>
-            </ul>
-        {% endif %}
+    <header id="header">
+        <div id="header__top">
+            <div class="container">
+                <div id="header__top--inner">
+                    <div id="logo">
+                        <a id="logo__link" href="/">Beutysputnik</a>
+                    </div>
 
-        {% if request.user.is_authenticated %}
-            <ul>
-                <li>
-                    <a href="{% url 'homepage' %}">Homepage</a>
-                </li>
-                <li>
-                    Hello, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user }}{% endif %}
-                </li>
-            </ul>
+                    <div id="select_city">
+                        <span class="icon icon-geomark"></span> Ваш регион: <a href="">Москва</a> <span class="icon icon-arrow-down"></span>
+                    </div>
 
-            <ul>
-                <li>
-                    <a href="{% url 'user:profile' %}">Профиль</a>
-                </li>
-                <li>
-                    <a href="{% url 'user:change-password' %}">Change password</a>
-                </li>
+                    <div id="user_zone">
+                        <a href="#" class="btn-solid mr-lg-3">Войти</a>
+                        <a href="#" class="btn-transparent">Зарегистрироваться</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                {# <!-- Client nav --> #}
-                {% if request.user|has_group:"Client" %}
+        <div id="header__banner">
+            <img src="{% static 'images/tmp/header-banner.jpg' %}" alt="">
+        </div>
+
+        <nav id="main-nav">
+            {% if not request.user.is_authenticated %}
+                <ul>
                     <li>
-                        <a href="{% url 'user:client-appointments' %}">Записи</a>
+                        <a href="{% url 'user:registration-by-phone' %}">Registration by phone</a>
                     </li>
                     <li>
-                        <a href="">Бонусы</a>
-                    </li>
-                {% endif %}
-
-                {# <!-- Salon nav --> #}
-                {% if request.user|has_group:"Salon" %}
-                    <li>
-                        <a href="{% url 'user:salon-appointments' %}">Журнал записи</a>
+                        <a href="{% url 'user:login' %}">Login</a>
                     </li>
                     <li>
-                        <a href="">Клиенты</a>
-                        <ul>
-                            <li>
-                                <a href="{% url 'user:salon-add-client' %}">Добавить Клиента</a>
-                            </li>
-                        </ul>
+                        <a href="{% url 'user:reset-password' %}">Password Reset</a>
+                    </li>
+                </ul>
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+                <ul>
+                    <li>
+                        <a href="{% url 'homepage' %}">Homepage</a>
                     </li>
                     <li>
-                        <a href="">Сотрудники</a>
+                        Hello, {% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user }}{% endif %}
+                    </li>
+                </ul>
+
+                <ul>
+                    <li>
+                        <a href="{% url 'user:profile' %}">Профиль</a>
                     </li>
                     <li>
-                        <a href="">Акции и бонусы</a>
-                        <ul>
-                            <li>
-                                <a href="{% url 'user:salon-add-action' %}">Добавить Акцию</a>
-                            </li>
-                        </ul>
+                        <a href="{% url 'user:change-password' %}">Change password</a>
                     </li>
+
+                    {# <!-- Client nav --> #}
+                    {% if request.user|has_group:"Client" %}
+                        <li>
+                            <a href="{% url 'user:client-appointments' %}">Записи</a>
+                        </li>
+                        <li>
+                            <a href="">Бонусы</a>
+                        </li>
+                    {% endif %}
+
+                    {# <!-- Salon nav --> #}
+                    {% if request.user|has_group:"Salon" %}
+                        <li>
+                            <a href="{% url 'user:salon-appointments' %}">Журнал записи</a>
+                        </li>
+                        <li>
+                            <a href="">Клиенты</a>
+                            <ul>
+                                <li>
+                                    <a href="{% url 'user:salon-add-client' %}">Добавить Клиента</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">Сотрудники</a>
+                        </li>
+                        <li>
+                            <a href="">Акции и бонусы</a>
+                            <ul>
+                                <li>
+                                    <a href="{% url 'user:salon-add-action' %}">Добавить Акцию</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                Аналитика<br>
+                                <small>(доступна по паролю)</small>
+                            </a>
+                        </li>
+                    {% endif %}
+
                     <li>
-                        <a href="">
-                            Аналитика<br>
-                            <small>(доступна по паролю)</small>
-                        </a>
+                        <a href="{% url 'user:logout' %}">Выход</a>
                     </li>
-                {% endif %}
+                </ul>
+            {% endif %}
+        </nav>
+    </header>
 
-                <li>
-                    <a href="{% url 'user:logout' %}">Выход</a>
-                </li>
-            </ul>
-        {% endif %}
-    </nav>
+    <div id="content">
+        {% block content_top %}{% endblock %}
 
-    <header id="header"></header>
+        <main id="main">
+            {% if page_title %}
+                <h1>{{ page_title }}</h1>
+            {% endif %}
 
-    {% block content_top %}{% endblock %}
+            {% block content %}{% endblock %}
 
-    <main id="main">
-        {% if page_title %}
-            <h1>{{ page_title }}</h1>
-        {% endif %}
-        {% block content %}{% endblock %}
-    </main>
+            <div id="section-search" class="section-type-one">
+                <div class="section-type-one__title container">
+                    <div class="h2">Что будем искать?</div>
+                </div>
 
-    {% block content_bottom %}{% endblock %}
+                <div class="section-type-one__inner container">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi ab dicta cumque similique aspernatur veniam fugit iure odit. Reiciendis praesentium itaque eaque provident culpa laboriosam placeat blanditiis eos alias quia, odio nihil. Autem modi qui commodi ipsam ex ducimus distinctio neque eius sequi numquam veniam consequuntur temporibus dolores, culpa aliquam. Ut veritatis quaerat eveniet odio tempora voluptatibus facilis, reiciendis provident fugiat similique a eligendi dolore magni nihil unde beatae itaque.</p>
+
+                    <form id="search-form" class="mt-3">
+                        <nav id="search-form__services-nav" class="mb-3">
+                            <a class="active" href="">Ногтевой сервис</a>
+                            <a href="">Парикмахерский зал</a>
+                            <a href="">Удаление волос</a>
+                            <a href="">Брови и ресницы</a>
+                            <a href="">Барбершоп</a>
+                        </nav>
+
+                        <div id="search-form__tiles">
+                            <div class="search-tiles-group">
+                                <div class="search-tile st-1">
+                                    <label for="">Местоположение или салон</label>
+                                    <input type="text" name="" id="" class="search-tile-input search-tile-input__place">
+                                </div>
+                                <div class="search-tile st-2">
+                                    <label for="">Дата визита</label>
+                                    <input type="text" name="" id="" class="search-tile-input search-tile-input__date">
+                                </div>
+                                <div class="search-tile st-3">
+                                    <div>
+                                        <label for="">Время начала</label>
+                                        <input type="text" name="" id="" class="search-tile-input search-tile-input__time">
+                                    </div>
+                                    <div class="mt-2 text-right">
+                                        <label for="st-precice-time">
+                                            <input type="checkbox" name="" id="st-precice-time"> точное время
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="search-tile st-4">
+                                    <label for="">Выберите услугу</label>
+                                    <input type="text" name="" id="" class="search-tile-input">
+                                </div>
+                                <div class="search-tile st-5">
+                                    <div class="search-tile__add-service">
+                                        <div class="search-tile__add-service-plus">+</div>
+                                        <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="search-tile st-4">
+                                    <label for="">Выберите услугу</label>
+                                    <input type="text" name="" id="" class="search-tile-input">
+                                </div>
+                                <div class="search-tile st-5">
+                                    <div class="search-tile__add-service">
+                                        <div class="search-tile__add-service-plus">+</div>
+                                        <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="text-center my-3">
+                            <div class="h4">Вы ищите:</div>
+                            <div class="search-query">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
+                        </div>
+
+                        <div id="search-form__submit">
+                            <button type="submit">Начать поиск</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="section-advantages">
+                <div id="section-advantages__inner" class="container">
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                    <div class="advantage">
+                        <div class="advantage__title">1234</div>
+                        <div class="advantage__descr">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum eveniet cumque aliquid vel veniam saepe, eum deleniti minima fugiat maxime</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-actions" class="section-type-one">
+                <div class="section-type-one__title container">
+                    <div class="h2">Акции</div>
+                </div>
+                <div class="section-type-one__inner container">
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="{% static 'images/tmp/action.jpg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="{% static 'images/tmp/action.jpg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="{% static 'images/tmp/action.jpg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-card">
+                        <div class="action-card__img">
+                            <a href="">
+                                <img src="{% static 'images/tmp/action.jpg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="action-card__mid">
+                            <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
+                            <div class="action-card__action-title">-50% НА ВСЕ!</div>
+                            <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
+                        </div>
+                        <div class="action-card__bottom">
+                            <div class="action-card__bottom--left">
+                                <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
+                                <div class="action-card__rating"></div>
+                            </div>
+                            <div class="action-card__bottom--read-more">
+                                <a href="">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {% block content_bottom %}{% endblock %}
+    </div>
 
     <footer id="footer">
-        <div class="container">
-            &copy; Copyrights {% now 'Y' %}
+        <div id="copyright" class="container text-center">
+            {% now "Y" as current_year %}
+            &copy Copyrights info {% if current_year != "2020" %}2020 &ndash; {% endif %}{{ current_year }}
         </div>
     </footer>
 
     {% block js %}
-        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static 'js/vendors~main.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script src="{% static 'js/vendors~2Gis.js' %}"></script>
+        <script src="{% static 'js/2Gis.js' %}"></script>
     {% endblock %}
 </body>
 </html>

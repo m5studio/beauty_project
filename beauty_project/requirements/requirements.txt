@@ -1,5 +1,13 @@
-appdirs==1.4.4
-distlib==0.3.1
-filelock==3.0.12
+asgiref==3.2.10
+Django==3.1.1
+django-appconf==1.0.4
+django-cleanup==5.0.0
+django-imagekit==4.0.2
+django-js-asset==1.2.2
+django-mptt==0.11.0
+django-unused-media==0.2.1
+pilkit==2.0
+Pillow==7.2.0
+pytz==2020.1
 six==1.15.0
-virtualenv==20.0.31
+sqlparse==0.3.1
