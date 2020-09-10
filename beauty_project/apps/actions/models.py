@@ -13,11 +13,11 @@ def image_upload_path(instance, filename):
     return f'actions/{filename}'
 
 ACTION_TYPES = (
-    (0, "Скидка на услугу"),
-    (1, "Скидка на услуги в определенные часы/дни"),
-    (2, "Скидка на первое посещение"),
-    (3, "Подарок"),
-    (4, "Подарок за первое посещение"),
+    ("0", "Скидка на услугу"),
+    ("1", "Скидка на услуги в определенные часы/дни"),
+    ("2", "Скидка на первое посещение"),
+    ("3", "Подарок"),
+    ("4", "Подарок за первое посещение"),
 )
 
 class Actions(models.Model):
@@ -31,10 +31,10 @@ class Actions(models.Model):
     title       = models.CharField('Заголовок акции', max_length=255)
 
     image       = ProcessedImageField(upload_to=image_upload_path,
-                                    processors=[ResizeToFill(1280, 768)],
-                                    format='JPEG',
-                                    options={'quality': 75},
-                                    blank=True, null=True)
+                                        processors=[ResizeToFill(1280, 768)],
+                                        format='JPEG',
+                                        options={'quality': 75},
+                                        blank=True, null=True)
 
     description = models.TextField('Описание', blank=True, null=True)
 
@@ -43,6 +43,9 @@ class Actions(models.Model):
 
     created     = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated     = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = 'Акция'

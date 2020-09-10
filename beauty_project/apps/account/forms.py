@@ -35,10 +35,10 @@ class RegistrationByPhoneForm(forms.Form):
         except Account.DoesNotExist:
             pass
 
-        if len(first_name) < 2:
+        if first_name is not None and len(first_name) < 2:
             self.add_error('first_name', 'First name can\'t be less than 2 digits')
 
-        if len(phone) < 5:
+        if phone is not None and len(phone) < 5:
             self.add_error('phone', 'Phone can\'t be less than 5 digits')
 
         return cleaned_data

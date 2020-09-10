@@ -37,7 +37,9 @@
         }
 
         &__action-title {
-            font-size: 2rem;
+            font-size: 1.8rem;
+            line-height: 1.2;
+            margin-bottom: 10px;
             text-shadow: 1px 1px 1px #333;
         }
 
@@ -49,7 +51,7 @@
             font-size: .7rem;
         }
 
-        &__rating {}
+        // &__rating {}
 
         &__bottom {
             display: grid;

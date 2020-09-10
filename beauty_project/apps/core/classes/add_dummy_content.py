@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 
 from apps.services.models import Services
 from apps.account.models import Account
+from apps.actions.models import Actions
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.salon_services import SalonServices
@@ -359,6 +360,31 @@ class AddDummyContent:
                 print("Записи Клиентов в Салон уже созданы")
 
 
+    def addActions(self):
+        salons = Salon.objects.filter(active=True)
+
+        if Actions.objects.all().count() == 0:
+            for salon in salons:
+                salon_instance = Salon.objects.get(id=salon.id)
+                service_instance = Services.objects.get(id=4)
+
+                i = 1
+                for _ in range(5):
+                    action = Actions(active=True, \
+                                        action_type="0", \
+                                        salon=salon_instance, \
+                                        services=service_instance, \
+                                        title=f"Акция {i}", \
+                                        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie nisl erat, in auctor purus vehicula vel. Mauris pharetra maximus sapien non bibendum. Pellentesque placerat mauris at dictum lobortis. Nulla consectetur tortor at magna faucibus suscipit. Vivamus aliquam lorem sem, in porta orci commodo sit amet.", \
+                                        discount=15, \
+                                    )
+                    action.save()
+                    print(f"Акция для {action.title} Салона {action.salon.name} создана!")
+                    i += 1
+        else:
+            print("Акции уже созданы")
+
+
     # Init creation
     def createDummyContent(self):
         self.addServices()
@@ -367,4 +393,5 @@ class AddDummyContent:
         self.addSalonsWorkSchedules()
         self.addSalonsEmployees()
         self.addSalonServices()
+        self.addActions()
         # self.addClientAppointments()
