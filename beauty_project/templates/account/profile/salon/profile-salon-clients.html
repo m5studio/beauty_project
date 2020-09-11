@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        {% for object in salon_clients %}
+            <div class="mb-3">
+                <div>Имя: {{ object.first_name }}</div>
+                <div>Тел.: {{ object.phone }}</div>
+                <div>Салон: {{ object.salon.name }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

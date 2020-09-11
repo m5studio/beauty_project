@@ -2,8 +2,10 @@
 
 
 {% block content %}
-    <form action="{% url 'user:salon-add-client' %}" novalidate method="post">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add Client</button>
-    </form>
+    <div class="container">
+        <form action="{% url 'user:salon-add-client' %}" novalidate method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Client</button>
+        </form>
+    </div>
 {% endblock %}

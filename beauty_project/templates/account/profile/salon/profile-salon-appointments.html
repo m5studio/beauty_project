@@ -2,25 +2,25 @@
 
 
 {% block content %}
-    <h1>Журнал записи {{ request.user.salon.name }}</h1>
+    <div class="container">
+        {% if client_appontents %}
+            <div class="h2">Календарь записей</div>
+            <p>TODO: CALENDAR</p>
 
-    {% if client_appontents %}
-        <h2>Календарь записей</h2>
-        <p>CALENDAR</p>
+            <h2>Записи кратко</h2>
+            {% for object in client_appontents %}
+                <div style="margin-bottom: 30px;">
+                    <div>Дата: {{ object.datetime|date:"d-m-Y H:i" }}</div>
+                    <!-- <div>Салон: {{ object.employee.salon.name }}</div> -->
+                    <!-- <div>Мастер: {{ object.employee.get_employee_full_name }}</div> -->
+                    <div>Имя клиента: {{ object.client.first_name }}</div>
+                    <div>Услуги: {{ object.services.all|join:" + " }}</div>
+                    <div>Цена: {{ object.calculate_total_services_price }} руб.</div>
+                    <div>Статус: {{ object.get_status_display }}</div>
+                </div>
+            {% endfor %}
 
-        <h2>Записи кратко</h2>
-        {% for object in client_appontents %}
-            <div style="margin-bottom: 30px;">
-                <div>Дата: {{ object.datetime|date:"d-m-Y H:i" }}</div>
-                <!-- <div>Салон: {{ object.employee.salon.name }}</div> -->
-                <!-- <div>Мастер: {{ object.employee.get_employee_full_name }}</div> -->
-                <div>Имя клиента: {{ object.client.first_name }}</div>
-                <div>Услуги: {{ object.services.all|join:" + " }}</div>
-                <div>Цена: {{ object.calculate_total_services_price }} руб.</div>
-                <div>Статус: {{ object.get_status_display }}</div>
-            </div>
-        {% endfor %}
-
-        <h2>Детальный журнал записей</h2>
-    {% endif %}
+            <div class="h2">Детальный журнал записей</div>
+        {% endif %}
+    </div>
 {% endblock %}

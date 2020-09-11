@@ -38,6 +38,7 @@ from apps.salon.forms import (
 @user_passes_test(lambda user: user.is_anonymous)
 def login_view(request):
     context = {}
+    context['page_title'] = 'Вход'
     if request.POST:
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
@@ -61,6 +62,7 @@ def logout_view(request):
 @login_required(login_url='user:login')
 def user_profile_view(request):
     context = {}
+    context['page_title'] = f'Профиль пользователя {request.user.username}'
 
     # Clean session
     if request.session.get('first_name'):
@@ -136,6 +138,7 @@ def user_profile_view(request):
 @login_required(login_url='user:login')
 def change_password_view(request):
     context = {}
+    context['page_title'] = 'Смена пароля'
     if request.POST:
         form = PasswordChangeForm(data=request.POST, user=request.user)
         if form.is_valid():
@@ -154,6 +157,7 @@ def change_password_view(request):
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
 def add_salon_client_view(request):
     context = {}
+    context['page_title'] = 'Добавить Клиента Салона'
     if request.POST:
         form = AddClientForm(request.POST, salon=request.user.salon)
         if form.is_valid():
@@ -171,6 +175,7 @@ def add_salon_client_view(request):
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
 def add_salon_action_view(request):
     context = {}
+    context['page_title'] = 'Добавить Салон'
     if request.POST:
         form = AddActionsForm(request.POST, salon=request.user.salon.id)
         if form.is_valid():
@@ -188,6 +193,7 @@ def add_salon_action_view(request):
 @user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
 def salon_appointments_journal_view(request):
     context = {}
+    context['page_title'] = f'Журнал записи Салона {request.user.salon.name}'
     context['client_appontents'] = ClientAppointment.objects.filter(employee__salon=request.user.salon)
     return render(request, 'account/profile/salon/profile-salon-appointments.html', context)
 
@@ -196,6 +202,7 @@ def salon_appointments_journal_view(request):
 @user_passes_test(lambda user: user.groups.filter(name='Client').exists() or user.is_superuser)
 def client_appointments_view(request):
     context = {}
+    # context['page_title'] = 'Клиенты'
     context['appointments'] = ClientAppointment.objects.filter(client=request.user)
 
     # ClientAppointmentForm
@@ -216,6 +223,8 @@ def client_appointments_view(request):
 @user_passes_test(lambda user: user.is_anonymous)
 def register_by_phone_view(request):
     context = {}
+    context['page_title'] = 'Регистрация'
+
     if request.POST:
         form = RegistrationByPhoneForm(request.POST)
         if form.is_valid():
@@ -242,6 +251,7 @@ def register_by_phone_view(request):
 
 def register_password_view(request):
     context = {}
+    context['page_title'] = 'Ваш Пароль'
 
     first_name = request.session.get('first_name')
     phone      = request.session.get('phone')
@@ -275,6 +285,8 @@ def register_password_view(request):
 # TODO: reset password
 def reset_password_view(request):
     context = {}
+    context['page_title'] = 'Восстановление пароля'
+
     if request.POST:
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
@@ -292,4 +304,14 @@ def reset_password_view(request):
 # TODO: reset password instructions manipulate with session
 def reset_password_instructions_view(request):
     context = {}
+    context['page_title'] = 'Сброс пароля'
     return render(request, 'account/reset-password-instructions.html', context)
+
+
+@login_required(login_url='user:login')
+@user_passes_test(lambda user: user.groups.filter(name='Salon').exists() or user.is_superuser)
+def salon_clients_view(request):
+    context = {}
+    context['page_title'] = 'Клиенты Салона'
+    context['salon_clients'] = Client.objects.filter(active=True, salon=request.user.salon.id)
+    return render(request, 'account/profile/salon/profile-salon-clients.html', context)

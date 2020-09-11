@@ -13,6 +13,7 @@ from apps.salon.models.salon_services import SalonServices
 from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.employee import Employee
 from apps.salon.models.client_appointment import ClientAppointment
+from apps.salon.models.client import Client
 
 
 class AddDummyContent:
@@ -333,6 +334,25 @@ class AddDummyContent:
                 print(f'Услуга "{service_instance.name}" для Салона "{salon.name}", с ценой {salon_service.price} создана!')
 
 
+    def addClient(self):
+        salons_ids_list = list(Salon.objects.all().values_list('id', flat=True))
+
+        if Client.objects.all().count() == 0:
+            for salon_id in salons_ids_list:
+                salon_instance = Salon.objects.get(id=salon_id)
+
+                for _ in range(15):
+                    client = Client(active=True, \
+                                    salon=salon_instance, \
+                                    phone=f'7988{random.randint(0000000,9999999)}', \
+                                    first_name=f'Клиент_{salon_instance.name.lower()}', \
+                                    )
+                    client.save()
+                    print(f'Клиент Салона "{salon_instance.name}" создана!')
+        else:
+            print("Клиенты салонов уже созданы")
+
+
     def addClientAppointments(self):
         users_client = Account.objects.filter(groups__name='Client')
 
@@ -394,4 +414,5 @@ class AddDummyContent:
         self.addSalonsEmployees()
         self.addSalonServices()
         self.addActions()
+        self.addClient()
         # self.addClientAppointments()

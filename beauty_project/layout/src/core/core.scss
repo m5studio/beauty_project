@@ -37,14 +37,11 @@ body {
 
         #select_city,
         #user_zone {
+            color: #ffc7b5;
+
             @include media-breakpoint-up(lg) {
                 text-align: right;
             }
-        }
-
-        #select_city {
-            color: #fbddd3;
-            font-size: .9rem;
 
             a {
                 color: #fbddd3;
@@ -56,6 +53,8 @@ body {
                 }
             }
         }
+
+        // #select_city {}
 
         // #user_zone {}
     }
@@ -71,8 +70,9 @@ body {
     }
 }
 
-#page-h1 {
+#page_title {
     text-align: center;
+    margin-bottom: 30px;
 
     h1 {
         color: #fbddd3;

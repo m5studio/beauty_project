@@ -14,6 +14,7 @@ from apps.account.views import (
     add_salon_action_view,
 
     salon_appointments_journal_view,
+    salon_clients_view,
 
     client_appointments_view,
 
@@ -46,6 +47,7 @@ urlpatterns = [
             path('add-action/', add_salon_action_view, name='salon-add-action'),
 
             path('appointments/', salon_appointments_journal_view, name='salon-appointments'),
+            path('clients/', salon_clients_view, name='salon-clients'),
         ])),
 
         # Client
