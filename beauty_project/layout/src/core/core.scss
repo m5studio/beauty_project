@@ -37,11 +37,22 @@ body {
 
         #select_city,
         #user_zone {
-            color: #ffc7b5;
-
             @include media-breakpoint-up(lg) {
                 text-align: right;
             }
+
+            a {
+                text-decoration: none;
+
+                &:focus,
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        #select_city {
+            color: #ffc7b5;
 
             a {
                 color: #fbddd3;
@@ -53,8 +64,6 @@ body {
                 }
             }
         }
-
-        // #select_city {}
 
         // #user_zone {}
     }
