@@ -30,6 +30,7 @@ urlpatterns = [
     path('', include('apps.account.urls')),
     path('', include('apps.core.urls')),
     path('', include('apps.salon.urls')),
+    path('', include('apps.api.urls')),
 ]
 
 if settings.DEBUG:

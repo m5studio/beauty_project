@@ -96,7 +96,7 @@ def user_profile_view(request):
         salon_instance = Salon.objects.get(id=request.user.salon.id)
 
         # EditSalonServicesForm
-        EditSalonServicesFormFormSet = inlineformset_factory(Salon, SalonServices, fields=('salon', 'service', 'price'), extra=0, can_delete=False)
+        EditSalonServicesFormFormSet = inlineformset_factory(Salon, SalonServices, form=EditSalonServicesForm, fields=('salon', 'service', 'price'), extra=0, can_delete=False)
         if request.POST and 'edit_prices' in request.POST:
             formset = EditSalonServicesFormFormSet(request.POST, instance=salon_instance)
             if formset.is_valid():

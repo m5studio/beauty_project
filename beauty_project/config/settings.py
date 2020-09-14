@@ -44,12 +44,9 @@ INSTALLED_APPS = [
     'imagekit',
     'mptt',
 
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-
     'apps.account.apps.AccountConfig',
     'apps.actions.apps.ActionsConfig',
+    'apps.api.apps.ApiConfig',
     'apps.core.apps.CoreConfig',
     'apps.salon.apps.SalonConfig',
     'apps.services.apps.ServicesConfig',
