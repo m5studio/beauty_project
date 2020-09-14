@@ -261,8 +261,8 @@ dist
 
 
 # ================== My rules
-.Design/
-.Доработанные прототипы Beauty Project/
+/Design
+/Доработанные прототипы Beauty Project
 *.psd
 *.zip
 beget.com.txt
