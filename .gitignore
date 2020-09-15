@@ -265,5 +265,6 @@ dist
 /Доработанные прототипы Beauty Project
 *.psd
 *.zip
+*.package-lock.json
 beget.com.txt
 # ================== END My rules
