@@ -16,16 +16,33 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# ENVIRON
+# https://github.com/joke2k/django-environ
+import environ
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+# reading .env file
+# environ.Env.read_env()
+PATH_TO_ENV = os.path.join(BASE_DIR, '.env')
+environ.Env.read_env(env_file=PATH_TO_ENV)
+# END ENVIRON
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7pme8gibxb(sen+ctgzb%1xx+uz78j&^dc8bln4zmdn&0-ji3w'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+if not DEBUG:
+    ALLOWED_HOSTS = env('ALLOWED_HOSTS').split('|')
 
 
 # Application definition
@@ -123,8 +140,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
 # LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = env('LANGUAGE_CODE')
 
 TIME_ZONE = 'Europe/Moscow'
 
