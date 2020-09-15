@@ -255,7 +255,7 @@ class AddDummyContent:
         salons_count = Salon.objects.all().count()
         if salons_count == 0:
             i = 1
-            for _ in range(10):
+            for _ in range(20):
                 salon = Salon(active=True, \
                                 name=f"Salon name {i}", \
                                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie nisl erat, in auctor purus vehicula vel. Mauris pharetra maximus sapien non bibendum. Pellentesque placerat mauris at dictum lobortis. Nulla consectetur tortor at magna faucibus suscipit. Vivamus aliquam lorem sem, in porta orci commodo sit amet.", \
@@ -263,8 +263,10 @@ class AddDummyContent:
                                 email="salonmail@gmail.com", \
                                 site_url="https://google.com", \
                                 city="Москва", \
-                                latitude="55.751244", \
-                                longitude="37.618423", \
+                                # latitude=f'55.751244', \
+                                # longitude=f'37.618423', \
+                                latitude=f'55.{random.randint(510000,740000)}', \
+                                longitude=f'37.{random.randint(570000,810000)}', \
                             )
                 salon.save()
                 print(f"Салон {salon.name} создан")

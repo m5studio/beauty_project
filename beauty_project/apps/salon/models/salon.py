@@ -10,6 +10,7 @@ class Salon(models.Model):
     email       = models.EmailField('Email', max_length=200, blank=True, null=True)
     site_url    = models.URLField('Site URL', max_length=200, blank=True, null=True)
 
+    # TODO: change city, metro to different models
     city        = models.CharField('Город', max_length=255, blank=True, null=True)
     address     = models.CharField('Адрес', max_length=255, blank=True, null=True)
     metro       = models.CharField('Метро', max_length=255, blank=True, null=True)

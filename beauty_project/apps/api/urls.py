@@ -1,16 +1,14 @@
 from django.urls import path, include
 
-# from apps.api.views import (
-#     # logout_view,
-#     # login_view,
-# )
+from apps.api.views import (
+    api_salons_list_view,
+)
 
 
 app_name = 'api'
 
 urlpatterns = [
-    # path('api/', include([
-    #     path('login/', login_view, name='login'),
-    #     path('logout/', logout_view, name='logout'),
-    # ])),
+    path('api/', include([
+        path('salons/', api_salons_list_view, name='salons'),
+    ])),
 ]
