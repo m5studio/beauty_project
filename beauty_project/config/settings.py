@@ -190,24 +190,6 @@ AUTHENTICATION_BACKENDS = [
     'apps.account.auth_backends.PhoneAuthBackend',
 ]
 
-"""
-# Allauth
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-ACCOUNT_EMAIL_REQUIRED = True
-
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-
-# LOGIN_REDIRECT_URL = "/user/cabinet/"
-"""
 
 # https://github.com/matthewwithanm/django-imagekit
 IMAGEKIT_CACHEFILE_DIR = 'cache-images'
