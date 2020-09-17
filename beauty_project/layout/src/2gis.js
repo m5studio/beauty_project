@@ -78,17 +78,16 @@ DG.then(function() {
         .then(response => response.json())
         .then(data => {
             // getSalonsArray.push(...data);
+
             for (var i = 0; i < data.length; i++) {
                 coordinates[0] = data[i].latitude;
                 coordinates[1] = data[i].longitude;
-                // console.log(coordinates[0], coordinates[1]);
                 DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
             }
-            // showMarkers();
         })
         .catch(err => console.error(err));
 
-    showMarkers();
+    showMarkers()
 
 
     document.getElementById('hide').onclick = hideMarkers;
@@ -106,7 +105,7 @@ DG.then(function() {
     };
 
     function showSanonsActions() {
-        markers.removeFrom(map);
+        // markers.removeFrom(map);
 
         fetch(api_url)
             .then(response => response.json())
@@ -118,11 +117,11 @@ DG.then(function() {
                         DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
                     }
                 }
-                // showMarkers();
+                showMarkers();
             })
             .catch(err => console.error(err));
 
-        showMarkers();
+        // showMarkers();
     };
 });
 
