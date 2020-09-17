@@ -383,7 +383,9 @@ class AddDummyContent:
 
 
     def addActions(self):
-        salons = Salon.objects.filter(active=True)
+        # salons = Salon.objects.filter(active=True)
+        # Get five random Salons
+        salons = Salon.objects.filter(active=True).order_by('?')[:5]
 
         if Actions.objects.all().count() == 0:
             for salon in salons:

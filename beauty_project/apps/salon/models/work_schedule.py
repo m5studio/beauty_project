@@ -1,4 +1,5 @@
 from django.db import models
+
 from apps.salon.models.salon import Salon
 
 

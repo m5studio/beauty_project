@@ -136,69 +136,6 @@
                         </div>
                     </div>
                 {% endfor %}
-                <!-- <div class="action-card">
-                    <div class="action-card__img">
-                        <a href="">
-                            <img src="{% static 'images/tmp/action.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="action-card__mid">
-                        <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
-                        <div class="action-card__action-title">-50% НА ВСЕ!</div>
-                        <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
-                    </div>
-                    <div class="action-card__bottom">
-                        <div class="action-card__bottom--left">
-                            <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
-                            <div class="action-card__rating"></div>
-                        </div>
-                        <div class="action-card__bottom--read-more">
-                            <a href="">Подробнее</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="action-card">
-                    <div class="action-card__img">
-                        <a href="">
-                            <img src="{% static 'images/tmp/action.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="action-card__mid">
-                        <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
-                        <div class="action-card__action-title">-50% НА ВСЕ!</div>
-                        <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
-                    </div>
-                    <div class="action-card__bottom">
-                        <div class="action-card__bottom--left">
-                            <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
-                            <div class="action-card__rating"></div>
-                        </div>
-                        <div class="action-card__bottom--read-more">
-                            <a href="">Подробнее</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="action-card">
-                    <div class="action-card__img">
-                        <a href="">
-                            <img src="{% static 'images/tmp/action.jpg' %}" alt="">
-                        </a>
-                    </div>
-                    <div class="action-card__mid">
-                        <div class="action-card__salon-name">Салон красоты РОМАШКА+</div>
-                        <div class="action-card__action-title">-50% НА ВСЕ!</div>
-                        <div class="action-card__action-date">Акция действует до 1 августа 2020</div>
-                    </div>
-                    <div class="action-card__bottom">
-                        <div class="action-card__bottom--left">
-                            <div class="action-card__address">г. Москва, Даниловская наб. 55</div>
-                            <div class="action-card__rating"></div>
-                        </div>
-                        <div class="action-card__bottom--read-more">
-                            <a href="">Подробнее</a>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     {% endif %}
@@ -214,9 +151,18 @@
             <div id="section-map__legend"class="container">
                 <div class="row">
                     <div id="section-map__legend--filters" class="col-5">
-                        <a class="active" href="">Открыты сейчас</a>
-                        <a href="">Акции</a>
-                        <a href="">Все салоны</a>
+                        <!-- <a id="section-map__legend--show-opened" class="active" href="">Открыты сейчас</a>
+                        <a id="section-map__legend--show-actions" href="">Акции</a>
+                        <a id="section-map__legend--show-all" href="">Все салоны</a> -->
+
+                        <button id="section-map__legend--show-opened" class="active" type="button">Открыты сейчас</button>
+                        <button id="section-map__legend--show-actions" type="button">Акции</button>
+                        <button id="section-map__legend--show-all" type="button">Все салоны</button>
+
+                        <!-- <span id="open">open</span>
+                        <span id="hide">hide</span> -->
+                        <input id="show" type="button" value="show markers" />
+                        <input id="hide" type="button" value="hide markers" />
                     </div>
                     <div class="col-2"></div>
                     <div id="section-map__legend--icons" class="col-5">
