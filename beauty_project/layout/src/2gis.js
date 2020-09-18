@@ -74,7 +74,7 @@ DG.then(function() {
     });
 
     // Add markers to map on page load
-    var salonsArray = [];
+    // var salonsArray = [];
 
     fetch(api_url)
         .then(response => response.json())
@@ -85,22 +85,35 @@ DG.then(function() {
                 coordinates[0] = data[i].latitude;
                 coordinates[1] = data[i].longitude;
                 DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
+
+                if (data[i].action === true) {
+                    DG.marker(coordinates).addTo(markers_actions).bindPopup(data[i].name);
+                }
             }
 
-            return salonsArray.push(...data);
+            // return salonsArray.push(...data);
         })
         .catch(err => console.error(err))
 
-    showMarkers()
+    showMarkers();
 
 
     document.getElementById('hide').onclick = hideMarkers;
-    document.getElementById('show').onclick = showMarkers;
-    document.getElementById('section-map__legend--show-actions').onclick = showSanonsActions;
+    // document.getElementById('show').onclick = showMarkers;
+
+    document.getElementById('section-map__legend--show-all').onclick = showMarkers;
+    document.getElementById('section-map__legend--show-actions').onclick = showActionMarkers;
 
     function showMarkers() {
         markers.addTo(map);
         // map.fitBounds(markers.getBounds());
+    };
+
+    function showActionMarkers() {
+        hideMarkers();
+
+        markers_actions.addTo(map);
+        map.fitBounds(markers.getBounds());
     };
 
     function hideMarkers() {
@@ -109,9 +122,8 @@ DG.then(function() {
     };
 
     function showSanonsActions() {
-        hideMarkers();
-
-        console.log(salonsArray);
+        // hideMarkers();
+        // markers_actions.removeFrom(map);
 
         salonsArray.forEach(el => {
             if (el.action === true) {
@@ -119,8 +131,9 @@ DG.then(function() {
                 coordinates[1] = el.longitude;
                 DG.marker(coordinates).addTo(markers_actions).bindPopup(el.name);
             }
-            markers_actions.addTo(map);
         });
+
+        markers_actions.addTo(map);
 
         /*
         fetch(api_url)
