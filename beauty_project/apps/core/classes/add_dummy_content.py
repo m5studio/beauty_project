@@ -275,6 +275,8 @@ class AddDummyContent:
 
     def addSalonsWorkSchedules(self):
         salons = Salon.objects.all()
+        hours_range = ["11", "15", "18"]
+
         for salon in salons:
             i = 0
             if not WorkSchedule.objects.filter(salon=salon).exists():
@@ -283,7 +285,8 @@ class AddDummyContent:
                     ws = WorkSchedule(salon=salon_obj, \
                                         week_day=WorkSchedule.WEEK_DAYS[i][0], \
                                         # working_hours_from="09:00:00", \
-                                        working_hours_to="18:00:00", \
+                                        # working_hours_to="18:00:00", \
+                                        working_hours_to=f"{random.choice(hours_range)}:00:00", \
                                     )
                     ws.save()
                     print(f'Рабочий график для салона "{ws.salon.name}" на {ws.get_week_day_display()} создан')

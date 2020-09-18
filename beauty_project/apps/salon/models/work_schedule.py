@@ -5,13 +5,21 @@ from apps.salon.models.salon import Salon
 
 class WorkSchedule(models.Model):
     WEEK_DAYS = (
-        ('monday', 'Понедельник'),
-        ('tuesday', 'Вторник'),
-        ('wednesday', 'Среда'),
-        ('thursday', 'Четверг'),
-        ('friday', 'Пятница'),
-        ('saturday', 'Суббота'),
-        ('sunday', 'Воскресенье'),
+        # ('monday', 'Понедельник'),
+        # ('tuesday', 'Вторник'),
+        # ('wednesday', 'Среда'),
+        # ('thursday', 'Четверг'),
+        # ('friday', 'Пятница'),
+        # ('saturday', 'Суббота'),
+        # ('sunday', 'Воскресенье'),
+
+        ('0', 'Понедельник'),
+        ('1', 'Вторник'),
+        ('2', 'Среда'),
+        ('3', 'Четверг'),
+        ('4', 'Пятница'),
+        ('5', 'Суббота'),
+        ('6', 'Воскресенье'),
     )
 
     salon              = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.CASCADE)
