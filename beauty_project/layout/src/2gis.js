@@ -50,11 +50,13 @@ DG.then(function() {
 });
 */
 
+
 DG.then(function() {
     const api_url = '/api/salons/';
 
     var map,
         markers = DG.featureGroup(),
+        markers_actions = DG.featureGroup(),
         coordinates = [];
 
     map = DG.map('section-map__map', {
@@ -72,41 +74,55 @@ DG.then(function() {
     });
 
     // Add markers to map on page load
-    var getSalonsArray = [];
+    var salonsArray = [];
 
     fetch(api_url)
         .then(response => response.json())
         .then(data => {
-            // getSalonsArray.push(...data);
+            // salonsArray.push(...data);
 
             for (var i = 0; i < data.length; i++) {
                 coordinates[0] = data[i].latitude;
                 coordinates[1] = data[i].longitude;
                 DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
             }
+
+            return salonsArray.push(...data);
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
 
     showMarkers()
 
 
     document.getElementById('hide').onclick = hideMarkers;
     document.getElementById('show').onclick = showMarkers;
-
     document.getElementById('section-map__legend--show-actions').onclick = showSanonsActions;
 
     function showMarkers() {
         markers.addTo(map);
-        map.fitBounds(markers.getBounds());
+        // map.fitBounds(markers.getBounds());
     };
 
     function hideMarkers() {
         markers.removeFrom(map);
+        markers_actions.removeFrom(map);
     };
 
     function showSanonsActions() {
-        // markers.removeFrom(map);
+        hideMarkers();
 
+        console.log(salonsArray);
+
+        salonsArray.forEach(el => {
+            if (el.action === true) {
+                coordinates[0] = el.latitude;
+                coordinates[1] = el.longitude;
+                DG.marker(coordinates).addTo(markers_actions).bindPopup(el.name);
+            }
+            markers_actions.addTo(map);
+        });
+
+        /*
         fetch(api_url)
             .then(response => response.json())
             .then(data => {
@@ -114,14 +130,15 @@ DG.then(function() {
                     if (data[i].action === true) {
                         coordinates[0] = data[i].latitude;
                         coordinates[1] = data[i].longitude;
-                        DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
+                        DG.marker(coordinates).addTo(markers_actions).bindPopup(data[i].name);
                     }
                 }
-                showMarkers();
+                // showMarkers();
+                markers_actions.addTo(map);
+                // map.fitBounds(markers_actions.getBounds());
             })
             .catch(err => console.error(err));
-
-        // showMarkers();
+        */
     };
 });
 
