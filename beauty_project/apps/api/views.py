@@ -24,7 +24,7 @@ def api_salons_list_view(request):
                 salon['action'] = True
             else:
                 salon['action'] = False
-
+        '''
         # Get current day Working schedule
         salon_ws = WorkSchedule.objects.filter(salon=salon['id'])
         for ws in salon_ws:
@@ -39,6 +39,7 @@ def api_salons_list_view(request):
                 print(today_ws.working_hours_to)
 
         print('\n')
+        '''
 
 
     salons_list = list(salons)
