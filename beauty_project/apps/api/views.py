@@ -34,6 +34,7 @@ def api_salons_list_view(request):
             if int(ws.week_day) == int(today_weekday):
                 today_ws = WorkSchedule.objects.get(salon=salon['id'], week_day=today_weekday)
 
+                print( int(str(now_time).replace(':','')), int(str(today_ws.working_hours_to).replace(':','')))
                 # Compare current time and Salon working_hours_to
                 if int(str(now_time).replace(':','')) < int(str(today_ws.working_hours_to).replace(':','')):
                     salon['working_schedule']['open_now'] = True
