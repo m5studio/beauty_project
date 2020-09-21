@@ -8,6 +8,7 @@ DG.then(function() {
     var map,
         markers = DG.featureGroup(),
         markers_actions = DG.featureGroup(),
+        markers_open_now = DG.featureGroup(),
         coordinates = [];
 
     map = DG.map('section-map__map', {
@@ -31,11 +32,18 @@ DG.then(function() {
             for (var i = 0; i < data.length; i++) {
                 coordinates[0] = data[i].latitude;
                 coordinates[1] = data[i].longitude;
+
+                // Add each Salon to markers
                 DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
 
                 // Add markers with actions
-                if (data[i].action === true) {
+                if (data[i].has_actions === true) {
                     DG.marker(coordinates).addTo(markers_actions).bindPopup(data[i].name);
+                }
+
+                // Add markers for open now Salons
+                if (data[i].working_schedule.open_now === true) {
+                    DG.marker(coordinates).addTo(markers_open_now).bindPopup(data[i].name);
                 }
             }
         })
@@ -48,23 +56,34 @@ DG.then(function() {
     document.getElementById('hide').onclick = hideMarkers;
 
     document.getElementById('section-map__legend--show-all').onclick = showMarkers;
-    document.getElementById('section-map__legend--show-actions').onclick = showActionMarkers;
+    document.getElementById('section-map__legend--show-actions').onclick = showActionsMarkers;
+    document.getElementById('section-map__legend--show-opened').onclick = showOpenNowMarkers;
 
     function showMarkers() {
+        hideMarkers();
+
         markers.addTo(map);
         // map.fitBounds(markers.getBounds());
     };
 
-    function showActionMarkers() {
+    function showActionsMarkers() {
         hideMarkers();
 
         markers_actions.addTo(map);
-        map.fitBounds(markers.getBounds());
+        map.fitBounds(markers_actions.getBounds());
     };
+
+    function showOpenNowMarkers() {
+        hideMarkers();
+
+        markers_open_now.addTo(map);
+        map.fitBounds(markers_open_now.getBounds());
+    }
 
     function hideMarkers() {
         markers.removeFrom(map);
         markers_actions.removeFrom(map);
+        markers_open_now.removeFrom(map);
     };
 });
 
