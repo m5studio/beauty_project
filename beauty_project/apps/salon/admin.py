@@ -6,6 +6,7 @@ from apps.salon.models.employee import Employee
 from apps.salon.models.client import Client
 from apps.salon.models.work_schedule import WorkSchedule
 from apps.salon.models.client_appointment import ClientAppointment
+from apps.salon.models.address import City, Metro, Address
 
 
 class WorkScheduleInline(admin.TabularInline):
@@ -97,3 +98,23 @@ class ClientAdmin(admin.ModelAdmin):
 class ClientAppointmentAdmin(admin.ModelAdmin):
     list_display = ('get_client_name', 'client', 'get_salon_name', 'employee', 'datetime', 'status')
     autocomplete_fields = ['client', 'employee', 'services']
+
+
+@admin.register(City)
+class CityAdmin(admin.ModelAdmin):
+    # search_fields = ['name']
+    pass
+
+
+@admin.register(Metro)
+class MetroAdmin(admin.ModelAdmin):
+    # search_fields = ['name']
+    # autocomplete_fields = ['city',]
+    ordering = ('name',)
+
+
+@admin.register(Address)
+class AddressAdmin(admin.ModelAdmin):
+    # autocomplete_fields = ['city', 'metro',]
+    # autocomplete_fields = ['city_name', 'metro_name',]
+    pass
