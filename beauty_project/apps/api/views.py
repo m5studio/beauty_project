@@ -5,6 +5,8 @@ from django.http import JsonResponse
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.work_schedule import WorkSchedule
+from apps.salon.models.address import Address
+
 from apps.actions.models import Actions
 
 

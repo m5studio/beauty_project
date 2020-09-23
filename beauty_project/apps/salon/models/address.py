@@ -1,5 +1,7 @@
 from django.db import models
 
+from apps.salon.models.salon import Salon
+
 
 class City(models.Model):
     name = models.CharField('Город', max_length=255)
@@ -26,11 +28,14 @@ class Metro(models.Model):
 
 
 class Address(models.Model):
+    salon    = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.CASCADE)
     city     = models.ForeignKey(City, verbose_name='Город', on_delete=models.CASCADE)
     metro    = models.ForeignKey(Metro, verbose_name='Метро', blank=True, on_delete=models.CASCADE)
     street   = models.CharField('Улица', max_length=255, blank=True, null=True)
     building = models.CharField('Номер дома', max_length=255, blank=True, null=True)
-    # TODO: latitude & longitude
+
+    latitude    = models.CharField('Широта', max_length=100, blank=True, null=True)
+    longitude   = models.CharField('Долгота', max_length=100, blank=True, null=True)
 
     def __str__(self):
         if self.metro:

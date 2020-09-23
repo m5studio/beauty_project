@@ -115,6 +115,6 @@ class MetroAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
+    list_display = ('salon', 'city', 'metro', 'street', 'building')
     # autocomplete_fields = ['city', 'metro',]
     # autocomplete_fields = ['city_name', 'metro_name',]
-    pass

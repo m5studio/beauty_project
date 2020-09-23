@@ -11,10 +11,11 @@ class Salon(models.Model):
     site_url    = models.URLField('Site URL', max_length=200, blank=True, null=True)
 
     # TODO: change city, metro to different models
-    city        = models.CharField('Город', max_length=255, blank=True, null=True)
-    address     = models.CharField('Адрес', max_length=255, blank=True, null=True)
-    metro       = models.CharField('Метро', max_length=255, blank=True, null=True)
+    # city        = models.CharField('Город', max_length=255, blank=True, null=True)
+    # address     = models.CharField('Адрес', max_length=255, blank=True, null=True)
+    # metro       = models.CharField('Метро', max_length=255, blank=True, null=True)
 
+    # TODO: move latitude and longitude to address
     latitude    = models.CharField('Широта', max_length=100, blank=True, null=True)
     longitude   = models.CharField('Долгота', max_length=100, blank=True, null=True)
 

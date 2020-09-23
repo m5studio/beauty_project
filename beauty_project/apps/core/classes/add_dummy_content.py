@@ -263,7 +263,7 @@ class AddDummyContent:
                                 phone="+79990001100", \
                                 email="salonmail@gmail.com", \
                                 site_url="https://google.com", \
-                                city="Москва", \
+                                # city="Москва", \
                                 # latitude=f'55.751244', \
                                 # longitude=f'37.618423', \
                                 latitude=f'55.{random.randint(510000,740000)}', \
@@ -340,15 +340,24 @@ class AddDummyContent:
                 print("Городов нет")
 
             if cities:
-                for _ in range(3):
+                city_moscow_instance = City.objects.get(name="Москва")
+                # moscow_metro_list = list(Metro.objects.filter(city=city_moscow_instance).values_list('name', flat=True))
+                # print(moscow_metro_list)
+
+                for salon_instance in Salon.objects.filter(active=True):
+                    salon_random_instance = Salon.objects.filter(active=True).order_by('?')[:1].first()
+                    metro_random_instance = Metro.objects.all().order_by('?')[:1].first()
                     # TODO
-                    address = Address(city=, \
-                                        metro=, \
-                                        street=, \
-                                        building=,
+                    address = Address(salon=salon_instance, \
+                                        city=city_moscow_instance, \
+                                        metro=metro_random_instance, \
+                                        street='ул. Большая Ордынка', \
+                                        building=f'{random.randint(1,50)}', \
+                                        latitude=f'55.{random.randint(510000,740000)}', \
+                                        longitude=f'37.{random.randint(570000,810000)}', \
                                     )
                     address.save()
-                    print(f'Адрес {address.city} {address.metro} {address.street} {address.building} создан')
+                print(f'Адрес {address.city} {address.metro} {address.street} {address.building} создан')
         else:
             print("Адреса созданы")
 
