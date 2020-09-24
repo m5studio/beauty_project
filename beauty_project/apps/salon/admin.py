@@ -17,9 +17,9 @@ class WorkScheduleInline(admin.TabularInline):
 
 @admin.register(Salon)
 class SalonAdmin(admin.ModelAdmin):
-    inlines = [
-        WorkScheduleInline,
-    ]
+    # inlines = [
+    #     WorkScheduleInline,
+    # ]
 
     fieldsets = (
         (None, {
@@ -79,14 +79,15 @@ class EmployeeAdmin(admin.ModelAdmin):
 class WorkScheduleAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('salon',)
+            # 'fields': ('salon',)
+            'fields': ('address',)
         }),
         ('График работы', {
             'fields': ('week_day', 'working_hours_from', 'working_hours_to',)
         }),
     )
 
-    autocomplete_fields = ['salon',]
+    # autocomplete_fields = ['salon',]
 
 
 @admin.register(Client)
@@ -115,6 +116,10 @@ class MetroAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
+    inlines = [
+        WorkScheduleInline,
+    ]
+
     list_display = ('salon', 'city', 'metro', 'street', 'building')
     # autocomplete_fields = ['city', 'metro',]
     # autocomplete_fields = ['city_name', 'metro_name',]

@@ -263,11 +263,8 @@ class AddDummyContent:
                                 phone="+79990001100", \
                                 email="salonmail@gmail.com", \
                                 site_url="https://google.com", \
-                                # city="Москва", \
-                                # latitude=f'55.751244', \
-                                # longitude=f'37.618423', \
-                                latitude=f'55.{random.randint(510000,740000)}', \
-                                longitude=f'37.{random.randint(570000,810000)}', \
+                                # latitude=f'55.{random.randint(510000,740000)}', \
+                                # longitude=f'37.{random.randint(570000,810000)}', \
                             )
                 salon.save()
                 print(f"Салон {salon.name} создан")
@@ -275,25 +272,28 @@ class AddDummyContent:
 
 
     def addSalonsWorkSchedules(self):
-        salons = Salon.objects.all()
+        # salons = Salon.objects.all()
+        addresses = Address.objects.all()
         hours_range = ["11", "15", "18"]
 
-        for salon in salons:
-            i = 0
-            if not WorkSchedule.objects.filter(salon=salon).exists():
-                for _ in range(7):
-                    salon_obj = Salon.objects.get(id=salon.id)
-                    ws = WorkSchedule(salon=salon_obj, \
-                                        week_day=WorkSchedule.WEEK_DAYS[i][0], \
-                                        # working_hours_from="09:00:00", \
-                                        # working_hours_to="18:00:00", \
-                                        working_hours_to=f"{random.choice(hours_range)}:00:00", \
-                                    )
-                    ws.save()
-                    print(f'Рабочий график для салона "{ws.salon.name}" на {ws.get_week_day_display()} создан')
-                    i += 1
-            else:
-                print(f'Рабочий график для салона "{salon.name}" уже существует')
+        if addresses.count() > 0:
+            for address in addresses:
+                i = 0
+                if not WorkSchedule.objects.filter(address=address).exists():
+                    for _ in range(7):
+                        # salon_instance = Salon.objects.get(id=salon.id)
+                        address_instance = Address.objects.get(id=address.id)
+                        ws = WorkSchedule(address=address_instance, \
+                                            week_day=WorkSchedule.WEEK_DAYS[i][0], \
+                                            # working_hours_from="09:00:00", \
+                                            # working_hours_to="18:00:00", \
+                                            working_hours_to=f"{random.choice(hours_range)}:00:00", \
+                                        )
+                        ws.save()
+                        print(f'Рабочий график для салона "{ws.address}" на {ws.get_week_day_display()} создан')
+                        i += 1
+                else:
+                    print(f'Рабочий график для салона "{address}" уже существует')
 
 
     def addCity(self):
@@ -333,31 +333,24 @@ class AddDummyContent:
 
     def addAddress(self):
         if Address.objects.all().count() == 0:
-            try:
-                cities = City.objects.all()
-            except Exception as e:
-                cities = None
-                print("Городов нет")
+            city_moscow_instance = City.objects.get(name="Москва")
 
-            if cities:
-                city_moscow_instance = City.objects.get(name="Москва")
-                # moscow_metro_list = list(Metro.objects.filter(city=city_moscow_instance).values_list('name', flat=True))
-                # print(moscow_metro_list)
+            for salon_instance in Salon.objects.all():
+                # salon_random_instance = Salon.objects.filter(active=True).order_by('?').first()
 
-                for salon_instance in Salon.objects.filter(active=True):
-                    salon_random_instance = Salon.objects.filter(active=True).order_by('?')[:1].first()
-                    metro_random_instance = Metro.objects.all().order_by('?')[:1].first()
-                    # TODO
+                # Create two addresses for Salon
+                for _ in range(2):
+                    metro_random_instance = Metro.objects.all().order_by('?').first()
                     address = Address(salon=salon_instance, \
                                         city=city_moscow_instance, \
                                         metro=metro_random_instance, \
-                                        street='ул. Большая Ордынка', \
+                                        street=f'{random.choice(["ул. Большая Ордынка", "пр. Вернадского", "ул. Воздвиженка", "Покровский бульвар"])}', \
                                         building=f'{random.randint(1,50)}', \
                                         latitude=f'55.{random.randint(510000,740000)}', \
                                         longitude=f'37.{random.randint(570000,810000)}', \
                                     )
                     address.save()
-                print(f'Адрес {address.city} {address.metro} {address.street} {address.building} создан')
+                    print(f'Адрес {address.city} {address.metro} {address.street} {address.building} создан')
         else:
             print("Адреса созданы")
 
@@ -453,7 +446,6 @@ class AddDummyContent:
 
 
     def addActions(self):
-        # salons = Salon.objects.filter(active=True)
         # Get five random Salons
         salons = Salon.objects.filter(active=True).order_by('?')[:5]
 

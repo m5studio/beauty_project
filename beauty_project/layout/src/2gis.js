@@ -29,7 +29,8 @@ DG.then(function() {
     fetch(api_url)
         .then(response => response.json())
         .then(data => {
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
+                /*
                 coordinates[0] = data[i].latitude;
                 coordinates[1] = data[i].longitude;
 
@@ -45,6 +46,26 @@ DG.then(function() {
                 if (data[i].working_schedule.open_now === true) {
                     DG.marker(coordinates).addTo(markers_open_now).bindPopup(data[i].name);
                 }
+                */
+
+                data[i].addresses.forEach(el => {
+                    // console.log(el);
+                    coordinates[0] = el.latitude;
+                    coordinates[1] = el.longitude;
+
+                    // Add each Salon to markers
+                    DG.marker(coordinates).addTo(markers).bindPopup(data[i].name);
+
+                    // Add markers with actions
+                    if (data[i].has_actions === true) {
+                        DG.marker(coordinates).addTo(markers_actions).bindPopup(data[i].name);
+                    }
+
+                    // Add markers for open now Salons
+                    if (el.working_schedule.open_now === true) {
+                        DG.marker(coordinates).addTo(markers_open_now).bindPopup(data[i].name);
+                    }
+                });
             }
         })
         .catch(err => console.error(err))
@@ -75,6 +96,8 @@ DG.then(function() {
 
     function showOpenNowMarkers() {
         hideMarkers();
+
+        console.log(markers_open_now);
 
         markers_open_now.addTo(map);
         map.fitBounds(markers_open_now.getBounds());
