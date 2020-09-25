@@ -15,11 +15,17 @@ class WorkScheduleInline(admin.TabularInline):
     max_num = 7
 
 
+class AddressInline(admin.TabularInline):
+    model = Address
+    extra = 1
+    max_num = 10
+
+
 @admin.register(Salon)
 class SalonAdmin(admin.ModelAdmin):
-    # inlines = [
-    #     WorkScheduleInline,
-    # ]
+    inlines = [
+        AddressInline,
+    ]
 
     fieldsets = (
         (None, {
@@ -28,12 +34,12 @@ class SalonAdmin(admin.ModelAdmin):
         ('Контакты салона', {
             'fields': ('phone', 'email', 'site_url')
         }),
-        ('Адрес', {
-            'fields': ('city', 'address', 'metro')
-        }),
-        ('Координаты', {
-            'fields': ('latitude', 'longitude',)
-        }),
+        # ('Адрес', {
+        #     'fields': ('city', 'address', 'metro')
+        # }),
+        # ('Координаты', {
+        #     'fields': ('latitude', 'longitude',)
+        # }),
     )
 
     search_fields = ['name']
@@ -79,7 +85,6 @@ class EmployeeAdmin(admin.ModelAdmin):
 class WorkScheduleAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            # 'fields': ('salon',)
             'fields': ('address',)
         }),
         ('График работы', {
