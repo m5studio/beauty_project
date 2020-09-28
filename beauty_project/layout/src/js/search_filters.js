@@ -1,6 +1,8 @@
 const api_cities_url = "/api/cities/";
 const api_services_url = "/api/services/";
 
+document.getElementById('search-tile-input__date').valueAsDate = new Date();
+
 // const searchInputPlaces = document.getElementsByClassName('search-tile-input__place');
 const searchInputPlaces = document.getElementById('search-tile-input__place');
 // const searchInputServices = document.getElementsByClassName('search-tile-input__services');
@@ -41,3 +43,6 @@ fetchServicesData().then(servicesArr => {
         searchInputServices.add(search_option);
     }
 });
+
+
+// Add .st-4 .st-5

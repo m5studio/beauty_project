@@ -56,6 +56,19 @@
                         grid-column-end: 3;
                     }
 
+                    &.st-5 {
+                        transition: all ease-in-out .2s;
+
+                        &:focus,
+                        &:hover {
+                            background-color: #fbddd3;
+
+                            .search-tile__add-service {
+                                color: #293c4d;
+                            }
+                        }
+                    }
+
                     &-input {
                         background-color: transparent;
                         border-color: transparent;
