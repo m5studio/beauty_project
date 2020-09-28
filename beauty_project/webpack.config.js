@@ -14,7 +14,8 @@ module.exports = {
     // entry: './layout/src/main.js',
     entry: {
         main: './layout/src/main.js',
-        '2Gis': './layout/src/2gis.js'
+        '2Gis': './layout/src/js/2gis.js',
+        'search_filters': './layout/src/js/search_filters.js'
     },
     output: {
         filename: 'js/[name].js',
@@ -132,7 +133,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'html/homepage.html',
             template: './layout/src/html/homepage.html',
-            chunks: ["main", "2Gis"]
+            chunks: ["main", "2Gis", "search_filters"]
         }),
 
         // ...

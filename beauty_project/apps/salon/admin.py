@@ -34,12 +34,6 @@ class SalonAdmin(admin.ModelAdmin):
         ('Контакты салона', {
             'fields': ('phone', 'email', 'site_url')
         }),
-        # ('Адрес', {
-        #     'fields': ('city', 'address', 'metro')
-        # }),
-        # ('Координаты', {
-        #     'fields': ('latitude', 'longitude',)
-        # }),
     )
 
     search_fields = ['name']

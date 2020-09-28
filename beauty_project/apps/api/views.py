@@ -5,13 +5,13 @@ from django.http import JsonResponse
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.work_schedule import WorkSchedule
-from apps.salon.models.address import Address
+from apps.salon.models.address import Address, City
 
 from apps.actions.models import Actions
+from apps.services.models import Services
 
 
 def api_salons_list_view(request):
-    # salons = Salon.objects.filter(active=True).values('id', 'name', 'description', 'latitude', 'longitude')
     salons = Salon.objects.filter(active=True).values('id', 'name', 'description')
 
     actions = Actions.objects.filter(active=True)
@@ -34,7 +34,6 @@ def api_salons_list_view(request):
         salons_addresses = list(Address.objects.filter(salon__id=salon['id']).values('city__name', 'metro__name', 'street', 'building', 'latitude', 'longitude'))
 
         for salon_address in salons_addresses:
-
             # Working schedule for address
             salon_address['working_schedule'] = {}
             address_working_schedules = WorkSchedule.objects.filter(address__salon__id=salon['id'], week_day=today_weekday)
@@ -52,21 +51,15 @@ def api_salons_list_view(request):
 
             salon['addresses'].append(salon_address)
 
-        # Get current day Working schedule
-        # salon['working_schedule'] = {}
-        # salon['working_schedule']['open_now'] = False
-
-        # salon_ws = WorkSchedule.objects.filter(address__salon=salon['id'])
-        # for ws in salon_ws:
-        #     if int(ws.week_day) == int(today_weekday):
-        #         today_ws = WorkSchedule.objects.get(address__salon=salon['id'], week_day=today_weekday)
-
-        #         # Compare current time and Salon working_hours_to
-        #         if int(str(now_time).replace(':','')) < int(str(today_ws.working_hours_to).replace(':','')):
-        #             salon['working_schedule']['open_now'] = True
-
-        #         salon['working_schedule']['open_from'] = today_ws.working_hours_from
-        #         salon['working_schedule']['open_to'] = today_ws.working_hours_to
-
     salons_list = list(salons)
     return JsonResponse(salons_list, safe=False)
+
+
+def api_cities_list_view(request):
+    cities_list = list(City.objects.all().values('id', 'name'))
+    return JsonResponse(cities_list, safe=False)
+
+
+def api_services_list_view(request):
+    services_list = list(Services.objects.all().values('id', 'name'))
+    return JsonResponse(services_list, safe=False)

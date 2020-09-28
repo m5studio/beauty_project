@@ -28,7 +28,8 @@
                     <div class="search-tiles-group">
                         <div class="search-tile st-1">
                             <label for="">Местоположение или салон</label>
-                            <input type="text" name="" id="" class="search-tile-input search-tile-input__place">
+                            <!-- <input type="text" name="" id="" class="search-tile-input search-tile-input__place"> -->
+                            <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place"></select>
                         </div>
                         <div class="search-tile st-2">
                             <label for="">Дата визита</label>
@@ -48,7 +49,8 @@
 
                         <div class="search-tile st-4">
                             <label for="">Выберите услугу</label>
-                            <input type="text" name="" id="" class="search-tile-input">
+                            <!-- <input type="text" name="" id="" class="search-tile-input"> -->
+                            <select name="" id="search-tile-input__services" class="search-tile-input search-tile-input__services"></select>
                         </div>
                         <div class="search-tile st-5">
                             <div class="search-tile__add-service">
@@ -173,4 +175,12 @@
             <div id="section-map__map"></div>
         </div>
     </div>
+{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/vendors~2Gis.js' %}"></script>
+    <script src="{% static 'js/2Gis.js' %}"></script>
+    <script src="{% static 'js/search_filters.js' %}"></script>
 {% endblock %}

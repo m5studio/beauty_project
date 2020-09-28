@@ -21,7 +21,7 @@
                     </div>
 
                     <div id="select_city">
-                        <span class="icon icon-geomark"></span> Ваш регион: <a href="">Москва</a> <span class="icon icon-arrow-down"></span>
+                        <span class="icon icon-geomark"></span> Ваш город: <a href="">Москва</a> <span class="icon icon-arrow-down"></span>
                     </div>
 
                     <div id="user_zone">
@@ -152,8 +152,9 @@
 {% block js %}
     <script src="{% static 'js/vendors~main.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script src="{% static 'js/vendors~2Gis.js' %}"></script>
+    {% comment %}<!-- <script src="{% static 'js/vendors~2Gis.js' %}"></script>
     <script src="{% static 'js/2Gis.js' %}"></script>
+    <script src="{% static 'js/search_filters.js' %}"></script> -->{% endcomment %}
 {% endblock %}
 </body>
 </html>

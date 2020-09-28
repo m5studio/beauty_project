@@ -3,7 +3,7 @@ var DG = require('2gis-maps');
 
 
 DG.then(function() {
-    const api_url = '/api/salons/';
+    const api_salons_url = '/api/salons/';
 
     var map,
         markers = DG.featureGroup(),
@@ -26,7 +26,7 @@ DG.then(function() {
     });
 
     // Add markers to map on page load
-    fetch(api_url)
+    fetch(api_salons_url)
         .then(response => response.json())
         .then(data => {
             for (let i = 0; i < data.length; i++) {
