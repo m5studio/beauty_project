@@ -45,4 +45,4 @@ fetchServicesData().then(servicesArr => {
 });
 
 
-// Add .st-4 .st-5
+// TODO: Clone .st-4 .st-5

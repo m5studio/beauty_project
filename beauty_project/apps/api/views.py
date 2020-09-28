@@ -61,5 +61,5 @@ def api_cities_list_view(request):
 
 
 def api_services_list_view(request):
-    services_list = list(Services.objects.all().values('id', 'name'))
+    services_list = list(Services.objects.all().values('id', 'parent', 'parent__name', 'name'))
     return JsonResponse(services_list, safe=False)
