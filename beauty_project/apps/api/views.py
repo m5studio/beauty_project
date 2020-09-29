@@ -62,4 +62,19 @@ def api_cities_list_view(request):
 
 def api_services_list_view(request):
     services_list = list(Services.objects.all().values('id', 'parent', 'parent__name', 'name'))
-    return JsonResponse(services_list, safe=False)
+
+    services_list_sorted = []
+    for service in services_list:
+        if service['parent'] == None:
+            services_list_sorted.append(
+                {
+                    'id': service['id'],
+                    'name': service['name'],
+                    'services': []
+                }
+            )
+
+    for service_sorted in services_list_sorted:
+        query_tree = list(Services.objects.get(pk=service_sorted['id']).get_descendants(include_self=False).values('id', 'parent', 'parent__name', 'name'))
+        service_sorted['services'].extend(query_tree)
+    return JsonResponse(services_list_sorted, safe=False)

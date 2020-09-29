@@ -25,8 +25,6 @@ class AddDummyContent:
                 Services.objects.get(name=item)
                 print(f'Услуга "{item}" уже существует')
             except Exception as e:
-                # service = Services(name=item, parent=obj)
-                # service.save()
                 Services.objects.create(name=item, parent=obj)
                 print(f'Услуга "{item}" создана!')
 
@@ -47,6 +45,31 @@ class AddDummyContent:
         except Exception as e:
             manicure_root = Services.objects.create(name="Маникюр", parent=nails_root)
             print(f'Услуга "{manicure_root}" создана!')
+
+        # Удаление волос
+        # try:
+        #     hair_remove_root = Services.objects.get(name="Удаление волос")
+        #     print(f'Услуга "{hair_remove_root}" уже существует')
+        # except Exception as e:
+        #     hair_remove_root = Services.objects.create(name="Удаление волос")
+        #     print(f'Услуга "{hair_remove_root}" создана!')
+
+        # Брови и ресницы
+        # try:
+        #     brows_lashes_root = Services.objects.get(name="Брови и ресницы")
+        #     print(f'Услуга "{brows_lashes_root}" уже существует')
+        # except Exception as e:
+        #     brows_lashes_root = Services.objects.create(name="Брови и ресницы")
+        #     print(f'Услуга "{brows_lashes_root}" создана!')
+
+        # Барбершоп
+        try:
+            barbershop_root = Services.objects.get(name="Барбершоп")
+            print(f'Услуга "{barbershop_root}" уже существует')
+        except Exception as e:
+            barbershop_root = Services.objects.create(name="Барбершоп")
+            print(f'Услуга "{barbershop_root}" создана!')
+
 
         manicure = [
             'Классический',
@@ -189,10 +212,12 @@ class AddDummyContent:
 
         # Удаление волос
         try:
-            hairremoving_root = Services.objects.get(name="Удаление волос", parent=barber_root)
+            # hairremoving_root = Services.objects.get(name="Удаление волос", parent=barber_root)
+            hairremoving_root = Services.objects.get(name="Удаление волос")
             print(f'Услуга "{hairremoving_root}" уже существует')
         except Exception as e:
-            hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root)
+            # hairremoving_root = Services.objects.create(name="Удаление волос", parent=barber_root)
+            hairremoving_root = Services.objects.create(name="Удаление волос")
             print(f'Услуга "{hairremoving_root}" создана!')
 
         hairremoving = [
@@ -210,12 +235,14 @@ class AddDummyContent:
 
         self._createSubServices(hairremoving, hairremoving_root)
 
-        # Ресницы и брови
+        # Брови и ресницы
         try:
-            eyelashes_eyebrows_root = Services.objects.get(name="Ресницы и брови", parent=barber_root)
+            # eyelashes_eyebrows_root = Services.objects.get(name="Брови и ресницы", parent=barber_root)
+            eyelashes_eyebrows_root = Services.objects.get(name="Брови и ресницы")
             print(f'Услуга "{eyelashes_eyebrows_root}" уже существует')
         except Exception as e:
-            eyelashes_eyebrows_root = Services.objects.create(name="Ресницы и брови", parent=barber_root)
+            # eyelashes_eyebrows_root = Services.objects.create(name="Брови и ресницы", parent=barber_root)
+            eyelashes_eyebrows_root = Services.objects.create(name="Брови и ресницы")
             print(f'Услуга "{eyelashes_eyebrows_root}" создана!')
 
         eyelashes_eyebrows = [
@@ -230,7 +257,7 @@ class AddDummyContent:
             'Окрашивание и коррекция бровей',
         ]
 
-        self._createSubServices(hairremoving, eyelashes_eyebrows_root)
+        self._createSubServices(eyelashes_eyebrows, eyelashes_eyebrows_root)
 
         # Ресницы и брови => Наращивание уголков
         try:
