@@ -8,8 +8,6 @@ const searchInputPlaces = document.getElementById('search-tile-input__place');
 // const searchInputServices = document.getElementsByClassName('search-tile-input__services');
 const searchInputServices = document.getElementById('search-tile-input__services');
 
-let citiesArr = [];
-let servicesArr = [];
 
 function fetchCitiesData() {
     return fetch(api_cities_url)
@@ -22,27 +20,91 @@ function fetchServicesData() {
 }
 
 
-fetchCitiesData().then(citiesArr => {
-    // console.log(citiesArr);
-    for (let i = 0; i < citiesArr.length; i++) {
+fetchCitiesData().then(response => {
+    for (let i = 0; i < response.length; i++) {
         let search_option = document.createElement("option");
-        search_option.value = citiesArr[i].id;
-        search_option.text = citiesArr[i].name;
-        // searchInputPlaces[i].add(search_option);
+        search_option.value = response[i].id;
+        search_option.text = response[i].name;
         searchInputPlaces.add(search_option);
+        // searchInputPlaces[i].add(search_option);
     }
 });
 
-fetchServicesData().then(servicesArr => {
-    // console.log(servicesArr);
-    for (let i = 0; i < servicesArr.length; i++) {
-        let search_option = document.createElement("option");
-        search_option.value = servicesArr[i].id;
-        search_option.text = servicesArr[i].name;
-        // searchInputServices[i].add(search_option);
-        searchInputServices.add(search_option);
+fetchServicesData().then(response => {
+    for (let i = 0; i < response.length; i++) {
+        // Menu #search-form__services-nav
+        let menu_link = document.createElement("a");
+        menu_link.href = '';
+        menu_link.text = response[i]['name'];
+        menu_link.setAttribute('data-list-id', i);
+        menu_link.setAttribute('data-service-id', response[i]['id']);
+        document.getElementById('search-form__services-nav').appendChild(menu_link);
+
+        for (let k = 0; k < response[i]['services'].length; k++) {
+            let search_option = document.createElement("option");
+            search_option.value = response[i]['services'][k].id;
+            search_option.text = response[i]['services'][k].name;
+            searchInputServices.add(search_option);
+            // searchInputServices[i].add(search_option);
+        }
+    }
+
+    const searchMenuLinks = document.querySelectorAll('#search-form__services-nav a');
+    for (let i = 0; i < searchMenuLinks.length; i++) {
+        // console.log(searchMenuLinks[i]);
+        searchMenuLinks[i].onclick = testFunction;
     }
 });
+
+
+function testFunction(e) {
+    e.preventDefault();
+
+    const searchMenuLinks = document.querySelectorAll('#search-form__services-nav a');
+    const data_list_id = e.target.attributes.getNamedItem('data-list-id').value;
+    const data_service_id = e.target.attributes.getNamedItem('data-service-id').value;
+
+    // Remove class="active"
+    for (let i = 0; i < searchMenuLinks.length; i++) {
+        searchMenuLinks[i].classList = '';
+    }
+
+    e.currentTarget.classList.add("active");
+
+    // console.log(e.target);
+    // console.log(data_service_id);
+
+    fetchServicesData().then(response => {
+        document.getElementById("search-tile-input__services").innerHTML = '';
+
+        const services_list = response[data_list_id]['services'];
+
+        if (services_list.length > 0) {
+            for (let i = 0; i < services_list.length; i++) {
+                let search_option = document.createElement("option");
+                search_option.value = services_list[i].id;
+                search_option.text = services_list[i].name;
+                searchInputServices.add(search_option);
+            }
+        }
+    });
+}
+
+
+// const searchMenuLinks = document.querySelectorAll('#search-form__services-nav a');
+// console.log(searchMenuLinks);
 
 
 // TODO: Clone .st-4 .st-5
+
+
+// Menu #search-form__services-nav
+// fetchServicesData().then(response => {
+//     for (let i = 0; i < response.length; i++) {
+//         let menu_link = document.createElement("a");
+//         menu_link.href = '';
+//         menu_link.text = response[i]['name'];
+//         // searchServicesNav.add(menu_link);
+//         document.getElementById('search-form__services-nav').appendChild(menu_link);
+//     }
+// });
