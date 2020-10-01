@@ -91,20 +91,23 @@ function testFunction(e) {
 }
 
 
-// const searchMenuLinks = document.querySelectorAll('#search-form__services-nav a');
-// console.log(searchMenuLinks);
+// Clone .st-4 .st-5
+const st_5 = document.getElementsByClassName('st-5');
 
+// document.getElementsByClassName('st-5')[0].onclick = duplicate;
+st_5[0].onclick = duplicate_st_4_st_5;
 
-// TODO: Clone .st-4 .st-5
+// for (let i = 0; i < st_5; i++) {
+//     st_5[i].onclick = duplicate;
+// }
 
+// var original = document.getElementById('duplicater');
+const original_1 = document.getElementsByClassName('st-4')[0];
+const original_2 = document.getElementsByClassName('st-5')[0];
 
-// Menu #search-form__services-nav
-// fetchServicesData().then(response => {
-//     for (let i = 0; i < response.length; i++) {
-//         let menu_link = document.createElement("a");
-//         menu_link.href = '';
-//         menu_link.text = response[i]['name'];
-//         // searchServicesNav.add(menu_link);
-//         document.getElementById('search-form__services-nav').appendChild(menu_link);
-//     }
-// });
+function duplicate_st_4_st_5() {
+    const clone_1 = original_1.cloneNode(true);
+    const clone_2 = original_2.cloneNode(true);
+    original_1.parentNode.appendChild(clone_1);
+    original_2.parentNode.appendChild(clone_2);
+}

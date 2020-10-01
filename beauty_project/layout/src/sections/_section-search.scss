@@ -62,6 +62,7 @@
                         &:focus,
                         &:hover {
                             background-color: #fbddd3;
+                            cursor: pointer;
 
                             .search-tile__add-service {
                                 color: #293c4d;
@@ -112,7 +113,6 @@
 
                     &__add-service {
                         color: #fbddd3;
-                        cursor: pointer;
                         text-align: center;
                     }
 
