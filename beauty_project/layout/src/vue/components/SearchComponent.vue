@@ -83,6 +83,8 @@ export default {
     mounted() {
         this.fetchServices();
         this.fetchCities();
+
+        document.getElementById('search-tile-input__date').valueAsDate = new Date();
     },
 
     methods: {
