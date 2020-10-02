@@ -10,7 +10,6 @@
 {% endblock %}
     <!-- TODO: og:tags -->
 </head>
-
 <body class="{% block body_classes %}{% if request.path == '/' %}homepage{% else %}not-homepage{% endif %}{% endblock %}">
     <header id="header">
         <div id="header__top">
@@ -127,19 +126,21 @@
     </header>
 
     <div id="content">
-        {% block content_top %}{% endblock %}
+        <div id="app">
+            {% block content_top %}{% endblock %}
 
-        <main id="main">
-            {% if page_title %}
-                <div id="page_title" class="container">
-                    <h1>{{ page_title }}</h1>
-                </div>
-            {% endif %}
+            <main id="main">
+                {% if page_title %}
+                    <div id="page_title" class="container">
+                        <h1>{{ page_title }}</h1>
+                    </div>
+                {% endif %}
 
-            {% block content %}{% endblock %}
-        </main>
+                {% block content %}{% endblock %}
+            </main>
 
-        {% block content_bottom %}{% endblock %}
+            {% block content_bottom %}{% endblock %}
+        </div>
     </div>
 
     <footer id="footer">

@@ -6,6 +6,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const { VueLoaderPlugin } = require('vue-loader');
+
 
 module.exports = {
     mode: 'production',
@@ -66,6 +68,18 @@ module.exports = {
                     }
                 ]
             },
+
+            {
+                test: /.vue$/,
+                loader: 'vue-loader'
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader'
+                ]
+            },
             // Fonts loader
             // {
             //     test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
@@ -86,9 +100,18 @@ module.exports = {
             chunks: 'all'
         }
     },
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        },
+        extensions: ['*', '.js', '.vue', '.json']
+    },
     plugins: [
         // Clean
         // new CleanWebpackPlugin(),
+
+        // Vue
+        new VueLoaderPlugin(),
 
         // Copy
         new CopyWebpackPlugin({
@@ -133,7 +156,8 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'html/homepage.html',
             template: './layout/src/html/homepage.html',
-            chunks: ["main", "2Gis", "search_filters"]
+            // chunks: ["main", "2Gis", "search_filters"]
+            chunks: ["main", "2Gis"]
         }),
 
         // ...
