@@ -94,20 +94,22 @@ function testFunction(e) {
 // Clone .st-4 .st-5
 const st_5 = document.getElementsByClassName('st-5');
 
-// document.getElementsByClassName('st-5')[0].onclick = duplicate;
-st_5[0].onclick = duplicate_st_4_st_5;
+// document.getElementsByClassName('st-5')[0].onclick = duplicate_st_4_and_st_5;
+st_5[0].onclick = duplicate_st_4_and_st_5;
 
-// for (let i = 0; i < st_5; i++) {
-//     st_5[i].onclick = duplicate;
-// }
-
-// var original = document.getElementById('duplicater');
 const original_1 = document.getElementsByClassName('st-4')[0];
 const original_2 = document.getElementsByClassName('st-5')[0];
 
-function duplicate_st_4_st_5() {
+function duplicate_st_4_and_st_5() {
     const clone_1 = original_1.cloneNode(true);
     const clone_2 = original_2.cloneNode(true);
+
     original_1.parentNode.appendChild(clone_1);
     original_2.parentNode.appendChild(clone_2);
+
+    // for (let i = 0; i < st_5.length; i++) {
+    //     console.clear();
+    //     console.log(st_5[i]);
+    //     st_5[i].click = duplicate_st_4_and_st_5;
+    // }
 }
