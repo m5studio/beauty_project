@@ -93,13 +93,26 @@ export default {
         },
         setServices(data) {
             this.services = data;
-            this.services_all = data;
+
+            // fill services_all
+            for (let i = 0; i < data.length; i++) {
+                data[i]['services'].forEach(el => {
+                    this.services_all.push(el);
+                });
+            }
+
+            // Sort alphabetically
+            this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+            // console.log(this.services_all);
         },
         getServiceGroupData(e) {
             e.preventDefault();
 
             const index = e.target.getAttribute('data-index');
             this.services_all = this.services[index]['services'];
+
+            // Sort alphabetically
+            this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
             // console.log(this.services);
             // console.log(this.services_all);
