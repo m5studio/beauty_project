@@ -6,12 +6,6 @@
                 :data-index="index"
                 @click="getServiceGroupData"
                 href="">{{ item.name }}</a>
-
-            <!-- <a class="active" href="">Ногтевой сервис</a>
-            <a href="">Парикмахерский зал</a>
-            <a href="">Удаление волос</a>
-            <a href="">Брови и ресницы</a>
-            <a href="">Барбершоп</a> -->
         </nav>
 
         <div id="search-form__tiles">
@@ -19,6 +13,7 @@
                 <div class="search-tile st-1">
                     <label for="">Местоположение или салон</label>
                     <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place">
+                        <option>- Выберите город -</option>
                         <option v-for="item in cities"
                             :key="item.id"
                             :value="item.id">{{ item.name }}</option>
@@ -43,12 +38,14 @@
                 <div class="search-tile st-4">
                     <label for="">Выберите услугу</label>
                     <select name="" id="search-tile-input__services" class="search-tile-input search-tile-input__services">
+                        <option>- Выберите услугу -</option>
                         <option v-for="item in services_all"
                             :key="item.id"
                             :value="item.id">{{ item.name }}</option>
                     </select>
                 </div>
-                <div class="search-tile st-5">
+                <div class="search-tile st-5" @click="cloneServices">
+                <!-- <div class="search-tile st-5" v-on:click.self="cloneServices"> -->
                     <div class="search-tile__add-service">
                         <div class="search-tile__add-service-plus">+</div>
                         <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
@@ -115,7 +112,6 @@ export default {
 
             // Sort alphabetically
             this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
-
             // console.log(this.services);
             // console.log(this.services_all);
         },
@@ -128,6 +124,21 @@ export default {
         setCities(data) {
             this.cities = data;
         },
+
+        cloneServices() {
+            // console.log('cloneServices');
+            const original_1 = document.getElementsByClassName('st-4')[0];
+            const original_2 = document.getElementsByClassName('st-5')[0];
+
+            const clone_1 = original_1.cloneNode(true);
+            const clone_2 = original_2.cloneNode(true);
+
+            original_1.parentNode.appendChild(clone_1);
+            original_2.parentNode.appendChild(clone_2);
+        },
+    },
+
+    computed: {
     },
 }
 </script>
