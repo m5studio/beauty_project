@@ -42,19 +42,22 @@
 
         &__tiles {
             .search-tiles-group {
-                display: grid;
-                grid-gap: 10px;
-                grid-template-columns: repeat(3, 1fr);
+                &__place-date-time {
+                    display: grid;
+                    grid-gap: 10px;
+                    grid-template-columns: repeat(3, 1fr);
+                    margin-bottom: 10px;
+                }
 
                 .search-tile {
                     background-color: #293c4d;
                     padding: 15px 30px;
                     min-height: 130px;
 
-                    &.st-4 {
-                        grid-column-start: 1;
-                        grid-column-end: 3;
-                    }
+                    // &.st-4 {
+                    //     grid-column-start: 1;
+                    //     grid-column-end: 3;
+                    // }
 
                     &.st-5 {
                         transition: all ease-in-out .2s;

@@ -10,47 +10,52 @@
 
         <div id="search-form__tiles">
             <div class="search-tiles-group">
-                <div class="search-tile st-1">
-                    <label for="">Местоположение или салон</label>
-                    <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place">
-                        <option>- Выберите город -</option>
-                        <option v-for="item in cities"
-                            :key="item.id"
-                            :value="item.id">{{ item.name }}</option>
-                    </select>
-                </div>
-                <div class="search-tile st-2">
-                    <label for="">Дата визита</label>
-                    <input type="date" name="" id="search-tile-input__date" class="search-tile-input search-tile-input__date">
-                </div>
-                <div class="search-tile st-3">
-                    <div>
-                        <label for="">Время начала</label>
-                        <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time">
+                <div class="search-tiles-group__place-date-time">
+                    <div class="search-tile st-1">
+                        <label for="">Местоположение или салон</label>
+                        <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place">
+                            <option>- Выберите город -</option>
+                            <option v-for="item in cities"
+                                :key="item.id"
+                                :value="item.id">{{ item.name }}</option>
+                        </select>
                     </div>
-                    <div class="mt-2 text-right">
-                        <label for="st-precice-time">
-                            <input type="checkbox" name="" id="st-precice-time"> точное время
-                        </label>
+                    <div class="search-tile st-2">
+                        <label for="">Дата визита</label>
+                        <input type="date" name="" id="search-tile-input__date" class="search-tile-input search-tile-input__date">
+                    </div>
+                    <div class="search-tile st-3">
+                        <div>
+                            <label for="">Время начала</label>
+                            <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time">
+                        </div>
+                        <div class="mt-2 text-right">
+                            <label for="st-precice-time">
+                                <input type="checkbox" name="" id="st-precice-time"> точное время
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="search-tile st-4">
-                    <label for="">Выберите услугу</label>
-                    <select name="" id="search-tile-input__services" class="search-tile-input search-tile-input__services">
-                        <option>- Выберите услугу -</option>
-                        <option v-for="item in services_all"
-                            :key="item.id"
-                            :value="item.id">{{ item.name }}</option>
-                    </select>
-                </div>
-                <div class="search-tile st-5" @click="cloneServices">
-                <!-- <div class="search-tile st-5" v-on:click.self="cloneServices"> -->
-                    <div class="search-tile__add-service">
-                        <div class="search-tile__add-service-plus">+</div>
-                        <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                <vue-cloneya :minimum="1" :maximum="7">
+                    <div class="search-tiles-group__add-service-wrap">
+                        <div class="search-tile st-4">
+                            <label for="">Выберите услугу</label>
+                            <select name="" id="search-tile-input__services" class="search-tile-input search-tile-input__services">
+                                <option>- Выберите услугу -</option>
+                                <option v-for="item in services_all"
+                                    :key="item.id"
+                                    :value="item.id">{{ item.name }}</option>
+                            </select>
+                        </div>
+                        <div class="search-tile st-5" v-cloneya-add>
+                            <div class="search-tile__add-service">
+                                <div class="search-tile__add-service-plus">+</div>
+                                <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </vue-cloneya>
             </div>
         </div>
 
@@ -124,27 +129,31 @@ export default {
         setCities(data) {
             this.cities = data;
         },
-
-        cloneServices() {
-            // console.log('cloneServices');
-            const original_1 = document.getElementsByClassName('st-4')[0];
-            const original_2 = document.getElementsByClassName('st-5')[0];
-
-            const clone_1 = original_1.cloneNode(true);
-            const clone_2 = original_2.cloneNode(true);
-
-            original_1.parentNode.appendChild(clone_1);
-            original_2.parentNode.appendChild(clone_2);
-        },
-    },
-
-    computed: {
     },
 }
 </script>
 
 <style lang="scss" scoped>
-// h2 {
-//     color: greenyellow;
-// }
+.clone-wrapper {
+    display: grid;
+    grid-gap: 10px;
+
+    .toClone {
+        margin-bottom: 10px;
+
+        .search-tiles-group__add-service-wrap {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+
+            .st-4 {
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+
+            // .st-5 {
+            // }
+        }
+    }
+}
 </style>
