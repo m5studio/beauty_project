@@ -1,11 +1,9 @@
 import Vue from 'vue';
 import VueCloneya from 'vue-cloneya';
 
-
 Vue.use(VueCloneya);
 
 Vue.component('search-component', require('./components/SearchComponent').default);
-
 
 new Vue({
     el: '#app',
@@ -18,4 +16,13 @@ new Vue({
     //         message: '!!!!!!!!! Hello from Webpack'
     //     }
     // },
+
+    // components: {
+    //     Datepicker,
+    // }
 });
+
+
+// new Vue({
+//     render: h => h(App),
+// }).$mount('#app')

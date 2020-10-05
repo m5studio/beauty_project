@@ -22,12 +22,14 @@
                     </div>
                     <div class="search-tile st-2">
                         <label for="">Дата визита</label>
-                        <input type="date" name="" id="search-tile-input__date" class="search-tile-input search-tile-input__date">
+                        <!-- <input type="date" name="" id="search-tile-input__date" class="search-tile-input search-tile-input__date"> -->
+                        <datepicker :monday-first="true" :language="languages[language]" :input-class="['search-tile-input', 'search-tile-input__date']"></datepicker>
                     </div>
                     <div class="search-tile st-3">
                         <div>
                             <label for="">Время начала</label>
                             <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time">
+                            <!-- <datepicker></datepicker> -->
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
@@ -47,6 +49,7 @@
                                     :key="item.id"
                                     :value="item.id">{{ item.name }}</option>
                             </select>
+                            <div class="mt-2 text-right" v-cloneya-remove>X remove</div>
                         </div>
                         <div class="search-tile st-5" v-cloneya-add>
                             <div class="search-tile__add-service">
@@ -67,13 +70,28 @@
         <div id="search-form__submit">
             <button type="submit">Начать поиск</button>
         </div>
+
+        {{ ru }}
     </form>
 </template>
 
 <script>
+import Datepicker from 'vuejs-datepicker';
+// import 'vuejs-datepicker/dist/locale/translations/ru.js';
+// import vdp_translation_ru from 'vuejs-datepicker/dist/locale/translations/ru.js';
+// import 'vuejs-datepicker/dist/locale/translations/ru.js';
+import * as lang from "vuejs-datepicker/src/locale";
+
+
 export default {
     data() {
         return {
+            // ru: vdp_translation_ru.js,
+            // ru: vdp_translation_ru,
+
+            language: "ru",
+            languages: lang,
+
             api_services_url: '/api/services/',
             api_cities_url: '/api/cities/',
             services: [],
@@ -82,11 +100,15 @@ export default {
         }
     },
 
+    components: {
+        Datepicker,
+    },
+
     mounted() {
         this.fetchServices();
         this.fetchCities();
 
-        document.getElementById('search-tile-input__date').valueAsDate = new Date();
+        // document.getElementById('search-tile-input__date').valueAsDate = new Date();
     },
 
     methods: {
