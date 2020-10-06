@@ -23,13 +23,16 @@
                     <div class="search-tile st-2">
                         <label for="">Дата визита</label>
                         <!-- <input type="date" name="" id="search-tile-input__date" class="search-tile-input search-tile-input__date"> -->
-                        <datepicker :monday-first="true" :language="languages[language]" :input-class="['search-tile-input', 'search-tile-input__date']"></datepicker>
+                        <datepicker :monday-first="true"
+                                    :language="languages[language]"
+                                    :input-class="['search-tile-input', 'search-tile-input__date']"
+                                    v-model="today"
+                                    format="d MMMM yyyy"></datepicker>
                     </div>
                     <div class="search-tile st-3">
                         <div>
                             <label for="">Время начала</label>
                             <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time">
-                            <!-- <datepicker></datepicker> -->
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
@@ -39,26 +42,83 @@
                     </div>
                 </div>
 
-                <vue-cloneya :minimum="1" :maximum="7">
+                <div class="clone-wrapper">
+                    <div class="toClone">
+                        <div class="search-tiles-group__add-service-wrap">
+                            <div class="search-tile st-4">
+                                <label for="">Выберите услугу</label>
+                                <select name=""
+                                    id="search-tile-input__services"
+                                    class="search-tile-input search-tile-input__services">
+                                    <option>- Выберите услугу -</option>
+                                    <option v-for="item in services_all"
+                                        :key="item.id"
+                                        :value="item.id">{{ item.name }}</option>
+                                </select>
+                                <!-- <div class="mt-3 text-right text-danger"
+                                    style="cursor: pointer;">X remove</div> -->
+                            </div>
+                            <div class="search-tile st-5" @click="cloneItem">
+                                <div class="search-tile__add-service">
+                                    <div class="search-tile__add-service-plus">+</div>
+                                    <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="toClone" v-for="item in clonedServices" :key="item.id">
+                        <div class="search-tiles-group__add-service-wrap">
+                            <div class="search-tile st-4">
+                                <label for="">Выберите услугу</label>
+                                <select name=""
+                                    id="search-tile-input__services"
+                                    class="search-tile-input search-tile-input__services">
+                                    <option>- Выберите услугу -</option>
+                                    <option v-for="item in services_all"
+                                        :key="item.id"
+                                        :value="item.id">{{ item.name }}</option>
+                                </select>
+                                <div class="mt-3 text-right text-danger"
+                                    @click="removeItem(item)"
+                                    style="cursor: pointer;">X remove</div>
+                            </div>
+                            <div class="search-tile st-5" @click="cloneItem">
+                                <div class="search-tile__add-service">
+                                    <div class="search-tile__add-service-plus">+</div>
+                                    <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <vue-cloneya :minimum="1" :maximum="5">
                     <div class="search-tiles-group__add-service-wrap">
                         <div class="search-tile st-4">
                             <label for="">Выберите услугу</label>
-                            <select name="" id="search-tile-input__services" class="search-tile-input search-tile-input__services">
+                            <select name="servives[]"
+                                id="search-tile-input__services"
+                                class="search-tile-input search-tile-input__services"
+                                v-cloneya-input>
                                 <option>- Выберите услугу -</option>
                                 <option v-for="item in services_all"
                                     :key="item.id"
                                     :value="item.id">{{ item.name }}</option>
                             </select>
-                            <div class="mt-2 text-right" v-cloneya-remove>X remove</div>
+                            <div class="mt-3 text-right text-danger"
+                                style="cursor: pointer;"
+                                v-cloneya-remove>X remove</div>
                         </div>
-                        <div class="search-tile st-5" v-cloneya-add>
+                        <div class="search-tile st-5"
+                            v-cloneya-add>
                             <div class="search-tile__add-service">
                                 <div class="search-tile__add-service-plus">+</div>
                                 <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
                             </div>
                         </div>
                     </div>
-                </vue-cloneya>
+                </vue-cloneya> -->
             </div>
         </div>
 
@@ -70,33 +130,32 @@
         <div id="search-form__submit">
             <button type="submit">Начать поиск</button>
         </div>
-
-        {{ ru }}
     </form>
 </template>
 
 <script>
 import Datepicker from 'vuejs-datepicker';
-// import 'vuejs-datepicker/dist/locale/translations/ru.js';
-// import vdp_translation_ru from 'vuejs-datepicker/dist/locale/translations/ru.js';
-// import 'vuejs-datepicker/dist/locale/translations/ru.js';
 import * as lang from "vuejs-datepicker/src/locale";
 
 
 export default {
     data() {
         return {
-            // ru: vdp_translation_ru.js,
-            // ru: vdp_translation_ru,
-
+            // vuejs-datepicker language, initial date
             language: "ru",
             languages: lang,
+            today: new Date(),
 
             api_services_url: '/api/services/',
             api_cities_url: '/api/cities/',
+
             services: [],
             services_all: [],
+            services_current: [],
+
             cities: [],
+
+            clonedServices: [],
         }
     },
 
@@ -105,10 +164,14 @@ export default {
     },
 
     mounted() {
+        // localStorage.clear();
+        // localStorage.removeItem("services_group_index");
+
         this.fetchServices();
         this.fetchCities();
+    },
 
-        // document.getElementById('search-tile-input__date').valueAsDate = new Date();
+    computed: {
     },
 
     methods: {
@@ -127,22 +190,29 @@ export default {
                 });
             }
 
+            this.services_current = this.services_all;
+
             // Sort alphabetically
-            this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
-            // console.log(this.services_all);
+            // this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+            console.log(this.services_all);
         },
         getServiceGroupData(e) {
             e.preventDefault();
 
             const index = e.target.getAttribute('data-index');
-            this.services_all = this.services[index]['services'];
+            // this.services_all = this.services[index]['services'];
+            this.services_current = this.services[index]['services'];
+
+            // localStorage.removeItem("services_group_index");
+            // localStorage.setItem("services_group_index", index);
 
             // Sort alphabetically
-            this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+            // this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
             // console.log(this.services);
             // console.log(this.services_all);
         },
-
         fetchCities() {
             fetch(this.api_cities_url)
                 .then(data => data.json())
@@ -150,6 +220,23 @@ export default {
         },
         setCities(data) {
             this.cities = data;
+        },
+
+        cloneItem(e) {
+            // console.log(e.target.closest(".toClone"));
+            const toCloneDiv = e.target.closest(".toClone");
+            const clone = toCloneDiv.cloneNode(true);
+            // document.getElementsByClassName('clone-wrapper')[0].appendChild(clone);
+
+            this.clonedServices.push(clone);
+
+            // var div = document.getElementById('div_id'),
+            // clone = div.cloneNode(true);
+            // clone.id = "some_id";
+            // document.getElementsByClassName('clone-wrapper')[0].appendChild(clone);
+        },
+        removeItem(item) {
+            this.clonedServices.splice(this.clonedServices.findIndex(w => w === item), 1)
         },
     },
 }
@@ -161,12 +248,15 @@ export default {
     grid-gap: 10px;
 
     .toClone {
-        margin-bottom: 10px;
-
         .search-tiles-group__add-service-wrap {
             display: grid;
             grid-gap: 10px;
             grid-template-columns: repeat(3, 1fr);
+            transition: opacity ease-in-out .3s;
+
+            &:hover {
+                opacity: .8;
+            }
 
             .st-4 {
                 grid-column-start: 1;

@@ -57,6 +57,10 @@
                     // vuejs-datepicker
                     .vdp-datepicker__calendar {
                         color: #333;
+
+                        .today {
+                            background-color: #E2E2E2;
+                        }
                     }
 
                     // &.st-4 {
