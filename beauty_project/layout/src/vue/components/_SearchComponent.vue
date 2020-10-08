@@ -1,20 +1,10 @@
 <template>
     <form id="search-form" class="mt-3">
-        <!-- <h3>services</h3>
-        {{ services }} -->
-
-        <h3>services_navigation</h3>
-        {{ services_navigation }}
-
-        <!-- <h3>services_all</h3>
-        {{ services_all }} -->
-
         <nav id="search-form__services-nav" class="mb-3">
-            <a v-for="(item, index) in services_navigation"
+            <a v-for="(item, index) in services"
                 :key="item.id"
-                :class="{ active : item.active }"
                 :data-index="index"
-                @click="navItem"
+                @click="getServiceGroupData"
                 href="">{{ item.name }}</a>
         </nav>
 
@@ -25,7 +15,9 @@
                         <label for="">Местоположение или салон</label>
                         <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place">
                             <option>- Выберите город -</option>
-                            <option>Город</option>
+                            <option v-for="item in cities"
+                                :key="item.id"
+                                :value="item.id">{{ item.name }}</option>
                         </select>
                     </div>
                     <div class="search-tile st-2">
@@ -63,7 +55,7 @@
                                         :value="item.id">{{ item.name }}</option>
                                 </select>
                             </div>
-                            <div class="search-tile st-5" @click="addService">
+                            <div class="search-tile st-5" @click="cloneItem">
                                 <div class="search-tile__add-service">
                                     <div class="search-tile__add-service-plus">+</div>
                                     <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
@@ -72,9 +64,7 @@
                         </div>
                     </div>
 
-                    <div v-for="(item, index) in services_added"
-                        :key="index"
-                        class="toClone">
+                    <div class="toClone" v-for="item in clonedServices" :key="item.id">
                         <div class="search-tiles-group__add-service-wrap">
                             <div class="search-tile st-4">
                                 <label for="">Выберите услугу</label>
@@ -82,12 +72,15 @@
                                     id="search-tile-input__services"
                                     class="search-tile-input search-tile-input__services">
                                     <option>- Выберите услугу -</option>
-                                    <option v-for="item in services_all"
+                                    <option v-for="item in services_current"
                                         :key="item.id"
                                         :value="item.id">{{ item.name }}</option>
                                 </select>
+                                <div class="mt-3 text-right text-danger"
+                                    @click="removeItem(item)"
+                                    style="cursor: pointer;">X remove</div>
                             </div>
-                            <div class="search-tile st-5" @click="addService">
+                            <div class="search-tile st-5" @click="cloneItem">
                                 <div class="search-tile__add-service">
                                     <div class="search-tile__add-service-plus">+</div>
                                     <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
@@ -95,7 +88,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -112,8 +104,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 import Datepicker from 'vuejs-datepicker';
 import * as lang from "vuejs-datepicker/src/locale";
 
@@ -121,24 +111,21 @@ import * as lang from "vuejs-datepicker/src/locale";
 export default {
     data() {
         return {
-            api_services_url: '/api/services/',
-            // api_cities_url: '/api/cities/',
-
             // vuejs-datepicker language, initial date
             language: "ru",
             languages: lang,
             today: new Date(),
 
-            services_navigation: [],
-            services_all: [],
-            services: [],
+            api_services_url: '/api/services/',
+            api_cities_url: '/api/cities/',
 
-            service_to_add: {
-                // "id": '',
-                "name": '',
-                // "active": false,
-            },
-            services_added: [],
+            services: [],
+            services_all: [],
+            services_current: [],
+
+            clonedServices: [],
+
+            cities: [],
         }
     },
 
@@ -147,84 +134,77 @@ export default {
     },
 
     mounted() {
-        // services
-        axios
-            .get(this.api_services_url)
-            .then(res => {
-                this.services = res.data;
-                console.log("axios mounted: services", this.services);
-            }),
-
-        // services_navigation
-        axios
-            .get(this.api_services_url)
-            .then(res => {
-                this.services_navigation = res.data;
-                this.fillServicesNavigation(this.services_navigation);
-                console.log("axios mounted: services_navigation", this.services_navigation);
-            }),
-
-        // services_all
-        axios
-            .get(this.api_services_url)
-            .then(res => {
-                let serv_all_tmp = res.data;
-                this.fillServicesAll(serv_all_tmp);
-                console.log("axios mounted: services_all", this.services_all);
-            }),
-
-        // this.fetchServices();
-        // this.setServices();
-        // this.setServicesNavigation();
-
-        console.log("mounted: services", this.services);
-        console.log("mounted: services_navigation", this.services_navigation);
-        console.log("mounted: services_all", this.services_all);
+        this.fetchServices();
+        this.fetchCities();
     },
 
     computed: {
     },
 
     methods: {
-        fillServicesNavigation(services_arr) {
-            for (let i = 0; i < services_arr.length; i++) {
-                services_arr[i].active = false;
-                delete services_arr[i].services;
-            }
+        fetchServices() {
+            fetch(this.api_services_url)
+                .then(data => data.json())
+                .then(this.setServices)
         },
-        fillServicesAll(services_arr) {
-            for (let i = 0; i < services_arr.length; i++) {
-                if (services_arr[i].services.length > 0) {
-                    services_arr[i].services.forEach(el => {
-                        this.services_all.push(el);
-                    });
-                }
-            }
-        },
+        setServices(data) {
+            this.services = data;
 
-        navItem(e) {
+            // fill services_all
+            for (let i = 0; i < data.length; i++) {
+                data[i]['services'].forEach(el => {
+                    this.services_all.push(el);
+                });
+            }
+
+            this.services_current = this.services_all;
+
+            // Sort alphabetically
+            // this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+            // console.log(this.services_all);
+        },
+        getServiceGroupData(e) {
             e.preventDefault();
 
             const index = e.target.getAttribute('data-index');
-            this.services_navigation.forEach(el => {
-                el.active = false;
-            });
-            this.services_navigation[index].active = true;
+            // this.services_all = this.services[index]['services'];
 
-            // console.log(this.$el);
-            this.$forceUpdate();
+            this.services_current = this.services[index]['services'];
+
+            // Sort alphabetically
+            // this.services_all.sort((a, b) => (a.name > b.name) ? 1 : -1)
+
+            // console.log(this.services);
+            // console.log(this.services_all);
+        },
+        fetchCities() {
+            fetch(this.api_cities_url)
+                .then(data => data.json())
+                .then(this.setCities)
+        },
+        setCities(data) {
+            this.cities = data;
         },
 
-        addService(e) {
-            e.preventDefault();
+        cloneItem(e) {
+            const toCloneDiv = e.target.closest(".toClone");
+            const clone = toCloneDiv.cloneNode(true);
+            this.clonedServices.push(clone);
 
-            console.log('addService()');
+            // console.log(clonedServices);
 
-            this.services_added.push({'test': '11111'});
+            // const index = e.target.getAttribute('data-index');
+            // this.services_current = this.services[index]['services'];
+        },
+        removeItem(item) {
+            this.clonedServices.splice(this.clonedServices.findIndex(w => w === item), 1);
 
-            console.log(this.services_added);
+            // console.log(this.clonedServices);
 
-            this.$forceUpdate();
+            // const item_index = this.clonedServices.indexOf(item);
+            // this.clonedServices.splice(this.clonedServices[item_index], 1);
+            // console.log(item_index);
         },
     },
 }

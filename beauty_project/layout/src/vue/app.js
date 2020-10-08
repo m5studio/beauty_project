@@ -1,7 +1,4 @@
 import Vue from 'vue';
-import VueCloneya from 'vue-cloneya';
-
-Vue.use(VueCloneya);
 
 Vue.component('search-component', require('./components/SearchComponent').default);
 
@@ -21,8 +18,3 @@ new Vue({
     //     Datepicker,
     // }
 });
-
-
-// new Vue({
-//     render: h => h(App),
-// }).$mount('#app')
