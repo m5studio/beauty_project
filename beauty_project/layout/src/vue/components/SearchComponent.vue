@@ -5,6 +5,7 @@
 
         <h3>services_navigation</h3>
         {{ services_navigation }}
+        <br><br>
 
         <!-- <h3>services_all</h3>
         {{ services_all }} -->
@@ -50,17 +51,18 @@
                 </div>
 
                 <div class="clone-wrapper">
-                    <div class="toClone">
+                    <!-- <div class="toClone">
                         <div class="search-tiles-group__add-service-wrap">
                             <div class="search-tile st-4">
                                 <label for="">Выберите услугу</label>
                                 <select name=""
+                                    v-model="service_to_add.name"
                                     id="search-tile-input__services"
                                     class="search-tile-input search-tile-input__services">
                                     <option>- Выберите услугу -</option>
                                     <option v-for="item in services_all"
                                         :key="item.id"
-                                        :value="item.id">{{ item.name }}</option>
+                                        :value="item.name">{{ item.name }}</option>
                                 </select>
                             </div>
                             <div class="search-tile st-5" @click="addService">
@@ -70,22 +72,30 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div v-for="(item, index) in services_added"
+                    <div v-for="(service_to_add, index) in services_added"
                         :key="index"
                         class="toClone">
                         <div class="search-tiles-group__add-service-wrap">
                             <div class="search-tile st-4">
                                 <label for="">Выберите услугу</label>
+
                                 <select name=""
+                                    v-model="service_to_add.name"
                                     id="search-tile-input__services"
                                     class="search-tile-input search-tile-input__services">
-                                    <option>- Выберите услугу -</option>
+
+                                    <option value="">- Выберите услугу -</option>
+
                                     <option v-for="item in services_all"
                                         :key="item.id"
-                                        :value="item.id">{{ item.name }}</option>
+                                        :value="item.name">{{ item.name }}</option>
                                 </select>
+                                <div class="mt-3 text-right text-danger"
+                                    v-if="index != 0"
+                                    @click.prevent="removeService(index)"
+                                    style="cursor: pointer;">X remove</div>
                             </div>
                             <div class="search-tile st-5" @click="addService">
                                 <div class="search-tile__add-service">
@@ -112,6 +122,8 @@
 </template>
 
 <script>
+import Vue from 'vue';
+
 import axios from "axios";
 
 import Datepicker from 'vuejs-datepicker';
@@ -134,9 +146,8 @@ export default {
             services: [],
 
             service_to_add: {
-                // "id": '',
+                "id": '',
                 "name": '',
-                // "active": false,
             },
             services_added: [],
         }
@@ -172,6 +183,8 @@ export default {
                 this.fillServicesAll(serv_all_tmp);
                 console.log("axios mounted: services_all", this.services_all);
             }),
+
+        this.services_added.push({'id': '', 'name': ""});
 
         // this.fetchServices();
         // this.setServices();
@@ -220,11 +233,23 @@ export default {
 
             console.log('addService()');
 
-            this.services_added.push({'test': '11111'});
+            const index = e.target.getAttribute('data-index');
+            // this.services_added.push({'test': '11111'});
+            // this.services_added.push(Vue.util.extend({}, this.apartment));
+            // this.services_added.push(Vue.util.extend({}, {'test': index, 'test2': '2222'}));
+            this.services_added.push(Vue.util.extend({}, this.service_to_add));
 
             console.log(this.services_added);
 
-            this.$forceUpdate();
+            // this.$forceUpdate();
+        },
+
+        removeService(index) {
+            console.log('removeService()', index);
+            // delete this.services_added[index];
+            // this.$forceUpdate();
+            Vue.delete(this.services_added, index);
+            console.log(this.services_added);
         },
     },
 }
