@@ -3,9 +3,11 @@
         <!-- <h3>services</h3>
         {{ services }} -->
 
-        <h3>services_navigation</h3>
+        <!-- <h3>services_navigation</h3>
         {{ services_navigation }}
-        <br><br>
+        <br><br> -->
+
+        <!-- <h3>{{ services_group_active_id }}</h3> -->
 
         <!-- <h3>services_all</h3>
         {{ services_all }} -->
@@ -81,17 +83,43 @@
                             <div class="search-tile st-4">
                                 <label for="">Выберите услугу</label>
 
-                                <select name=""
+                                <!-- <select name=""
                                     v-model="service_to_add.name"
                                     id="search-tile-input__services"
                                     class="search-tile-input search-tile-input__services">
 
                                     <option value="">- Выберите услугу -</option>
-
                                     <option v-for="item in services_all"
-                                        :key="item.id"
-                                        :value="item.name">{{ item.name }}</option>
-                                </select>
+                                            :key="item.id"
+                                            :value="item.name">{{ item.name }}</option>
+                                </select> -->
+
+                                <!-- check if last -->
+                                <span v-if="index == services_added.length - 1">
+                                    <select name=""
+                                        v-model="service_to_add.name"
+                                        id="search-tile-input__services"
+                                        class="search-tile-input search-tile-input__services">
+
+                                        <option value="">- Выберите услугу -</option>
+                                        <option v-for="item in services_last"
+                                            :key="item.id"
+                                            :value="item.name">{{ item.name }}</option>
+                                    </select>
+                                </span>
+                                <span v-else>
+                                    <select name=""
+                                        v-model="service_to_add.name"
+                                        id="search-tile-input__services"
+                                        class="search-tile-input search-tile-input__services">
+
+                                        <option value="">- Выберите услугу -</option>
+                                        <option v-for="item in services_all"
+                                                :key="item.id"
+                                                :value="item.name">{{ item.name }}</option>
+                                    </select>
+                                </span>
+
                                 <div class="mt-3 text-right text-danger"
                                     v-if="index != 0"
                                     @click.prevent="removeService(index)"
@@ -113,7 +141,8 @@
         <div class="text-center my-3">
             <div class="h4">Вы ищите:</div>
             <div class="search-query">{{ searchQuery }}</div>
-            <!-- TODO: remove -->
+
+            <!-- TODO: remove: -->
             <div class="search-query" style="opacity: .3;">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
         </div>
 
@@ -145,7 +174,11 @@ export default {
 
             services_navigation: [],
             services_all: [],
+            services_last: [],
             services: [],
+
+            services_group_active_id: '',
+            services_selected: [],
 
             service_to_add: {
                 "id": '',
@@ -165,7 +198,7 @@ export default {
             .get(this.api_services_url)
             .then(res => {
                 this.services = res.data;
-                console.log("axios mounted: services", this.services);
+                // console.log("axios mounted: services", this.services);
             }),
 
         // services_navigation
@@ -174,7 +207,7 @@ export default {
             .then(res => {
                 this.services_navigation = res.data;
                 this.fillServicesNavigation(this.services_navigation);
-                console.log("axios mounted: services_navigation", this.services_navigation);
+                // console.log("axios mounted: services_navigation", this.services_navigation);
             }),
 
         // services_all
@@ -183,18 +216,18 @@ export default {
             .then(res => {
                 let serv_all_tmp = res.data;
                 this.fillServicesAll(serv_all_tmp);
-                console.log("axios mounted: services_all", this.services_all);
+                // console.log("axios mounted: services_all", this.services_all);
             }),
 
         this.services_added.push({'id': '', 'name': ""});
 
-        // this.fetchServices();
-        // this.setServices();
-        // this.setServicesNavigation();
+        this.services_last = this.services_all;
 
-        console.log("mounted: services", this.services);
-        console.log("mounted: services_navigation", this.services_navigation);
-        console.log("mounted: services_all", this.services_all);
+        // this.fetchServices();
+
+        // console.log("mounted: services", this.services);
+        // console.log("mounted: services_navigation", this.services_navigation);
+        // console.log("mounted: services_all", this.services_all);
     },
 
     computed: {
@@ -203,7 +236,7 @@ export default {
             this.services_added.forEach(el => {
                 added_services.push(el.name);
             });
-            console.log(added_services);
+            // console.log(added_services);
 
             added_services = added_services.toString();
             let new_added_services = '';
@@ -241,6 +274,17 @@ export default {
             });
             this.services_navigation[index].active = true;
 
+            // Set active services
+            this.services_group_active_id = this.services_navigation[index].id;
+            if (typeof this.services_group_active_id == "number") {
+                this.services.forEach(el => {
+                    if (el.id == this.services_group_active_id) {
+                        this.services_last = el.services;
+                        // console.log(el.services);
+                    }
+                });
+            }
+
             // console.log(this.$el);
             this.$forceUpdate();
         },
@@ -248,25 +292,20 @@ export default {
         addService(e) {
             e.preventDefault();
 
-            console.log('addService()');
+            // console.log('addService()');
 
             const index = e.target.getAttribute('data-index');
-            // this.services_added.push({'test': '11111'});
-            // this.services_added.push(Vue.util.extend({}, this.apartment));
-            // this.services_added.push(Vue.util.extend({}, {'test': index, 'test2': '2222'}));
             this.services_added.push(Vue.util.extend({}, this.service_to_add));
 
-            console.log(this.services_added);
-
-            // this.$forceUpdate();
+            // console.log(this.services_added);
         },
 
         removeService(index) {
-            console.log('removeService()', index);
+            // console.log('removeService()', index);
             // delete this.services_added[index];
             // this.$forceUpdate();
             Vue.delete(this.services_added, index);
-            console.log(this.services_added);
+            // console.log(this.services_added);
         },
     },
 }
