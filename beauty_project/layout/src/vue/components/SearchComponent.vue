@@ -113,7 +113,8 @@
         <div class="text-center my-3">
             <div class="h4">Вы ищите:</div>
             <div class="search-query">{{ searchQuery }}</div>
-            <div class="search-query">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
+            <!-- TODO: remove -->
+            <div class="search-query" style="opacity: .3;">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
         </div>
 
         <div id="search-form__submit">
@@ -203,9 +204,10 @@ export default {
                 added_services.push(el.name);
             });
             console.log(added_services);
+
             added_services = added_services.toString();
             let new_added_services = '';
-            if (added_services.length > 0) {
+            if (added_services.length > 1) {
                 new_added_services = added_services.replace(/,/g, ' + ')
             }
 
