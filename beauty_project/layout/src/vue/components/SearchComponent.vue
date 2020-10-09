@@ -12,6 +12,9 @@
         <!-- <h3>services_all</h3>
         {{ services_all }} -->
 
+        <h3>time_ranges</h3>
+        {{ time_ranges }}
+
         <nav id="search-form__services-nav" class="mb-3">
             <a v-for="(item, index) in services_navigation"
                 :key="item.id"
@@ -42,7 +45,14 @@
                     <div class="search-tile st-3">
                         <div>
                             <label for="">Время начала</label>
-                            <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time">
+                            <!-- <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time"> -->
+                            <select name=""
+                                id="search-tile-input__time"
+                                class="search-tile-input search-tile-input__time">
+                                <option v-for="(item, index) in time_ranges"
+                                        :key="index"
+                                        :value="item.time">{{ item.time }}</option>
+                            </select>
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
@@ -53,47 +63,12 @@
                 </div>
 
                 <div class="clone-wrapper">
-                    <!-- <div class="toClone">
-                        <div class="search-tiles-group__add-service-wrap">
-                            <div class="search-tile st-4">
-                                <label for="">Выберите услугу</label>
-                                <select name=""
-                                    v-model="service_to_add.name"
-                                    id="search-tile-input__services"
-                                    class="search-tile-input search-tile-input__services">
-                                    <option>- Выберите услугу -</option>
-                                    <option v-for="item in services_all"
-                                        :key="item.id"
-                                        :value="item.name">{{ item.name }}</option>
-                                </select>
-                            </div>
-                            <div class="search-tile st-5" @click="addService">
-                                <div class="search-tile__add-service">
-                                    <div class="search-tile__add-service-plus">+</div>
-                                    <div class="search-tile__add-service-text">добавить еще услугу из другой категории?</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <div v-for="(service_to_add, index) in services_added"
                         :key="index"
                         class="toClone">
                         <div class="search-tiles-group__add-service-wrap">
                             <div class="search-tile st-4">
                                 <label for="">Выберите услугу</label>
-
-                                <!-- <select name=""
-                                    v-model="service_to_add.name"
-                                    id="search-tile-input__services"
-                                    class="search-tile-input search-tile-input__services">
-
-                                    <option value="">- Выберите услугу -</option>
-                                    <option v-for="item in services_all"
-                                            :key="item.id"
-                                            :value="item.name">{{ item.name }}</option>
-                                </select> -->
-
                                 <!-- check if last -->
                                 <span v-if="index == services_added.length - 1">
                                     <select name=""
@@ -154,7 +129,6 @@
 
 <script>
 import Vue from 'vue';
-
 import axios from "axios";
 
 import Datepicker from 'vuejs-datepicker';
@@ -185,6 +159,8 @@ export default {
                 "name": '',
             },
             services_added: [],
+
+            time_ranges: [],
         }
     },
 
@@ -220,14 +196,9 @@ export default {
             }),
 
         this.services_added.push({'id': '', 'name': ""});
-
         this.services_last = this.services_all;
 
-        // this.fetchServices();
-
-        // console.log("mounted: services", this.services);
-        // console.log("mounted: services_navigation", this.services_navigation);
-        // console.log("mounted: services_all", this.services_all);
+        this.generateTimeRanges();
     },
 
     computed: {
@@ -299,13 +270,31 @@ export default {
 
             // console.log(this.services_added);
         },
-
         removeService(index) {
             // console.log('removeService()', index);
             // delete this.services_added[index];
             // this.$forceUpdate();
             Vue.delete(this.services_added, index);
             // console.log(this.services_added);
+        },
+
+        generateTimeRanges() {
+            let hour = 0;
+            for(let i = 0; i < 24; i++) {
+                const hour_fornated = (hour) => {
+                    if (hour <= 9) {
+                        return `0${hour}:00`;
+                    } else {
+                        return `${hour}:00`;
+                    }
+                }
+
+                if (hour >= 8 && hour <= 22) {
+                    this.time_ranges.push({'time': hour_fornated(hour)});
+                }
+
+                hour++;
+            }
         },
     },
 }
