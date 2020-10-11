@@ -4,17 +4,4 @@ Vue.component('search-component', require('./components/SearchComponent').defaul
 
 new Vue({
     el: '#app',
-    // data: {
-    //     message: '!!!!!!!!! Hello from Webpack'
-    // }
-
-    // data() {
-    //     return {
-    //         message: '!!!!!!!!! Hello from Webpack'
-    //     }
-    // },
-
-    // components: {
-    //     Datepicker,
-    // }
 });

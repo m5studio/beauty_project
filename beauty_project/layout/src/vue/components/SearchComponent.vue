@@ -12,8 +12,8 @@
         <!-- <h3>services_all</h3>
         {{ services_all }} -->
 
-        <h3>time_ranges</h3>
-        {{ time_ranges }}
+        <!-- <h3>time_ranges</h3>
+        {{ time_ranges }} -->
 
         <nav id="search-form__services-nav" class="mb-3">
             <a v-for="(item, index) in services_navigation"
