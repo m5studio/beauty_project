@@ -28,7 +28,8 @@
                                     :language="languages[language]"
                                     :input-class="['search-tile-input', 'search-tile-input__date']"
                                     v-model="today"
-                                    format="d MMMM yyyy"></datepicker>
+                                    format="dd.MM.yyyy (D)"></datepicker>
+                                    <!-- format="d MMMM yyyy"></datepicker> -->
                     </div>
                     <div class="search-tile st-3">
                         <div>
@@ -299,10 +300,12 @@ export default {
                     return `${hour}:${minutes}`;
                 }
 
-                this.time_ranges.push({'time': time_formated(hour, minutes)});
-                for(let k = 0; k < 3; k++) {
-                    minutes = minutes += 15;
+                if (hour >= 9 && hour <= 21) {
                     this.time_ranges.push({'time': time_formated(hour, minutes)});
+                    for(let k = 0; k < 3; k++) {
+                        minutes = minutes += 15;
+                        this.time_ranges.push({'time': time_formated(hour, minutes)});
+                    }
                 }
 
                 minutes = 0;
