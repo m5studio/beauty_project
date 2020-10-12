@@ -46,17 +46,35 @@
                         <div>
                             <label for="">Время начала</label>
                             <!-- <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time"> -->
-                            <select name=""
-                                id="search-tile-input__time"
-                                class="search-tile-input search-tile-input__time">
-                                <option v-for="(item, index) in time_ranges"
-                                        :key="index"
-                                        :value="item.time">{{ item.time }}</option>
-                            </select>
+                            <div v-if="!time_certain_checked" id="search-form__time-ranges">
+                                <select name=""
+                                    id="search-tile-input__time"
+                                    class="search-tile-input search-tile-input__time">
+                                    <option v-for="(item, index) in time_ranges"
+                                            :key="index"
+                                            :value="item.time">{{ item.time }}</option>
+                                </select>
+                                <select name=""
+                                    id="search-tile-input__time"
+                                    class="search-tile-input search-tile-input__time">
+                                    <option v-for="(item, index) in time_ranges"
+                                            :key="index"
+                                            :value="item.time">{{ item.time }}</option>
+                                </select>
+                            </div>
+                            <div v-if="time_certain_checked">
+                                <select name=""
+                                    id="search-tile-input__time"
+                                    class="search-tile-input search-tile-input__time">
+                                    <option v-for="(item, index) in time_ranges"
+                                            :key="index"
+                                            :value="item.time">{{ item.time }}</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
-                                <input type="checkbox" name="" id="st-precice-time"> точное время
+                                <input type="checkbox" name="" id="st-precice-time" v-model="time_certain_checked"> точное время
                             </label>
                         </div>
                     </div>
@@ -161,6 +179,7 @@ export default {
             services_added: [],
 
             time_ranges: [],
+            time_certain_checked: false,
         }
     },
 
@@ -301,6 +320,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+#search-form__time-ranges {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .clone-wrapper {
     display: grid;
     grid-gap: 10px;
