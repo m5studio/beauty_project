@@ -1,17 +1,5 @@
 <template>
     <form id="search-form" class="mt-3">
-        <!-- <h3>services</h3>
-        {{ services }} -->
-
-        <!-- <h3>services_navigation</h3>
-        {{ services_navigation }}
-        <br><br> -->
-
-        <!-- <h3>{{ services_group_active_id }}</h3> -->
-
-        <!-- <h3>services_all</h3>
-        {{ services_all }} -->
-
         <!-- <h3>time_ranges</h3>
         {{ time_ranges }} -->
 
@@ -299,19 +287,25 @@ export default {
 
         generateTimeRanges() {
             let hour = 0;
+            let minutes = 0;
             for(let i = 0; i < 24; i++) {
-                const hour_fornated = (hour) => {
+                const time_formated = (hour, minutes) => {
                     if (hour <= 9) {
-                        return `0${hour}:00`;
-                    } else {
-                        return `${hour}:00`;
+                        hour = `0${hour}`;
                     }
+                    if (minutes <= 9) {
+                        minutes = `0${minutes}`;
+                    }
+                    return `${hour}:${minutes}`;
                 }
 
-                if (hour >= 8 && hour <= 22) {
-                    this.time_ranges.push({'time': hour_fornated(hour)});
+                this.time_ranges.push({'time': time_formated(hour, minutes)});
+                for(let k = 0; k < 3; k++) {
+                    minutes = minutes += 15;
+                    this.time_ranges.push({'time': time_formated(hour, minutes)});
                 }
 
+                minutes = 0;
                 hour++;
             }
         },
