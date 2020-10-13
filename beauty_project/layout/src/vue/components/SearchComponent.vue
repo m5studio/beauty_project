@@ -190,7 +190,7 @@ export default {
         }
 
         // Set time_certain
-        this.time_certain = todayHours;
+        this.time_certain = `${todayHours}:00`;
 
         // services
         axios
