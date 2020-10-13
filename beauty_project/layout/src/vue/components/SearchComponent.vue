@@ -29,7 +29,6 @@
                                     :input-class="['search-tile-input', 'search-tile-input__date']"
                                     v-model="today"
                                     format="dd.MM.yyyy (D)"></datepicker>
-                                    <!-- format="d MMMM yyyy"></datepicker> -->
                     </div>
                     <div class="search-tile st-3">
                         <div>
@@ -37,14 +36,16 @@
                             <!-- <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time"> -->
                             <div v-if="!time_certain_checked" id="search-form__time-ranges">
                                 <select name=""
-                                    id="search-tile-input__time"
+                                    v-model="time_start"
+                                    id="search-tile-input__time--start"
                                     class="search-tile-input search-tile-input__time">
                                     <option v-for="(item, index) in time_ranges"
                                             :key="index"
                                             :value="item.time">{{ item.time }}</option>
                                 </select>
                                 <select name=""
-                                    id="search-tile-input__time"
+                                    v-model="time_end"
+                                    id="search-tile-input__time--end"
                                     class="search-tile-input search-tile-input__time">
                                     <option v-for="(item, index) in time_ranges"
                                             :key="index"
@@ -53,6 +54,7 @@
                             </div>
                             <div v-if="time_certain_checked">
                                 <select name=""
+                                    v-model="time_certain"
                                     id="search-tile-input__time"
                                     class="search-tile-input search-tile-input__time">
                                     <option v-for="(item, index) in time_ranges"
@@ -169,6 +171,9 @@ export default {
 
             time_ranges: [],
             time_certain_checked: false,
+            time_start: '09:00',
+            time_end: '10:30',
+            time_certain: '11:00',
         }
     },
 
@@ -177,6 +182,13 @@ export default {
     },
 
     mounted() {
+        // Set start/end time
+        const todayHours = this.today.getHours();
+        if (todayHours <= 19) {
+            this.time_start = `${todayHours + 1}:00`;
+            this.time_end = `${todayHours + 2}:00`;
+        }
+
         // services
         axios
             .get(this.api_services_url)
@@ -213,7 +225,10 @@ export default {
         searchQuery() {
             let added_services = [];
             this.services_added.forEach(el => {
-                added_services.push(el.name);
+                // console.log(el.name);
+                if (el.name != '') {
+                    added_services.push(el.name);
+                }
             });
             // console.log(added_services);
 
@@ -223,7 +238,12 @@ export default {
                 new_added_services = added_services.replace(/,/g, ' + ')
             }
 
-            return `${new_added_services}`;
+            if (new_added_services && this.time_certain_checked == false) {
+                return `${new_added_services}, от ${this.time_start} до ${this.time_end}`;
+            }
+            if (new_added_services && this.time_certain_checked == true) {
+                return `${new_added_services}, в ${this.time_certain}`;
+            }
         },
     },
 

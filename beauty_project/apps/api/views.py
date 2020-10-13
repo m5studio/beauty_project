@@ -34,12 +34,14 @@ def api_salons_list_view(request):
         salons_addresses = list(Address.objects.filter(salon__id=salon['id']).values('city__name', 'metro__name', 'street', 'building', 'latitude', 'longitude'))
 
         for salon_address in salons_addresses:
+            salon_address['address_full'] = f"{salon_address['city__name']}, {salon_address['street']}, {salon_address['building']}"
+
             # Working schedule for address
             salon_address['working_schedule'] = {}
             address_working_schedules = WorkSchedule.objects.filter(address__salon__id=salon['id'], week_day=today_weekday)
+
             for aws in address_working_schedules:
                 if int(aws.week_day) == int(today_weekday):
-
                     # Compare current time and Salon working_hours_to
                     if int(str(now_time).replace(':','')) < int(str(aws.working_hours_to).replace(':','')):
                         salon_address['working_schedule']['open_now'] = True

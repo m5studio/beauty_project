@@ -1,12 +1,15 @@
 from django.db import models
 
+from mptt.fields import TreeForeignKey
+
 from apps.salon.models.salon import Salon
 from apps.services.models import Services
 
 
 class SalonServices(models.Model):
     salon   = models.ForeignKey(Salon, verbose_name='Салон', on_delete=models.CASCADE)
-    service = models.ForeignKey(Services, on_delete=models.CASCADE, verbose_name="Услуга")
+    # service = models.ForeignKey(Services, on_delete=models.CASCADE, verbose_name="Услуга")
+    service = TreeForeignKey(Services, on_delete=models.CASCADE, verbose_name="Услуга")
     price   = models.DecimalField('Цена', max_digits=10, decimal_places=2)
 
     def __str__(self):
