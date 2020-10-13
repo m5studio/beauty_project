@@ -189,6 +189,9 @@ export default {
             this.time_end = `${todayHours + 2}:00`;
         }
 
+        // Set time_certain
+        this.time_certain = todayHours;
+
         // services
         axios
             .get(this.api_services_url)
