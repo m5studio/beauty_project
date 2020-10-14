@@ -17,9 +17,15 @@
                 <div class="search-tiles-group__place-date-time">
                     <div class="search-tile st-1">
                         <label for="">Местоположение или салон</label>
-                        <select name="" id="search-tile-input__place" class="search-tile-input search-tile-input__place">
-                            <option>- Выберите город -</option>
-                            <option>Город</option>
+                        <select name="city"
+                                v-model="city_selected"
+                                id="search-tile-input__place"
+                                class="search-tile-input search-tile-input__place">
+                            <option value="">- Выберите город -</option>
+                            <option v-for="(item, index) in cities"
+                                    :key="index"
+                                    :data-city-id="item.id"
+                                    :value="item.name">{{ item.name }}</option>
                         </select>
                     </div>
                     <div class="search-tile st-2">
@@ -28,6 +34,7 @@
                                     :language="languages[language]"
                                     :input-class="['search-tile-input', 'search-tile-input__date']"
                                     v-model="today"
+                                    name="date_of_visit"
                                     format="dd.MM.yyyy (D)"></datepicker>
                     </div>
                     <div class="search-tile st-3">
@@ -35,7 +42,7 @@
                             <label for="">Время начала</label>
                             <!-- <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time"> -->
                             <div v-if="!time_certain_checked" id="search-form__time-ranges">
-                                <select name=""
+                                <select name="time_start"
                                     v-model="time_start"
                                     id="search-tile-input__time--start"
                                     class="search-tile-input search-tile-input__time">
@@ -43,7 +50,7 @@
                                             :key="index"
                                             :value="item.time">{{ item.time }}</option>
                                 </select>
-                                <select name=""
+                                <select name="time_end"
                                     v-model="time_end"
                                     id="search-tile-input__time--end"
                                     class="search-tile-input search-tile-input__time">
@@ -53,7 +60,7 @@
                                 </select>
                             </div>
                             <div v-if="time_certain_checked">
-                                <select name=""
+                                <select name="time_certain"
                                     v-model="time_certain"
                                     id="search-tile-input__time"
                                     class="search-tile-input search-tile-input__time">
@@ -65,7 +72,7 @@
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
-                                <input type="checkbox" name="" id="st-precice-time" v-model="time_certain_checked"> точное время
+                                <input type="checkbox" id="st-precice-time" v-model="time_certain_checked"> точное время
                             </label>
                         </div>
                     </div>
@@ -80,26 +87,26 @@
                                 <label for="">Выберите услугу</label>
                                 <!-- check if last -->
                                 <span v-if="index == services_added.length - 1">
-                                    <select name=""
+                                    <select name="service_to_add[]"
                                         v-model="service_to_add.name"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
 
                                         <option value="">- Выберите услугу -</option>
-                                        <option v-for="item in services_last"
-                                            :key="item.id"
+                                        <option v-for="(item, index) in services_last"
+                                            :key="index"
                                             :value="item.name">{{ item.name }}</option>
                                     </select>
                                 </span>
                                 <span v-else>
-                                    <select name=""
+                                    <select name="service_to_add[]"
                                         v-model="service_to_add.name"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
 
                                         <option value="">- Выберите услугу -</option>
-                                        <option v-for="item in services_all"
-                                                :key="item.id"
+                                        <option v-for="(item, index) in services_all"
+                                                :key="index"
                                                 :value="item.name">{{ item.name }}</option>
                                     </select>
                                 </span>
@@ -122,16 +129,13 @@
             </div>
         </div>
 
-        <div class="text-center my-3">
+        <div v-if="searchQuery" class="text-center mt-3">
             <div class="h4">Вы ищите:</div>
             <div class="search-query">{{ searchQuery }}</div>
-
-            <!-- TODO: remove: -->
-            <div class="search-query" style="opacity: .3;">Классический маникюр + Ремонт 1 ногтя + Коррекция бровей в Москве, начало с 09:00 до 12:00</div>
         </div>
 
-        <div id="search-form__submit">
-            <button type="submit">Начать поиск</button>
+        <div id="search-form__submit" class="mt-3">
+            <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button>
         </div>
     </form>
 </template>
@@ -148,7 +152,7 @@ export default {
     data() {
         return {
             api_services_url: '/api/services/',
-            // api_cities_url: '/api/cities/',
+            api_cities_url: '/api/cities/',
 
             // vuejs-datepicker language, initial date
             language: "ru",
@@ -174,6 +178,9 @@ export default {
             time_start: '09:00',
             time_end: '10:30',
             time_certain: '11:00',
+
+            cities: [],
+            city_selected: '',
         }
     },
 
@@ -184,10 +191,9 @@ export default {
     mounted() {
         // Set start/end time
         const todayHours = this.today.getHours();
-        if (todayHours <= 19) {
-            this.time_start = `${todayHours + 1}:00`;
-            this.time_end = `${todayHours + 2}:00`;
-        }
+
+        this.time_start = `${todayHours + 1}:00`;
+        this.time_end = `${todayHours + 2}:00`;
 
         // Set time_certain
         this.time_certain = `${todayHours + 1}:00`;
@@ -218,7 +224,14 @@ export default {
                 // console.log("axios mounted: services_all", this.services_all);
             }),
 
-        this.services_added.push({'id': '', 'name': ""});
+        // cities
+        axios
+            .get(this.api_cities_url)
+            .then(res => {
+                this.cities = res.data;
+            }),
+
+        this.services_added.push({'id': "", 'name': ""});
         this.services_last = this.services_all;
 
         this.generateTimeRanges();
@@ -228,12 +241,10 @@ export default {
         searchQuery() {
             let added_services = [];
             this.services_added.forEach(el => {
-                // console.log(el.name);
                 if (el.name != '') {
                     added_services.push(el.name);
                 }
             });
-            // console.log(added_services);
 
             added_services = added_services.toString();
             let new_added_services = '';
@@ -241,11 +252,27 @@ export default {
                 new_added_services = added_services.replace(/,/g, ' + ')
             }
 
+            const city_selected = () => {
+                if (this.city_selected != '') {
+                    return `, в ${this.city_selected}, `;
+                } else {
+                    return '';
+                }
+            }
+
+            const time_ranges_formated = () => {
+                return `начало с ${this.time_start} до ${this.time_end}`;
+            }
+
+            const time_certain_formated = () => {
+                return `время ${this.time_certain}`;
+            }
+
             if (new_added_services && this.time_certain_checked == false) {
-                return `${new_added_services}, от ${this.time_start} до ${this.time_end}`;
+                return `${new_added_services}${city_selected()}${time_ranges_formated()}`;
             }
             if (new_added_services && this.time_certain_checked == true) {
-                return `${new_added_services}, в ${this.time_certain}`;
+                return `${new_added_services}${city_selected()}${time_certain_formated()}`;
             }
         },
     },
@@ -294,12 +321,11 @@ export default {
         addService(e) {
             e.preventDefault();
 
-            // console.log('addService()');
-
             const index = e.target.getAttribute('data-index');
-            this.services_added.push(Vue.util.extend({}, this.service_to_add));
+            // this.services_added.push(Vue.util.extend({}, this.service_to_add));
+            this.services_added.push({'id': 'test id', 'name': 'test name'});
 
-            // console.log(this.services_added);
+            console.log(this.services_added);
         },
         removeService(index) {
             // console.log('removeService()', index);
@@ -334,6 +360,15 @@ export default {
                 minutes = 0;
                 hour++;
             }
+        },
+
+        sumbitSearchForm() {
+            // console.log(this.$data);
+            console.log("city_selected", this.city_selected);
+            console.log("today", this.today);
+            console.log("time_start", this.time_start);
+            console.log("time_end", this.time_end);
+            console.log("services_added", this.services_added);
         },
     },
 }
