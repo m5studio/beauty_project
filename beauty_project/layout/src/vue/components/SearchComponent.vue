@@ -88,26 +88,26 @@
                                 <!-- check if last -->
                                 <span v-if="index == services_added.length - 1">
                                     <select name="service_to_add[]"
-                                        v-model="service_to_add.name"
+                                        v-model="service_to_add.id"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
 
                                         <option value="">- Выберите услугу -</option>
                                         <option v-for="(item, index) in services_last"
                                             :key="index"
-                                            :value="item.name">{{ item.name }}</option>
+                                            :value="item.id">{{ item.name }}</option>
                                     </select>
                                 </span>
                                 <span v-else>
                                     <select name="service_to_add[]"
-                                        v-model="service_to_add.name"
+                                        v-model="service_to_add.id"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
 
                                         <option value="">- Выберите услугу -</option>
                                         <option v-for="(item, index) in services_all"
                                                 :key="index"
-                                                :value="item.name">{{ item.name }}</option>
+                                                :value="item.id">{{ item.name }}</option>
                                     </select>
                                 </span>
 
@@ -169,7 +169,7 @@ export default {
 
             service_to_add: {
                 "id": '',
-                "name": '',
+                // "name": '',
             },
             services_added: [],
 
@@ -231,7 +231,9 @@ export default {
                 this.cities = res.data;
             }),
 
-        this.services_added.push({'id': "", 'name': ""});
+        // Fill first services_added
+        this.services_added.push({'id': ''});
+
         this.services_last = this.services_all;
 
         this.generateTimeRanges();
@@ -241,8 +243,11 @@ export default {
         searchQuery() {
             let added_services = [];
             this.services_added.forEach(el => {
-                if (el.name != '') {
-                    added_services.push(el.name);
+                // get by id services name
+                for (let i = 0; i < this.services_all.length; i++) {
+                    if (el.id == this.services_all[i].id) {
+                        added_services.push(this.services_all[i].name);
+                    }
                 }
             });
 
@@ -254,18 +259,18 @@ export default {
 
             const city_selected = () => {
                 if (this.city_selected != '') {
-                    return `, в ${this.city_selected}, `;
+                    return `, в ${this.city_selected}`;
                 } else {
                     return '';
                 }
             }
 
             const time_ranges_formated = () => {
-                return `начало с ${this.time_start} до ${this.time_end}`;
+                return `, начало с ${this.time_start} до ${this.time_end}`;
             }
 
             const time_certain_formated = () => {
-                return `время ${this.time_certain}`;
+                return `, время ${this.time_certain}`;
             }
 
             if (new_added_services && this.time_certain_checked == false) {
@@ -322,10 +327,9 @@ export default {
             e.preventDefault();
 
             const index = e.target.getAttribute('data-index');
-            // this.services_added.push(Vue.util.extend({}, this.service_to_add));
-            this.services_added.push({'id': 'test id', 'name': 'test name'});
 
-            console.log(this.services_added);
+            this.services_added.push(Vue.util.extend({}, this.service_to_add));
+            // this.services_added.push({'name': 'test 111'});
         },
         removeService(index) {
             // console.log('removeService()', index);
@@ -364,11 +368,13 @@ export default {
 
         sumbitSearchForm() {
             // console.log(this.$data);
-            console.log("city_selected", this.city_selected);
-            console.log("today", this.today);
-            console.log("time_start", this.time_start);
-            console.log("time_end", this.time_end);
-            console.log("services_added", this.services_added);
+
+            console.log("sumbitSearchForm()");
+            console.log("city_selected:", this.city_selected);
+            console.log("today:", this.today);
+            console.log("time_start:", this.time_start);
+            console.log("time_end:", this.time_end);
+            console.log("services_added:", this.services_added);
         },
     },
 }
