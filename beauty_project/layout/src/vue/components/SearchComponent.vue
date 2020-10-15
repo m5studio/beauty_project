@@ -1,5 +1,5 @@
 <template>
-    <form id="search-form" class="mt-3">
+    <form action="/searh-query/" method="GET" id="search-form" class="mt-3">
         <!-- <h3>time_ranges</h3>
         {{ time_ranges }} -->
 
@@ -135,7 +135,7 @@
         </div>
 
         <div id="search-form__submit" class="mt-3">
-            <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button>
+            <button type="submit" @:click="sumbitSearchForm">Начать поиск</button>
         </div>
     </form>
 </template>
@@ -366,15 +366,17 @@ export default {
             }
         },
 
-        sumbitSearchForm() {
+        sumbitSearchForm(e) {
+            // e.preventDefault();
+
             // console.log(this.$data);
 
             console.log("sumbitSearchForm()");
-            console.log("city_selected:", this.city_selected);
-            console.log("today:", this.today);
-            console.log("time_start:", this.time_start);
-            console.log("time_end:", this.time_end);
-            console.log("services_added:", this.services_added);
+            // console.log("city_selected:", this.city_selected);
+            // console.log("today:", this.today);
+            // console.log("time_start:", this.time_start);
+            // console.log("time_end:", this.time_end);
+            // console.log("services_added:", this.services_added);
         },
     },
 }
