@@ -382,7 +382,7 @@ export default {
 
             axios({
                     method: 'post',
-                    url: '/core/searh-query/',
+                    url: '/search-results/',
                     data: {
                         city: this.city_selected,
                         date_of_visit: moment(this.today).format('MM-DD-YYYY, hh:mm:ss'),

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block body_classes %}{% spaceless %}
+    {{ block.super }} search-results
+{% endspaceless %}{% endblock %}
+
+
+{% block breadcrumbs %}
+    <nav id="breadcrumbs" class="container">
+        <ol>
+            <li>
+                <a href="{% url 'homepage' %}">Главная</a>
+            </li>
+            <li>{{ page_title }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+
+{% block content_top %}{% endblock %}
+
+
+{% block content %}{% endblock %}
+
+
+{% block content_bottom %}{% endblock %}
+
+
+{% block js %}
+    {{ block.super }}
+    <!-- <script src="{% static 'js/vendors~2Gis.js' %}"></script> -->
+    <!-- <script src="{% static 'js/2Gis.js' %}"></script> -->
+{% endblock %}

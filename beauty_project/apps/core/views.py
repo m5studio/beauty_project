@@ -16,15 +16,13 @@ class HomepageView(TemplateView):
         return context
 
 
-def search_query_view(request):
-    print("!!! homepage_search_query_view()")
-    print(request)
+def search_results_view(request):
+    context = {}
+    context['page_title'] = 'Результаты поиска'
+
     if request.method == "POST":
         print("POST request")
-        # print(request.POST)
         # print(request.POST.get('city'))
-        # print(request.POST.get('date_of_visit'))
-        # print(request.POST.get('csrftoken'))
 
         request_body_json = json.loads(request.body.decode('utf-8'))
 
@@ -36,10 +34,6 @@ def search_query_view(request):
         print(request_body_json['time_certain_checked'])
         print(request_body_json['time_certain'])
         print(request_body_json['services_added'])
+        return redirect('/')
 
-        # import datetime
-        # date_time_str = request_body_json['date_of_visit']
-        # date_time_obj = datetime.datetime.strptime(date_time_str, '%Y-%m-%d %H:%M:%S.%f')
-        # print(date_time_obj)
-
-    return redirect('/')
+    return render(request, 'core/search-results.html', context)
