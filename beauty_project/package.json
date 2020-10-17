@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --progress",
     "watch": "webpack --watch --progress",
+    "clean": "rm -rf ./layout/dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Denis <jquphp@gmail.com>",
@@ -35,6 +36,7 @@
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
+    "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "vue": "^2.6.12",
     "vuejs-datepicker": "^1.6.2"

@@ -1,8 +1,6 @@
 <template>
-    <form action="/searh-query/" method="GET" id="search-form" class="mt-3">
-        <!-- <h3>time_ranges</h3>
-        {{ time_ranges }} -->
-
+    <!-- <form action="/core/searh-query/" method="POST" id="search-form" class="mt-3"> -->
+    <form id="search-form" class="mt-3">
         <nav id="search-form__services-nav" class="mb-3">
             <a v-for="(item, index) in services_navigation"
                 :key="item.id"
@@ -40,7 +38,6 @@
                     <div class="search-tile st-3">
                         <div>
                             <label for="">Время начала</label>
-                            <!-- <input type="time" name="" id="search-tile-input__time" class="search-tile-input search-tile-input__time"> -->
                             <div v-if="!time_certain_checked" id="search-form__time-ranges">
                                 <select name="time_start"
                                     v-model="time_start"
@@ -87,7 +84,7 @@
                                 <label for="">Выберите услугу</label>
                                 <!-- check if last -->
                                 <span v-if="index == services_added.length - 1">
-                                    <select name="service_to_add[]"
+                                    <select name="service_to_add"
                                         v-model="service_to_add.id"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
@@ -99,7 +96,7 @@
                                     </select>
                                 </span>
                                 <span v-else>
-                                    <select name="service_to_add[]"
+                                    <select name="service_to_add"
                                         v-model="service_to_add.id"
                                         id="search-tile-input__services"
                                         class="search-tile-input search-tile-input__services">
@@ -135,17 +132,20 @@
         </div>
 
         <div id="search-form__submit" class="mt-3">
-            <button type="submit" @:click="sumbitSearchForm">Начать поиск</button>
+            <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button>
         </div>
     </form>
 </template>
 
 <script>
+import getCookie from '../../ajax/getcookie';
+import moment from 'moment';
+
 import Vue from 'vue';
-import axios from "axios";
+import axios from 'axios';
 
 import Datepicker from 'vuejs-datepicker';
-import * as lang from "vuejs-datepicker/src/locale";
+import * as lang from 'vuejs-datepicker/src/locale';
 
 
 export default {
@@ -157,7 +157,9 @@ export default {
             // vuejs-datepicker language, initial date
             language: "ru",
             languages: lang,
+
             today: new Date(),
+            // date_of_visit: String,
 
             services_navigation: [],
             services_all: [],
@@ -366,16 +368,52 @@ export default {
             }
         },
 
-        sumbitSearchForm(e) {
-            // e.preventDefault();
-
-            // console.log(this.$data);
-
+        sumbitSearchForm() {
             console.log("sumbitSearchForm()");
+
+            const csrftoken = getCookie('csrftoken');
+            // console.log(csrftoken);
+
+            // Push services ids to flat array e.g.: [64, 78, 12]
+            let services_added_arr = [];
+            this.services_added.forEach(el => {
+                services_added_arr.push(el.id);
+            })
+
+            axios({
+                    method: 'post',
+                    url: '/core/searh-query/',
+                    data: {
+                        city: this.city_selected,
+                        date_of_visit: moment(this.today).format('MM-DD-YYYY, hh:mm:ss'),
+                        // date_of_visit: this.date_of_visit,
+                        time_start: this.time_start,
+                        time_end: this.time_end,
+                        time_certain_checked: this.time_certain_checked,
+                        time_certain: this.time_certain,
+                        // services_added: this.services_added,
+                        services_added: services_added_arr,
+                    },
+                    headers: { "X-CSRFTOKEN": csrftoken, 'content-type': 'application/json' }
+                })
+                .then(function(response) {
+                    // handle success
+                    // console.log(response);
+                })
+                .catch(function(response) {
+                    // handle error
+                    // console.log(response);
+                });
+
+
+            // console.log(this.today);
+            // console.log(moment(this.today).format('MM-DD-YYYY, hh:mm:ss'));
+
             // console.log("city_selected:", this.city_selected);
             // console.log("today:", this.today);
             // console.log("time_start:", this.time_start);
             // console.log("time_end:", this.time_end);
+            // console.log("time_certain:", this.time_certain);
             // console.log("services_added:", this.services_added);
         },
     },
