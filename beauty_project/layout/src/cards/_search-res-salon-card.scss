@@ -1,0 +1,78 @@
+.search-res-salon-card {
+    background-color: #293c4d;
+
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: 30% 1fr;
+
+    &:not(:last-child) {
+        margin-bottom: 30px;
+    }
+
+    &__img {
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__content {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 1fr 30%;
+
+        padding: 10px 0;
+
+        // &--left {}
+
+        &--address {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        &--street {}
+
+        &--metro {}
+
+        &--right {
+            border-left: 1px solid #efd4cb;
+            padding-left: 10px;
+
+            div {
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+
+        &--rating {}
+
+        &--reviews {
+            text-align: center;
+        }
+
+        &--price {
+            color: white;
+            font-size: 1.7rem;
+            text-align: center;
+        }
+
+        &--sign-up {
+            text-align: center;
+
+            a {
+                background-color: #ff4200;
+                border-radius: 5px;
+                color: white;
+                padding: 5px 15px;
+
+                &:focus,
+                &:hover {
+                    color: white;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
