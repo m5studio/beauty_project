@@ -24,9 +24,9 @@ def search_results_view(request):
     context = {}
     context['page_title'] = 'Результаты поиска'
 
-    get_city = request.GET['city']
+    if request.GET.get('city'):
+        get_city = request.GET.get('city')
 
-    if get_city:
         city_instance = City.objects.get(id=get_city)
         context['object_list'] = Address.objects.filter(salon__active=True, city=city_instance)
     else:
