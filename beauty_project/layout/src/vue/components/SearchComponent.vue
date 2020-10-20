@@ -1,6 +1,6 @@
 <template>
-    <form v-bind:action="url_search_results" method="GET" id="search-form" class="mt-3">
-    <!-- <form id="search-form" class="mt-3"> -->
+    <!-- <form v-bind:action="url_search_results" method="GET" id="search-form" class="mt-3"> -->
+    <form id="search-form" class="mt-3">
         <nav id="search-form__services-nav" class="mb-3">
             <a v-for="(item, index) in services_navigation"
                 :key="item.id"
@@ -74,7 +74,7 @@
                         </div>
                         <div class="mt-2 text-right">
                             <label for="st-precice-time">
-                                <input type="checkbox" id="st-precice-time" v-model="time_certain_checked"> точное время
+                                <input type="checkbox" id="st-precice-time" name="time_certain" v-model="time_certain_checked"> точное время
                             </label>
                         </div>
                     </div>
@@ -372,8 +372,28 @@ export default {
             }
         },
 
-        sumbitSearchForm() {
+        // sumbitSearchForm() {
+        sumbitSearchForm(e) {
+            e.preventDefault();
+
             console.log("sumbitSearchForm()");
+
+            const search_form = document.getElementById('search-form');
+            console.log(search_form);
+
+            for (let i = 0; i < search_form.elements.length; i++) {
+                console.log(search_form.elements[i].name, search_form.elements[i].value);
+            }
+
+            axios.get('/search-results/?city=1&service_to_add=83,1', {
+                params: {
+                    answer: '42',
+                }
+            })
+            // search_form.submit();
+
+            // search_form.submit();
+
 
             // const csrftoken = getCookie('csrftoken');
             // console.log(csrftoken);
