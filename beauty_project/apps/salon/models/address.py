@@ -43,6 +43,9 @@ class Address(models.Model):
         else:
             return f'{self.city}, {self.street} {self.building}'
 
+    def display_address(self):
+        return f"г. {self.city}, {self.street}, {self.building}"
+
     class Meta:
         verbose_name = 'Адрес'
         verbose_name_plural = 'Адреса'
