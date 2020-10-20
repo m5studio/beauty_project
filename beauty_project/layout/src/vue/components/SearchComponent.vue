@@ -166,7 +166,6 @@ export default {
             languages: lang,
 
             today: new Date(),
-            // date_of_visit: String,
 
             services_navigation: [],
             services_all: [],
@@ -178,7 +177,6 @@ export default {
 
             service_to_add: {
                 "id": '',
-                // "name": '',
             },
             services_added: [],
 
@@ -334,9 +332,7 @@ export default {
 
         addService(e) {
             e.preventDefault();
-
             const index = e.target.getAttribute('data-index');
-
             this.services_added.push(Vue.util.extend({}, this.service_to_add));
             // this.services_added.push({'name': 'test 111'});
         },
@@ -351,6 +347,7 @@ export default {
         generateTimeRanges() {
             let hour = 0;
             let minutes = 0;
+
             for(let i = 0; i < 24; i++) {
                 const time_formated = (hour, minutes) => {
                     if (hour <= 9) {
@@ -378,14 +375,14 @@ export default {
         sumbitSearchForm() {
             console.log("sumbitSearchForm()");
 
-            const csrftoken = getCookie('csrftoken');
+            // const csrftoken = getCookie('csrftoken');
             // console.log(csrftoken);
 
             // Push services ids to flat array e.g.: [64, 78, 12]
-            let services_added_arr = [];
-            this.services_added.forEach(el => {
-                services_added_arr.push(el.id);
-            })
+            // let services_added_arr = [];
+            // this.services_added.forEach(el => {
+            //     services_added_arr.push(el.id);
+            // })
 
             /*
             axios({
