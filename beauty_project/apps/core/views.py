@@ -27,7 +27,7 @@ def search_results_view(request):
     get_city = request.GET['city']
 
     if get_city:
-        city_instance = City.objects.get(name=get_city)
+        city_instance = City.objects.get(id=get_city)
         context['object_list'] = Address.objects.filter(salon__active=True, city=city_instance)
     else:
         context['object_list'] = Address.objects.filter(salon__active=True)

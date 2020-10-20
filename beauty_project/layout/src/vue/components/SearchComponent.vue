@@ -23,7 +23,7 @@
                             <option v-for="(item, index) in cities"
                                     :key="index"
                                     :data-city-id="item.id"
-                                    :value="item.name">{{ item.name }}</option>
+                                    :value="item.id">{{ item.name }}</option>
                         </select>
                     </div>
                     <div class="search-tile st-2">
@@ -31,6 +31,10 @@
                         <datepicker :monday-first="true"
                                     :language="languages[language]"
                                     :input-class="['search-tile-input', 'search-tile-input__date']"
+                                    :disabled-dates="{
+                                                        from: new Date(new Date().setMonth(new Date().getMonth()+2)),
+                                                        to: new Date(new Date().setDate(new Date().getDate()-1))
+                                                    }"
                                     v-model="today"
                                     name="date_of_visit"
                                     format="dd.MM.yyyy"></datepicker>
