@@ -61,10 +61,11 @@
         &--right {
             border-left: 1px solid #efd4cb;
             padding-left: 10px;
+            padding-right: 10px;
 
             div {
                 &:not(:last-child) {
-                    margin-bottom: 10px;
+                    margin-bottom: 15px;
                 }
             }
         }
@@ -72,7 +73,16 @@
         &--rating {}
 
         &--reviews {
+            font-size: .9rem;
             text-align: center;
+
+            a {
+                color: #fbddd3;
+
+                // &:focus,
+                // &:hover {
+                // }
+            }
         }
 
         &--price {
@@ -88,10 +98,13 @@
                 background-color: #ff4200;
                 border-radius: 5px;
                 color: white;
+                display: block;
+                font-size: 1.1rem;
                 padding: 5px 15px;
 
                 &:focus,
                 &:hover {
+                    background-color: #b12f00;
                     color: white;
                     text-decoration: none;
                 }

@@ -26,15 +26,15 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-3">
-                <div class="h4">Фильтры услуг</div>
+            <div class="col-2">
+                <div class="h5">Фильтры услуг</div>
             </div>
-            <div class="col-9">
+            <div class="col-10">
                 <div class="mb-3">
                     Вы искали: Классический маникюр в г.Москва 5 августа с 09:00 до 12:00 <a href="">Изменить</a>
                 </div>
 
-                <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-between mb-4">
                     <div class="">
                         <a href="">Посмотреть на карте</a>
                     </div>
@@ -48,9 +48,48 @@
                 </div>
 
                 <div>
-                    <div class="search-res-salon-card">
+                    {{ object_list }}
+
+                    {% for object in object_list %}
+                        <div class="search-res-salon-card">
+                            <div class="search-res-salon-card__img">
+                                <img src="https://via.placeholder.com/256x200" alt="">
+                            </div>
+                            <div class="search-res-salon-card__content">
+                                <div class="search-res-salon-card__content--left">
+                                    <div class="search-res-salon-card__content--salon-name">
+                                        <a href="">{{ object.salon.name }}</a>
+                                    </div>
+                                    <div class="search-res-salon-card__content--description">
+                                        {{ object.salon.description }} <a href="">подробнее</a>
+                                    </div>
+                                    <div class="search-res-salon-card__content--address">
+                                        <div class="search-res-salon-card__content--street">
+                                            <span class="icon icon-geomark"></span> г. Москва, ул. Мневники, 46а
+                                        </div>
+                                        <div class="search-res-salon-card__content--metro">
+                                            <span class="icon icon-metro"></span> {{ object.metro.name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="search-res-salon-card__content--right">
+                                    <div class="search-res-salon-card__content--rating">stars</div>
+                                    <div class="search-res-salon-card__content--reviews">
+                                        <a href="">Оценки (97)</a>
+                                        <a href="">Отзывы (15)</a>
+                                    </div>
+                                    <div class="search-res-salon-card__content--price">1700 руб.</div>
+                                    <div class="search-res-salon-card__content--sign-up">
+                                        <a href="">Записаться</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <!-- <div class="search-res-salon-card">
                         <div class="search-res-salon-card__img">
-                            <img src="https://via.placeholder.com/256x230" alt="">
+                            <img src="https://via.placeholder.com/256x200" alt="">
                         </div>
                         <div class="search-res-salon-card__content">
                             <div class="search-res-salon-card__content--left">
@@ -81,7 +120,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <template>
-    <!-- <form action="/core/searh-query/" method="POST" id="search-form" class="mt-3"> -->
-    <form id="search-form" class="mt-3">
+    <form v-bind:action="url_search_results" method="GET" id="search-form" class="mt-3">
+    <!-- <form id="search-form" class="mt-3"> -->
         <nav id="search-form__services-nav" class="mb-3">
             <a v-for="(item, index) in services_navigation"
                 :key="item.id"
@@ -33,7 +33,8 @@
                                     :input-class="['search-tile-input', 'search-tile-input__date']"
                                     v-model="today"
                                     name="date_of_visit"
-                                    format="dd.MM.yyyy (D)"></datepicker>
+                                    format="dd.MM.yyyy"></datepicker>
+                                    <!-- format="dd.MM.yyyy (D)"></datepicker> -->
                     </div>
                     <div class="search-tile st-3">
                         <div>
@@ -132,7 +133,8 @@
         </div>
 
         <div id="search-form__submit" class="mt-3">
-            <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button>
+            <!-- <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button> -->
+            <button type="submit" v-on:click="sumbitSearchForm">Начать поиск</button>
         </div>
     </form>
 </template>
@@ -153,6 +155,7 @@ export default {
         return {
             api_services_url: '/api/services/',
             api_cities_url: '/api/cities/',
+            url_search_results: '/search-results/',
 
             // vuejs-datepicker language, initial date
             language: "ru",
@@ -380,9 +383,10 @@ export default {
                 services_added_arr.push(el.id);
             })
 
+            /*
             axios({
                     method: 'post',
-                    url: '/search-results/',
+                    url: this.url_search_results,
                     data: {
                         city: this.city_selected,
                         date_of_visit: moment(this.today).format('MM-DD-YYYY, hh:mm:ss'),
@@ -399,12 +403,16 @@ export default {
                 .then(function(response) {
                     // handle success
                     // console.log(response);
+
+                    // Redirect to serach results
+                    // location.href = this.url_search_results;
+                    location.href = '/search-results/';
                 })
                 .catch(function(response) {
                     // handle error
                     // console.log(response);
                 });
-
+            */
 
             // console.log(this.today);
             // console.log(moment(this.today).format('MM-DD-YYYY, hh:mm:ss'));

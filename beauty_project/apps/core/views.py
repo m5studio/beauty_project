@@ -3,6 +3,10 @@ import json
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
+from apps.salon.models.salon import Salon
+from apps.salon.models.salon_services import SalonServices
+from apps.salon.models.address import Address, City
+
 from apps.actions.models import Actions
 
 
@@ -20,6 +24,12 @@ def search_results_view(request):
     context = {}
     context['page_title'] = 'Результаты поиска'
 
+    get_city = request.GET['city']
+
+    city_instance = City.objects.get(name=get_city)
+    context['object_list'] = Address.objects.filter(salon__active=True, city=city_instance)
+
+    """
     if request.method == "POST":
         print("POST request")
         # print(request.POST.get('city'))
@@ -34,6 +44,7 @@ def search_results_view(request):
         print(request_body_json['time_certain_checked'])
         print(request_body_json['time_certain'])
         print(request_body_json['services_added'])
-        return redirect('/')
+        # return redirect('/')
+    """
 
     return render(request, 'core/search-results.html', context)
