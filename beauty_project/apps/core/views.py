@@ -35,6 +35,11 @@ def search_results_view(request):
     get_services = request.GET.get('service_to_add')
     print(get_services)
 
+    get_services = get_services.split(",")
+    get_services = map(int, get_services)
+    get_services = list(set(get_services))
+    print(get_services)
+
     get_services_list = request.GET.getlist('service_to_add')
     print(get_services_list)
 

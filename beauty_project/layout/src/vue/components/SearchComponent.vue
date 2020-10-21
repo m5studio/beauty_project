@@ -139,6 +139,7 @@
         <div id="search-form__submit" class="mt-3">
             <!-- <button type="submit" v-on:click.prevent="sumbitSearchForm">Начать поиск</button> -->
             <button type="submit" v-on:click="sumbitSearchForm">Начать поиск</button>
+            <!-- <button type="submit" v-on:click="sumbitSearchForm(this)">Начать поиск</button> -->
         </div>
     </form>
 </template>
@@ -379,19 +380,23 @@ export default {
             console.log("sumbitSearchForm()");
 
             const search_form = document.getElementById('search-form');
-            console.log(search_form);
 
+            let service_to_add_arr = [];
             for (let i = 0; i < search_form.elements.length; i++) {
+                service_to_add_arr.push(search_form.elements[i].name, search_form.elements[i].value);
                 console.log(search_form.elements[i].name, search_form.elements[i].value);
             }
 
-            axios.get('/search-results/?city=1&service_to_add=83,1', {
-                params: {
-                    answer: '42',
-                }
-            })
-            // search_form.submit();
+            // Exclude non unique values
+            service_to_add_arr = [...new Set(service_to_add_arr)];
+            console.log(service_to_add_arr);
 
+            // search_form.action = '/search-results/?city=1&service_to_add=83,1';
+            search_form.action = `/search-results/?city=${this.city_selected}&date_of_visit=${moment(this.today).format('MM-DD-YYYY')}&service_to_add=83,1,1,2,2,83`;
+
+
+            // Submit form
+            location.href = search_form.action;
             // search_form.submit();
 
 
