@@ -32,16 +32,18 @@ def search_results_view(request):
     else:
         context['object_list'] = Address.objects.filter(salon__active=True)
 
-    get_services = request.GET.get('service_to_add')
-    print(get_services)
 
-    get_services = get_services.split(",")
-    get_services = map(int, get_services)
-    get_services = list(set(get_services))
-    print(get_services)
+    if request.GET.get('service_to_add'):
+        get_services = request.GET.get('service_to_add')
+        print(get_services)
 
-    get_services_list = request.GET.getlist('service_to_add')
-    print(get_services_list)
+        get_services = get_services.split(",")
+        get_services = map(int, get_services)
+        get_services = list(set(get_services))
+        print(get_services)
+
+        get_services_list = request.GET.getlist('service_to_add')
+        print(get_services_list)
 
     """
     if request.method == "POST":

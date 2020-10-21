@@ -37,8 +37,8 @@
                                                     }"
                                     v-model="today"
                                     name="date_of_visit"
-                                    format="dd.MM.yyyy"></datepicker>
-                                    <!-- format="dd.MM.yyyy (D)"></datepicker> -->
+                                    format="dd.MM.yyyy (D)"></datepicker>
+                                    <!-- format="dd.MM.yyyy"></datepicker> -->
                     </div>
                     <div class="search-tile st-3">
                         <div>
@@ -373,29 +373,48 @@ export default {
             }
         },
 
-        // sumbitSearchForm() {
         sumbitSearchForm(e) {
             e.preventDefault();
 
-            console.log("sumbitSearchForm()");
-
+            // console.log("sumbitSearchForm()");
             const search_form = document.getElementById('search-form');
 
             let service_to_add_arr = [];
             for (let i = 0; i < search_form.elements.length; i++) {
-                service_to_add_arr.push(search_form.elements[i].name, search_form.elements[i].value);
-                console.log(search_form.elements[i].name, search_form.elements[i].value);
+                if (search_form.elements[i].name == 'service_to_add') {
+                    service_to_add_arr.push(search_form.elements[i].value);
+                }
+                // console.log(search_form.elements[i].name, search_form.elements[i].value);
             }
-
             // Exclude non unique values
             service_to_add_arr = [...new Set(service_to_add_arr)];
-            console.log(service_to_add_arr);
+            // Separate values by ,
+            const service_to_add_arr_to_str = service_to_add_arr.join(',');
 
             // search_form.action = '/search-results/?city=1&service_to_add=83,1';
-            search_form.action = `/search-results/?city=${this.city_selected}&date_of_visit=${moment(this.today).format('MM-DD-YYYY')}&service_to_add=83,1,1,2,2,83`;
+            // search_form.action = `/search-results/?city=${this.city_selected}&date_of_visit=${moment(this.today).format('MM-DD-YYYY')}&service_to_add=${service_to_add_arr_to_str}`;
+            search_form.action = '/search-results/?';
 
+            if (this.city_selected != '') {
+                search_form.action += `city=${this.city_selected}`;
+            }
+            if (this.today != '') {
+                search_form.action += `&date_of_visit=${moment(this.today).format('MM-DD-YYYY')}`;
+            }
+            if (this.time_certain_checked == false && this.time_start != '' && this.time_end != '') {
+                search_form.action += `&time_start=${this.time_start}&time_end=${this.time_end}`;
+            }
+            if (this.time_certain_checked == true) {
+                search_form.action += `&time_certain=${this.time_certain}`;
+            }
+            if (service_to_add_arr_to_str.length > 0) {
+                search_form.action += `&service_to_add=${service_to_add_arr_to_str}`;
+            }
 
-            // Submit form
+            // Replace ?& in search query
+            search_form.action = search_form.action.replace("?&", "?");
+
+            // Submit form with GET parameters
             location.href = search_form.action;
             // search_form.submit();
 
