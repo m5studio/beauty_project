@@ -289,9 +289,7 @@ class AddDummyContent:
                                 description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie nisl erat, in auctor purus vehicula vel. Mauris pharetra maximus sapien non bibendum. Pellentesque placerat mauris at dictum lobortis. Nulla consectetur tortor at magna faucibus suscipit. Vivamus aliquam lorem sem, in porta orci commodo sit amet.", \
                                 phone="+79990001100", \
                                 email="salonmail@gmail.com", \
-                                site_url="https://google.com", \
-                                # latitude=f'55.{random.randint(510000,740000)}', \
-                                # longitude=f'37.{random.randint(570000,810000)}', \
+                                site_url="https://google.com"
                             )
                 salon.save()
                 print(f"Салон {salon.name} создан")
@@ -409,18 +407,23 @@ class AddDummyContent:
 
     def addSalonServices(self):
         salons = Salon.objects.all()
+        # addresses = Address.objects.all()
         services_ids_list = Services.objects.all().values_list('id', flat=True)
-        services_ids_list_random = random.sample(list(services_ids_list), 10)
+        # services_ids_list_random = random.sample(list(services_ids_list), 10)
 
         for salon in salons:
             salon_instance = Salon.objects.get(id=salon.id)
+            address_instance = Address.objects.filter(salon=salon_instance).first()
+
+            services_ids_list_random = random.sample(list(services_ids_list), 10)
 
             # for service_id in services_ids_list:
             for service_id in services_ids_list_random:
                 service_instance = Services.objects.get(id=service_id)
                 salon_service = SalonServices(salon=salon_instance, \
+                                            address=address_instance, \
                                             service=service_instance, \
-                                            price=random.randint(1000,9000)
+                                            price=random.randint(900,9000)
                                             )
                 salon_service.save()
                 print(f'Услуга "{service_instance.name}" для Салона "{salon.name}", с ценой {salon_service.price} создана!')

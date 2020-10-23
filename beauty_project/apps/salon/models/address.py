@@ -20,7 +20,6 @@ class Metro(models.Model):
 
     def __str__(self):
         return f'{self.city}: {self.name}'
-        # return self.name
 
     class Meta:
         verbose_name = 'Метро'

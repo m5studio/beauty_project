@@ -26,10 +26,24 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-2">
-                <div class="h5">Фильтры услуг</div>
+            <div class="col-3">
+                <form action="" method="get" onchange="submit()">
+                    <div class="h5">Фильтры услуг</div>
+                    <div>
+                        <div>
+                            <strong>Станции метро ({{ filter_metro.count }})</strong>
+                        </div>
+                        <div id="metroStationsList" style="height: 15vh; overflow: hidden; padding-left: 10px; font-size: .9rem;">
+                            {% for metro in filter_metro %}
+                                <input type="checkbox" name="metro" value="{{ metro.id }}" style="margin-bottom: 3px;"> {{ metro.name }}<br>
+                            {% endfor %}
+                        </div>
+
+                        <div style="cursor: pointer; margin-top: 10px; font-size: .9rem;" onclick="document.getElementById('metroStationsList').style.height= 'auto';">Смотреть все</div>
+                    </div>
+                </form>
             </div>
-            <div class="col-10">
+            <div class="col-9">
                 <div class="mb-3">
                     Вы искали: Классический маникюр в г.Москва 5 августа с 09:00 до 12:00 <a href="">Изменить</a>
                 </div>
@@ -64,10 +78,10 @@
                                         </div>
                                         <div class="search-res-salon-card__content--address">
                                             <div class="search-res-salon-card__content--street">
-                                                <span class="icon icon-geomark"></span> {{ object.display_address }}
+                                                <span class="icon icon-geomark"></span> {{ object.address.display_address }}
                                             </div>
                                             <div class="search-res-salon-card__content--metro">
-                                                <span class="icon icon-metro"></span> {{ object.metro.name }}
+                                                <span class="icon icon-metro"></span> {{ object.address.metro.name }}
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +91,7 @@
                                             <a href="">Оценки (97)</a>
                                             <a href="">Отзывы (15)</a>
                                         </div>
-                                        <div class="search-res-salon-card__content--price">1700 руб.</div>
+                                        <div class="search-res-salon-card__content--price">{{ object.price.normalize }} руб.</div>
                                         <div class="search-res-salon-card__content--sign-up">
                                             <a href="">Записаться</a>
                                         </div>
@@ -86,43 +100,6 @@
                             </div>
                         {% endfor %}
                     {% endif %}
-
-                    {% comment %}
-                    <!-- <div class="search-res-salon-card">
-                        <div class="search-res-salon-card__img">
-                            <img src="https://via.placeholder.com/256x200" alt="">
-                        </div>
-                        <div class="search-res-salon-card__content">
-                            <div class="search-res-salon-card__content--left">
-                                <div class="search-res-salon-card__content--salon-name">
-                                    <a href="">Название салона</a>
-                                </div>
-                                <div class="search-res-salon-card__content--description">
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores doloribus sunt aspernatur atque delectus laboriosam non, excepturi error, iusto consequuntur <a href="">подробнее</a>
-                                </div>
-                                <div class="search-res-salon-card__content--address">
-                                    <div class="search-res-salon-card__content--street">
-                                        <span class="icon icon-geomark"></span> г. Москва, ул. Мневники, 46а
-                                    </div>
-                                    <div class="search-res-salon-card__content--metro">
-                                        <span class="icon icon-metro"></span> м. Крылатские холмы
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="search-res-salon-card__content--right">
-                                <div class="search-res-salon-card__content--rating">stars</div>
-                                <div class="search-res-salon-card__content--reviews">
-                                    <a href="">Оценки (97)</a>
-                                    <a href="">Отзывы (15)</a>
-                                </div>
-                                <div class="search-res-salon-card__content--price">1700 руб.</div>
-                                <div class="search-res-salon-card__content--sign-up">
-                                    <a href="">Записаться</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-                    {% endcomment %}
                 </div>
             </div>
         </div>

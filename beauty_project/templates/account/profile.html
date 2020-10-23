@@ -3,9 +3,36 @@
 {% load account_groups %}
 
 
+{% block body_classes %}{% spaceless %}
+    {{ block.super }} user-profile
+{% endspaceless %}{% endblock %}
+
+
+{% block content_top %}
+    {% include "account/includes/user-profile-salon-nav.html" %}
+{% endblock %}
+
+
 {% block content %}
     <div class="container">
-        <div class="h2">Hi, {{ request.user.first_name }}</div>
+        <form action="{% url 'user:profile' %}" novalidate method="post">{% csrf_token %}
+            <div class="user-profile__type-one">
+                <div class="user-profile__type-one--left">
+                    <img src="https://via.placeholder.com/256x256" alt="">
+                </div>
+                <div class="user-profile__type-one--right">
+                    <h4>Салон красоты "{{ request.user.salon.name }}"</h4>
+                    {{ form_edit_salon.as_p }}
+                    <button type="submit">Edit Salon</button>
+                </div>
+            </div>
+        </form>
+
+        <div class="user-profile__type-two"></div>
+    </div>
+
+    <div class="container">
+        <div class="h2">Hi, {{ request.user.first_name }} | {{ request.user.salon.name }}</div>
         <div class="h2">User Group{% if request.user.groups.all.count > 1 %}s{% endif %}: {{ request.user.groups.all|join:", " }}</div>
 
         <p>Login: {{ request.user }}</p>

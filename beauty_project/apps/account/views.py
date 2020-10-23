@@ -62,7 +62,7 @@ def logout_view(request):
 @login_required(login_url='user:login')
 def user_profile_view(request):
     context = {}
-    context['page_title'] = f'Профиль пользователя {request.user.username}'
+    context['page_title'] = 'Личный кабинет'
 
     # Clean session
     if request.session.get('first_name'):
@@ -89,8 +89,9 @@ def user_profile_view(request):
         form = EditAccountForm(instance=request.user)
         context['form'] = form
 
-    # Edit Salon Form if user in Salon Group
+    # Salon Group
     if request.user.groups.filter(name='Salon').exists():
+        # context['page_title'] = f'Салон красоты "{request.user.salon.name}"'
         context['salon_services'] = SalonServices.objects.filter(salon=request.user.salon).reverse()
 
         salon_instance = Salon.objects.get(id=request.user.salon.id)
@@ -131,6 +132,16 @@ def user_profile_view(request):
         else: #GET request
             form_add_salon_services = AddSalonServicesForm(salon=request.user.salon.id)
             context['form_add_salon_services'] = form_add_salon_services
+
+
+    # Manager Group
+    # if request.user.groups.filter(name='Manager').exists():
+    #     context['page_title'] = f'Личный кабинет менеджера {request.user.first_name}'
+
+
+    # Client Group
+    # if request.user.groups.filter(name='Manager').exists():
+    #     context['page_title'] = f'Личный кабинет клиента {request.user.first_name}'
 
     return render(request, 'account/profile.html', context)
 

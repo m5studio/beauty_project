@@ -1,13 +1,12 @@
-import json
-
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 
 from apps.salon.models.salon import Salon
 from apps.salon.models.salon_services import SalonServices
-from apps.salon.models.address import Address, City
+from apps.salon.models.address import Address, City, Metro
 
 from apps.actions.models import Actions
+from apps.services.models import Services
 
 
 class HomepageView(TemplateView):
@@ -23,44 +22,30 @@ class HomepageView(TemplateView):
 def search_results_view(request):
     context = {}
     context['page_title'] = 'Результаты поиска'
+    context['filter_metro'] = Metro.objects.all()
+
 
     if request.GET.get('city'):
         get_city = request.GET.get('city')
 
         city_instance = City.objects.get(id=get_city)
-        context['object_list'] = Address.objects.filter(salon__active=True, city=city_instance)
+        context['object_list'] = SalonServices.objects.filter(salon__active=True, address__city=city_instance)
     else:
-        context['object_list'] = Address.objects.filter(salon__active=True)
+        context['object_list'] = SalonServices.objects.filter(salon__active=True)
 
 
     if request.GET.get('service_to_add'):
         get_services = request.GET.get('service_to_add')
-        print(get_services)
 
         get_services = get_services.split(",")
         get_services = map(int, get_services)
-        get_services = list(set(get_services))
-        print(get_services)
+        get_services_list = list(set(get_services))
+        context['object_list'] = SalonServices.objects.filter(salon__active=True, service__in=get_services_list)
 
-        get_services_list = request.GET.getlist('service_to_add')
-        print(get_services_list)
 
-    """
-    if request.method == "POST":
-        print("POST request")
-        # print(request.POST.get('city'))
-
-        request_body_json = json.loads(request.body.decode('utf-8'))
-
-        print(request_body_json)
-        print(request_body_json['city'])
-        print(request_body_json['date_of_visit'])
-        print(request_body_json['time_start'])
-        print(request_body_json['time_end'])
-        print(request_body_json['time_certain_checked'])
-        print(request_body_json['time_certain'])
-        print(request_body_json['services_added'])
-        # return redirect('/')
-    """
+    if request.GET.get('metro'):
+        metro_stations_ids_list = list(map(int, request.GET.getlist('metro')))
+        print(metro_stations_ids_list)
+        context['object_list'] = context['object_list'].filter(address__metro__id__in=metro_stations_ids_list)
 
     return render(request, 'core/search-results.html', context)

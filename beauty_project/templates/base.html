@@ -8,7 +8,6 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% endblock %}
-    <!-- TODO: og:tags -->
 </head>
 <body class="{% block body_classes %}{% if request.path == '/' %}homepage{% else %}not-homepage{% endif %}{% endblock %}">
     <header id="header">
@@ -29,17 +28,36 @@
                             <a href="{% url 'user:registration-by-phone' %}" class="btn-transparent">Зарегистрироваться</a>
                         {% endif %}
                         {% if request.user.is_authenticated %}
-                            Привет, <a href="{% url 'user:profile' %}">{% if request.user.first_name %}{{ request.user.first_name }}{% else %}{{ request.user }}{% endif %}</a>
+                            <div class="auth">
+                                <a href="{% url 'user:profile' %}">{% spaceless %}
+                                    {% if request.user|has_group:"Salon" %}
+                                        {% if request.user.salon.name %}
+                                            {{ request.user.salon.name }}
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if request.user|has_group:"Client" %}
+                                        {% if request.user.first_name %}
+                                            {{ request.user.first_name }}
+                                        {% endif %}
+                                    {% endif %}{% endspaceless %}</a> <span class="icon icon-arrow-down"></span>
+
+                                <a href="{% url 'user:logout' %}" style="text-decoration: none; margin-left: 30px;">Выйти</a>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="header__banner">
-            <img src="{% static 'images/tmp/header-banner.jpg' %}" alt="">
-        </div>
+        {% if request.path == '/' %}
+            <div id="header__banner">
+                <img src="{% static 'images/tmp/header-banner.jpg' %}" alt="">
+            </div>
+        {% endif %}
+    </header>
 
+    <div id="content">
         <nav id="main-nav">
             {% comment %}
             <!-- {% if not request.user.is_authenticated %}
@@ -123,21 +141,19 @@
                 </ul>
             {% endif %}
         </nav>
-    </header>
 
-    <div id="content">
         <div id="app">
             {% block breadcrumbs %}{% endblock %}
+
+            {% if page_title %}
+                <div id="page_title" class="container">
+                    <h1>{{ page_title }}</h1>
+                </div>
+            {% endif %}
 
             {% block content_top %}{% endblock %}
 
             <main id="main">
-                {% if page_title %}
-                    <div id="page_title" class="container">
-                        <h1>{{ page_title }}</h1>
-                    </div>
-                {% endif %}
-
                 {% block content %}{% endblock %}
             </main>
 

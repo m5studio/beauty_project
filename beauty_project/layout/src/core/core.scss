@@ -65,7 +65,11 @@ body {
             }
         }
 
-        // #user_zone {}
+        #user_zone {
+            .auth {
+                @extend #select_city;
+            }
+        }
     }
 
     &__banner {
