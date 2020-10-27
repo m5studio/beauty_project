@@ -83,17 +83,17 @@
                     }
 
                     &-input {
-                        background-color: transparent;
-                        border-color: transparent;
-                        border-width: 0;
-                        border-bottom: 2px solid #fbddd3;
-                        color: white;
-                        font-size: 1.05rem;
-                        outline: none;
-                        padding: 3px 30px 3px 0;
-                        display: block;
-                        width: 100%;
-                        transition: background-color ease-in-out .3s;
+                        // background-color: transparent;
+                        // border-color: transparent;
+                        // border-width: 0;
+                        // border-bottom: 2px solid #fbddd3;
+                        // color: white;
+                        // font-size: 1.05rem;
+                        // outline: none;
+                        // padding: 3px 30px 3px 0;
+                        // display: block;
+                        // width: 100%;
+                        // transition: background-color ease-in-out .3s;
 
                         &__place {
                             background-image: url("images/icons/icon-arrow-down.png");
@@ -112,15 +112,15 @@
                         // &__time {
                         // }
 
-                        &:focus,
-                        &:hover {
-                            background-color: rgba(255, 255, 255, .1);
-                            outline: none;
-                        }
+                        // &:focus,
+                        // &:hover {
+                        //     background-color: rgba(255, 255, 255, .1);
+                        //     outline: none;
+                        // }
 
-                        option {
-                            color: #1a2835;
-                        }
+                        // option {
+                        //     color: #1a2835;
+                        // }
                     }
 
                     &__add-service {

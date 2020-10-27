@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_unused_media',
     'imagekit',
     'mptt',
+    'widget_tweaks',
 
     'apps.account.apps.AccountConfig',
     'apps.actions.apps.ActionsConfig',
